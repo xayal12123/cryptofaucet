@@ -11,7 +11,6 @@
             --card-bg: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.07);
             --gold: #FFC107;
-            --orange: #FF6F00;
             --text: #EDEDF3;
             --muted: #9a9aab;
             --grad: linear-gradient(135deg, #FFC107, #FF6F00);
@@ -24,25 +23,24 @@
             color: var(--text);
             font-family: 'Inter', sans-serif;
             margin: 0;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            padding-bottom: 80px;
         }
 
         header {
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(5, 5, 8, 0.8);
         }
 
-        .logo { font-weight: 900; font-size: 22px; color: var(--gold); text-transform: uppercase; letter-spacing: -1px; }
+        .logo { font-weight: 900; font-size: 20px; color: var(--gold); text-transform: uppercase; letter-spacing: -1px; }
         .logo span { color: #fff; font-weight: 400; }
 
         .balance-badge {
@@ -50,23 +48,11 @@
             padding: 8px 16px;
             border-radius: 14px;
             border: 1px solid rgba(255, 193, 7, 0.2);
-            font-weight: 800;
-            color: var(--gold);
+            font-weight: 800; color: var(--gold);
         }
 
-        .container {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; width: 100%; flex: 1; }
+        
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -74,178 +60,156 @@
             padding: 30px;
             text-align: center;
             backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
         .timer-display {
-            font-size: 60px;
-            font-weight: 900;
-            margin: 20px 0;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(255,111,0,0.2);
+            font-size: 55px; font-weight: 900; margin: 20px 0;
+            background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .btn-main {
-            background: var(--grad);
-            border: none;
-            padding: 20px;
-            width: 100%;
-            border-radius: 20px;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 111, 0, 0.3);
+            background: var(--grad); border: none; padding: 20px; width: 100%;
+            border-radius: 18px; font-weight: 900; font-size: 16px; color: #000;
+            cursor: pointer; box-shadow: 0 10px 20px rgba(255, 111, 0, 0.2);
         }
-
         .btn-main:disabled { background: #1a1a24; color: #444; box-shadow: none; cursor: not-allowed; }
 
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: rgba(10, 10, 15, 0.9);
+            position: fixed; bottom: 0; width: 100%; background: rgba(10, 10, 15, 0.95);
+            display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border);
             backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            border-top: 1px solid var(--border);
         }
-
-        .nav-item {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.6;
-        }
-
+        
+        .nav-item { color: var(--muted); text-decoration: none; font-size: 10px; text-align: center; opacity: 0.6; font-weight: 700; }
         .nav-item.active { color: var(--gold); opacity: 1; }
 
-        .ad-slot {
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 15px;
-            border: 1px dashed var(--border);
-            color: var(--muted);
-            font-size: 10px;
-            min-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #auth-screen {
+            position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+            display: flex; align-items: center; justify-content: center; padding: 20px;
         }
 
-        .status-text { font-size: 12px; color: var(--muted); margin-top: 15px; }
+        input {
+            width: 100%; background: #1a1a24; border: 1px solid var(--border);
+            padding: 16px; border-radius: 14px; color: #fff; margin-bottom: 15px;
+        }
 
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
+<div id="auth-screen">
+    <div class="card" style="width: 100%; max-width: 380px;">
+        <h1 style="color:var(--gold); margin-bottom: 10px;">NoirFaucet</h1>
+        <p style="color:var(--muted); margin-bottom: 30px;">Kripto qazanmağa başlamaq üçün giriş edin</p>
+        <button class="btn-main" onclick="login()">GOOGLE İLƏ GİRİŞ</button>
+    </div>
+</div>
+
 <header>
-    <div class="logo">Noir<span>Faucet</span></div>
+    <div class="logo">Noir<span>PRO</span></div>
     <div class="balance-badge">💰 <span id="topBalance">0.00</span></div>
 </header>
 
 <div class="container">
-    
-    <div class="ad-slot">Reklam Aktivləşdirildi</div>
-
     <div id="faucet" class="tab-content active">
         <div class="card">
-            <h2 style="margin:0">Manual Faucet</h2>
-            <p style="color:var(--muted); font-size:13px">Hər 5 dəqiqədən bir mükafat topla</p>
-            <div class="timer-display" id="faucetTimer">...</div>
+            <h2 style="margin-top:0">Manual Claim</h2>
+            <p style="color:var(--muted); font-size: 13px;">Hər 5 dəqiqədən bir balansını artır</p>
+            <div class="timer-display" id="faucetTimer">05:00</div>
             <button class="btn-main" id="claimBtn" onclick="handleClaim()" disabled>TOKENLƏRİ GÖTÜR</button>
-            <p id="statusMsg" class="status-text">Sistemə bağlanılır...</p>
+            <p id="statusMsg" style="font-size: 11px; color: var(--muted); margin-top: 15px;">Məlumatlar senkronizə edilir...</p>
         </div>
     </div>
-
-    <div id="links" class="tab-content">
-        <div class="card">
-            <h2>Qısa Linklər</h2>
-            <p style="color:var(--muted)">Shortlink sistemini quraşdırmaq üçün API lazımdır.</p>
-            <button class="btn-main" style="opacity:0.5">Tezliklə</button>
-        </div>
-    </div>
-
+    
     <div id="withdraw" class="tab-content">
         <div class="card">
             <h2>Çıxarış</h2>
-            <div style="margin: 20px 0; text-align: left;">
-                <label style="font-size: 12px; color: var(--muted);">DGB Cüzdan Ünvanı</label>
-                <input type="text" id="walletAddress" placeholder="Ünvanı bura yazın" style="width:100%; background: #1a1a24; border:1px solid var(--border); padding:15px; border-radius:12px; color:#fff; margin-top:10px;">
-            </div>
-            <p style="font-size: 12px; color: var(--orange);">Minimal çıxarış: 5.00 Token</p>
-            <button class="btn-main" onclick="handleWithdraw()">Çıxarış Et</button>
+            <p style="color:var(--muted); font-size: 13px; margin-bottom: 20px;">Minimal çıxarış: 50.00 Token</p>
+            <input type="email" id="wallet" placeholder="FaucetPay Email">
+            <button class="btn-main" onclick="alert('Sorğu qəbul edildi! 24 saat ərzində yoxlanılacaq.')">ÖDƏNİŞ TƏLƏB ET</button>
         </div>
     </div>
-
 </div>
 
 <div class="bottom-nav">
-    <a href="#" class="nav-item active" onclick="showTab('faucet', this)">🏠<br>ANA SƏHİFƏ</a>
-    <a href="#" class="nav-item" onclick="showTab('links', this)">🔗<br>LINKLƏR</a>
-    <a href="#" class="nav-item" onclick="showTab('withdraw', this)">💳<br>ÇIXARIŞ</a>
+    <a href="#" class="nav-item active" onclick="showTab('faucet', this)">🏠<br>HOME</a>
+    <a href="#" class="nav-item" onclick="showTab('withdraw', this)">💳<br>WITHDRAW</a>
+    <a href="#" class="nav-item" onclick="logout()">🚪<br>LOGOUT</a>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script src="https://pl29329349.profitablecpmratenetwork.com/aa/69/69/aa696903b4f2d1329390ab3ebd1dc84a.js"></script>
 
 <script>
-// FİRЕBАSЕ MƏLUMATLARIN
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
   projectId: "faucetfirex",
   storageBucket: "faucetfirex.firebasestorage.app",
   messagingSenderId: "191065358342",
-  appId: "1:191065358342:web:b9911c6e71b9fc4b254387",
-  measurementId: "G-4MFS9HC7ME"
+  appId: "1:191065358342:web:b9911c6e71b9fc4b254387"
 };
 
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 const db = firebase.firestore();
-const colName = "users";
-const uId = "user_xeyal_pro";
+let currentUser = null;
 
-function showTab(tabId, el) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    el.classList.add('active');
+// Giriş Funksiyası
+async function login() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+        await auth.signInWithPopup(provider);
+    } catch (e) { alert("Xəta: " + e.message); }
 }
 
-function init() {
-    const status = document.getElementById('statusMsg');
-    db.collection(colName).doc(uId).onSnapshot(doc => {
-        if(doc.exists) {
-            const data = doc.data();
-            document.getElementById('topBalance').innerText = (data.balance || 0).toFixed(2);
-            startFaucetTimer(data.lastClaim || 0);
-            status.innerText = "SİSTEM AKTİVDİR ✅";
-        } else {
-            db.collection(colName).doc(uId).set({ balance: 0, lastClaim: 0 });
-        }
-    });
+function logout() {
+    auth.signOut().then(() => location.reload());
 }
 
-function startFaucetTimer(lastClaim) {
+// Auth Müşahidəçisi
+auth.onAuthStateChanged(user => {
+    if (user) {
+        currentUser = user;
+        document.getElementById('auth-screen').style.display = 'none';
+        
+        // Sənin bazandakı "tarazlıq" və "son_İddia" sahələrinə uyğunlaşdırılıb
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const bal = (data.tarazlıq || 0).toFixed(2);
+                document.getElementById('topBalance').innerText = bal;
+                updateTimer(data.son_İddia || 0);
+                document.getElementById('statusMsg').innerText = "Sistem Aktivdir ✅";
+            } else {
+                // Yeni istifadəçini sənin sahə adlarınla yaradırıq
+                db.collection("users").doc(user.uid).set({ 
+                    tarazlıq: 0, 
+                    son_İddia: 0 
+                });
+            }
+        });
+    } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+    }
+});
+
+// Timer İdarəetməsi
+function updateTimer(lastClaim) {
     const btn = document.getElementById('claimBtn');
     const display = document.getElementById('faucetTimer');
-    
-    const update = () => {
+    const tick = () => {
         const now = Date.now();
         const diff = (5 * 60 * 1000) - (now - lastClaim);
-        if(diff <= 0) {
+        if (diff <= 0) {
             btn.disabled = false;
             display.innerText = "READY";
             display.style.color = "var(--gold)";
@@ -253,39 +217,31 @@ function startFaucetTimer(lastClaim) {
             btn.disabled = true;
             const m = Math.floor(diff / 60000);
             const s = Math.floor((diff % 60000) / 1000);
-            display.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-            setTimeout(update, 1000);
+            display.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            setTimeout(tick, 1000);
         }
     };
-    update();
+    tick();
 }
 
+// Token Götürmə Funksiyası
 async function handleClaim() {
     try {
-        await db.collection(colName).doc(uId).update({
-            balance: firebase.firestore.FieldValue.increment(10),
-            lastClaim: Date.now()
+        await db.collection("users").doc(currentUser.uid).update({
+            tarazlıq: firebase.firestore.FieldValue.increment(10),
+            son_İddia: Date.now()
         });
-        alert("🎉 10 Token qazandınız!");
+        window.navigator.vibrate(50);
     } catch (e) { alert("Xəta: " + e.message); }
 }
 
-async function handleWithdraw() {
-    const address = document.getElementById('walletAddress').value;
-    const currentBalance = parseFloat(document.getElementById('topBalance').innerText);
-
-    if(address.length < 10) {
-        alert("Zəhmət olmasa düzgün DGB ünvanı daxil edin.");
-        return;
-    }
-    if(currentBalance < 5) {
-        alert("Balansınızda kifayət qədər token yoxdur (Min. 5.00).");
-        return;
-    }
-    alert("Çıxarış sorğusu qəbul edildi!");
+// Tab dəyişdirici
+function showTab(id, el) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
 }
-
-init();
 </script>
 </body>
 </html>
