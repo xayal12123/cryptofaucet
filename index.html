@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoirFaucet PRO — Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050508;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.07);
+            --gold: #FFC107;
+            --orange: #FF6F00;
+            --text: #EDEDF3;
+            --muted: #9a9aab;
+            --grad: linear-gradient(135deg, #FFC107, #FF6F00);
+        }
+
+        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigasiya */
+        header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-weight: 900; font-size: 22px; color: var(--gold); text-transform: uppercase; letter-spacing: -1px; }
+        .logo span { color: #fff; font-weight: 400; }
+
+        .balance-badge {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 8px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        /* Ana Konteyner */
+        .container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Kart Dizaynı */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+        }
+
+        .timer-display {
+            font-size: 60px;
+            font-weight: 900;
+            margin: 20px 0;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(255,111,0,0.2);
+        }
+
+        .btn-main {
+            background: var(--grad);
+            border: none;
+            padding: 20px;
+            width: 100%;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 111, 0, 0.3);
+        }
+
+        .btn-main:disabled { background: #1a1a24; color: #444; box-shadow: none; cursor: not-allowed; }
+
+        /* Menu Alt Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-item {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.6;
+        }
+
+        .nav-item.active { color: var(--gold); opacity: 1; }
+
+        /* Reklam Yeri Placeholder */
+        .ad-slot {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 15px;
+            border: 1px dashed var(--border);
+            color: var(--muted);
+            font-size: 10px;
+            min-height: 90px;
+        }
+
+        .status-text { font-size: 12px; color: var(--muted); margin-top: 15px; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Noir<span>Faucet</span></div>
+    <div class="balance-badge">💰 <span id="topBalance">0.00</span></div>
+</header>
+
+<div class="container">
+    
+    <div class="ad-slot">Reklam Sahəsi (A-Ads)</div>
+
+    <div id="faucet" class="tab-content active">
+        <div class="card">
+            <h2 style="margin:0">Manual Faucet</h2>
+            <p style="color:var(--muted); font-size:13px">Hər 5 dəqiqədən bir mükafat topla</p>
+            <div class="timer-display" id="faucetTimer">...</div>
+            <button class="btn-main" id="claimBtn" onclick="handleClaim()" disabled>TOKENLƏRİ GÖTÜR</button>
+            <p id="statusMsg" class="status-text">Sistemə bağlanılır...</p>
+        </div>
+    </div>
+
+    <div id="links" class="tab-content">
+        <div class="card">
+            <h2>Qısa Linklər</h2>
+            <p style="color:var(--muted)">Shortlink sistemini quraşdırmaq üçün API lazımdır.</p>
+            <button class="btn-main" style="opacity:0.5">Tezliklə</button>
+        </div>
+    </div>
+
+    <div id="withdraw" class="tab-content">
+        <div class="card">
+            <h2>Çıxarış</h2>
+            <div style="margin: 20px 0; text-align: left;">
+                <label style="font-size: 12px; color: var(--muted);">DGB Cüzdan Ünvanı</label>
+                <input type="text" placeholder="Ünvanı bura yazın" style="width:100%; background: #1a1a24; border:1px solid var(--border); padding:15px; border-radius:12px; color:#fff; margin-top:10px;">
+            </div>
+            <p style="font-size: 12px; color: var(--orange);">Minimal çıxarış: 5.00 Token</p>
+            <button class="btn-main" onclick="alert('Balansınız kifayət deyil!')">Çıxarış Et</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="bottom-nav">
+    <a href="#" class="nav-item active" onclick="showTab('faucet', this)">🏠<br>ANA SƏHİFƏ</a>
+    <a href="#" class="nav-item" onclick="showTab('links', this)">🔗<br>LINKLƏR</a>
+    <a href="#" class="nav-item" onclick="showTab('withdraw', this)">💳<br>ÇIXARIŞ</a>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+<script>
+// FİRЕBАSЕ MƏLUMATLARIN (faucetfirex)
+const firebaseConfig = {
+  apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
+  authDomain: "faucetfirex.firebaseapp.com",
+  projectId: "faucetfirex",
+  storageBucket: "faucetfirex.firebasestorage.app",
+  messagingSenderId: "191065358342",
+  appId: "1:191065358342:web:b9911c6e71b9fc4b254387",
+  measurementId: "G-4MFS9HC7ME"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const colName = "users";
+const uId = "user_xeyal_pro";
+
+function showTab(tabId, el) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    el.classList.add('active');
+}
+
+function init() {
+    const status = document.getElementById('statusMsg');
+    db.collection(colName).doc(uId).onSnapshot(doc => {
+        if(doc.exists) {
+            const data = doc.data();
+            document.getElementById('topBalance').innerText = (data.balance || 0).toFixed(2);
+            startFaucetTimer(data.lastClaim || 0);
+            status.innerText = "SİSTEM AKTİVDİR ✅";
+        } else {
+            db.collection(colName).doc(uId).set({ balance: 0, lastClaim: 0 });
+        }
+    });
+}
+
+function startFaucetTimer(lastClaim) {
+    const btn = document.getElementById('claimBtn');
+    const display = document.getElementById('faucetTimer');
+    const update = () => {
+        const now = Date.now();
+        const diff = (5 * 60 * 1000) - (now - lastClaim);
+        if(diff <= 0) {
+            btn.disabled = false;
+            display.innerText = "READY";
+            display.style.color = "var(--gold)";
+        } else {
+            btn.disabled = true;
+            const m = Math.floor(diff / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            display.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            setTimeout(update, 1000);
+        }
+    };
+    update();
+}
+
+async function handleClaim() {
+    try {
+        await db.collection(colName).doc(uId).update({
+            balance: firebase.firestore.FieldValue.increment(10),
+            lastClaim: Date.now()
+        });
+        alert("🎉 10 Token qazandınız!");
+    } catch (e) { alert("Xəta: " + e.message); }
+}
+
+init();
+</script>
+</body>
+</html>
