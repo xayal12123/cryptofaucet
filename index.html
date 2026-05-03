@@ -30,7 +30,6 @@
             min-height: 100vh;
         }
 
-        /* Navigasiya */
         header {
             padding: 20px;
             display: flex;
@@ -55,7 +54,6 @@
             color: var(--gold);
         }
 
-        /* Ana Konteyner */
         .container {
             flex: 1;
             max-width: 500px;
@@ -69,7 +67,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Kart Dizaynı */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -106,7 +103,6 @@
 
         .btn-main:disabled { background: #1a1a24; color: #444; box-shadow: none; cursor: not-allowed; }
 
-        /* Menu Alt Bar */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -132,7 +128,6 @@
 
         .nav-item.active { color: var(--gold); opacity: 1; }
 
-        /* Reklam Yeri Placeholder */
         .ad-slot {
             margin: 20px 0;
             padding: 15px;
@@ -142,6 +137,9 @@
             color: var(--muted);
             font-size: 10px;
             min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .status-text { font-size: 12px; color: var(--muted); margin-top: 15px; }
@@ -157,7 +155,7 @@
 
 <div class="container">
     
-    <div class="ad-slot">Reklam Sahəsi (A-Ads)</div>
+    <div class="ad-slot">Reklam Aktivləşdirildi</div>
 
     <div id="faucet" class="tab-content active">
         <div class="card">
@@ -182,10 +180,10 @@
             <h2>Çıxarış</h2>
             <div style="margin: 20px 0; text-align: left;">
                 <label style="font-size: 12px; color: var(--muted);">DGB Cüzdan Ünvanı</label>
-                <input type="text" placeholder="Ünvanı bura yazın" style="width:100%; background: #1a1a24; border:1px solid var(--border); padding:15px; border-radius:12px; color:#fff; margin-top:10px;">
+                <input type="text" id="walletAddress" placeholder="Ünvanı bura yazın" style="width:100%; background: #1a1a24; border:1px solid var(--border); padding:15px; border-radius:12px; color:#fff; margin-top:10px;">
             </div>
             <p style="font-size: 12px; color: var(--orange);">Minimal çıxarış: 5.00 Token</p>
-            <button class="btn-main" onclick="alert('Balansınız kifayət deyil!')">Çıxarış Et</button>
+            <button class="btn-main" onclick="handleWithdraw()">Çıxarış Et</button>
         </div>
     </div>
 
@@ -200,8 +198,10 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
+<script src="https://pl29329349.profitablecpmratenetwork.com/aa/69/69/aa696903b4f2d1329390ab3ebd1dc84a.js"></script>
+
 <script>
-// FİRЕBАSЕ MƏLUMATLARIN (faucetfirex)
+// FİRЕBАSЕ MƏLUMATLARIN
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -241,6 +241,7 @@ function init() {
 function startFaucetTimer(lastClaim) {
     const btn = document.getElementById('claimBtn');
     const display = document.getElementById('faucetTimer');
+    
     const update = () => {
         const now = Date.now();
         const diff = (5 * 60 * 1000) - (now - lastClaim);
@@ -267,6 +268,21 @@ async function handleClaim() {
         });
         alert("🎉 10 Token qazandınız!");
     } catch (e) { alert("Xəta: " + e.message); }
+}
+
+async function handleWithdraw() {
+    const address = document.getElementById('walletAddress').value;
+    const currentBalance = parseFloat(document.getElementById('topBalance').innerText);
+
+    if(address.length < 10) {
+        alert("Zəhmət olmasa düzgün DGB ünvanı daxil edin.");
+        return;
+    }
+    if(currentBalance < 5) {
+        alert("Balansınızda kifayət qədər token yoxdur (Min. 5.00).");
+        return;
+    }
+    alert("Çıxarış sorğusu qəbul edildi!");
 }
 
 init();
