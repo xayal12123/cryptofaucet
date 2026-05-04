@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ə<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirFaucet PRO — Üzv Paneli</title>
+    <title>NoirFaucet PRO — Professional Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,7 +16,7 @@
         }
 
         * { box-sizing: border-box; transition: 0.3s; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 90px; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 90px; }
 
         /* Auth Screen */
         #auth-screen {
@@ -29,7 +29,7 @@
             text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.7);
         }
 
-        /* App UI */
+        /* App Content */
         #app-content { display: none; }
         header { 
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
@@ -41,12 +41,12 @@
         .container { max-width: 480px; margin: 0 auto; padding: 20px; }
         .card { background: var(--card); border: 1px solid var(--border); border-radius: 30px; padding: 30px 20px; text-align: center; margin-bottom: 20px; }
 
-        .btn-main { background: var(--grad); border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; color: #000; cursor: pointer; font-size: 15px; position: relative; z-index: 10; }
+        .btn-main { background: var(--grad); border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; color: #000; cursor: pointer; font-size: 15px; }
         .btn-google { background: #fff; color: #000; display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 25px; border: none; }
         
         .list-box { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 16px; border-radius: 18px; border: 1px solid var(--border); margin-bottom: 10px; text-align: left; }
         
-        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); z-index: 1001; }
+        .nav-bar { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); }
         .nav-item { color: #555; text-decoration: none; font-size: 10px; text-align: center; cursor: pointer; font-weight: 800; }
         .nav-item.active { color: var(--gold); }
 
@@ -65,7 +65,7 @@
 <div id="auth-screen">
     <div class="auth-card">
         <div style="font-size: 35px; font-weight: 900; color: var(--gold); margin-bottom: 10px;">NoirPRO</div>
-        <p style="color: #8e8e9e; font-size: 14px; margin-bottom: 30px;">Qazanmaq üçün şəxsi hesabınıza giriş edin.</p>
+        <p style="color: #8e8e9e; font-size: 14px; margin-bottom: 30px;">Davam etmək üçün Google ilə giriş edin.</p>
         <button class="btn-main btn-google" onclick="handleAuth()">
             <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.26 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.67-.35-1.39-.35-2.09s.13-1.42.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
             GOOGLE İLƏ GİRİŞ ET
@@ -98,18 +98,11 @@
                 <div id="ptc-list"></div>
             </div>
         </div>
-        <div id="links-tab" class="tab">
-            <div class="card">
-                <h2>Shortlinks</h2>
-                <div id="sl-list"></div>
-            </div>
-        </div>
     </div>
 
     <div class="nav-bar">
         <div class="nav-item active" onclick="showTab('faucet-tab', this)">🏠<br>GÖTÜR</div>
         <div class="nav-item" onclick="showTab('ptc-tab', this)">👁️<br>PTC</div>
-        <div class="nav-item" onclick="showTab('links-tab', this)">🔗<br>LİNKLƏR</div>
         <div class="nav-item" onclick="logout()">🚪<br>ÇIXIŞ</div>
     </div>
 </div>
@@ -119,6 +112,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
+// KONFİQURASİYA
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -135,24 +129,27 @@ let user = null;
 let lastClaim = 0;
 
 // REKLAM LİNKLƏRİ
-const myPTC = [{ name: "Sponsor Ad #1", reward: 25, sec: 15, url: "https://adsterra-link-buraya.com" }];
-const mySL = [{ name: "Keçid #1", reward: 50, url: "https://shortlink-buraya.com" }];
+const myPTC = [{ name: "Bonus Reklam #1", reward: 25, sec: 10, url: "https://adsterra-link.com" }];
+
+// SESSİYA İDARƏETMƏSİ (MOBİL ÜÇÜN ŞƏRTDİR)
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 function handleAuth() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(() => {
-        showToast("Giriş uğurludur!");
-    }).catch(e => {
-        if(e.code === 'auth/unauthorized-domain') {
-            alert("Xəta: Firebase panelində Netlify domenini Authorized Domains siyahısına əlavə etməlisiniz!");
-        } else {
-            console.error(e);
-        }
-    });
+    // Popup yerinə Redirect istifadə edirik ki, mobil brauzerlər atmasın
+    auth.signInWithRedirect(provider);
 }
 
-function logout() { auth.signOut().then(() => location.reload()); }
-function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
+// Yönləndirmədən qayıdanda nəticəni tutmaq
+auth.getRedirectResult().then((result) => {
+    if (result.user) {
+        showToast("Xoş gəldiniz!");
+    }
+}).catch((error) => {
+    if (error.code === 'auth/unauthorized-domain') {
+        alert("Xəta: Firebase panelində Authorized Domains siyahısına bu Netlify ünvanını əlavə edin!");
+    }
+});
 
 auth.onAuthStateChanged(u => {
     user = u;
@@ -175,12 +172,14 @@ auth.onAuthStateChanged(u => {
     }
 });
 
+function logout() { auth.signOut().then(() => location.reload()); }
+function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
+
 function showTab(id, el) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById(id).classList.add('active'); el.classList.add('active');
     if(id === 'ptc-tab') renderPTC();
-    if(id === 'links-tab') renderSL();
 }
 
 function renderPTC() {
@@ -188,16 +187,7 @@ function renderPTC() {
     cont.innerHTML = myPTC.map(ad => `
         <div class="list-box">
             <div><div class="info-title">${ad.name}</div><div style="color:var(--gold); font-size:12px">+${ad.reward} Token | ${ad.sec}s</div></div>
-            <button class="btn-action" onclick="startPTC('${ad.url}', ${ad.reward}, ${ad.sec})">İZLƏ</button>
-        </div>`).join('');
-}
-
-function renderSL() {
-    const cont = document.getElementById('sl-list');
-    cont.innerHTML = mySL.map(sl => `
-        <div class="list-box">
-            <div><div class="info-title">${sl.name}</div><div style="color:var(--gold); font-size:12px">+${sl.reward} Token</div></div>
-            <button class="btn-action" onclick="window.open('${sl.url}','_blank'); addReward(${sl.reward})">KEÇ</button>
+            <button class="btn-main" style="width:auto; padding:8px 15px;" onclick="startPTC('${ad.url}', ${ad.reward}, ${ad.sec})">İZLƏ</button>
         </div>`).join('');
 }
 
@@ -211,14 +201,10 @@ async function startPTC(url, reward, sec) {
         left--; timerDisp.innerText = left;
         if(left <= 0) {
             clearInterval(interval); overlay.style.display = "none";
-            await addReward(reward);
-            showToast(`+${reward} Token qazandınız!`);
+            await db.collection("users").doc(user.uid).update({ tarazlıq: firebase.firestore.FieldValue.increment(reward) });
+            showToast(`+${reward} Token!`);
         }
     }, 1000);
-}
-
-async function addReward(amt) {
-    await db.collection("users").doc(user.uid).update({ tarazlıq: firebase.firestore.FieldValue.increment(amt) });
 }
 
 async function claimToken() {
@@ -245,4 +231,3 @@ function startFaucetTimer() {
 
 </body>
 </html>
-
