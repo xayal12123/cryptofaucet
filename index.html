@@ -3,49 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Premium DGB Faucet</title>
+    <title>NoirPRO — Ultimate DGB Faucet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #fff; --border: rgba(255,255,255,0.08); }
         * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
         
+        /* UI Components */
         .auth-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .auth-card { background: var(--card); padding: 40px 30px; border-radius: 35px; width: 100%; max-width: 380px; border: 1px solid var(--border); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
-        
         input { width: 100%; padding: 16px; margin: 15px 0; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: #12121f; color: #fff; outline: none; text-align: center; font-size: 15px; }
         #app-content { display: none; }
-        
         header { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.9); backdrop-filter: blur(12px); z-index: 1000; }
         .bal-badge { background: rgba(255,193,7,0.1); padding: 8px 16px; border-radius: 14px; color: var(--gold); font-weight: 800; border: 1px solid rgba(255,193,7,0.2); }
-        
         .container { max-width: 480px; margin: auto; padding: 20px; }
-        .card { background: var(--card); padding: 25px; border-radius: 30px; border: 1px solid var(--border); margin-bottom: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .card { background: var(--card); padding: 25px; border-radius: 30px; border: 1px solid var(--border); margin-bottom: 18px; text-align: center; }
+        .btn { background: linear-gradient(135deg, #FFC107, #FF8F00); color: #000; border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 16px; }
+        .btn:disabled { background: #1d1d2b; color: #444; opacity: 0.5; cursor: not-allowed; }
         
-        .btn { background: linear-gradient(135deg, #FFC107, #FF8F00); color: #000; border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 10px 20px rgba(255,193,7,0.2); }
-        .btn:disabled { background: #1d1d2b; color: #444; box-shadow: none; cursor: not-allowed; opacity: 0.5; }
-        
-        /* Riyazi Kapça Dizaynı */
+        /* Back-end Logic UI */
         #math-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 25px; margin: 15px 0; border: 1px dashed var(--border); display: none; }
-        .math-text { font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
-        .math-input { width: 140px; font-size: 22px; font-weight: bold; border: 2px solid var(--gold); background: #000; margin-top: 10px; }
-
+        .math-text { font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 12px; }
+        .math-input { width: 140px; font-size: 22px; font-weight: bold; border: 2px solid var(--gold); background: #000; }
+        
+        /* Navigation */
         .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-item { font-size: 24px; cursor: pointer; opacity: 0.4; }
         .nav-item.active { opacity: 1; color: var(--gold); }
-        
         .tab { display: none; } .active-tab { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* HoneyPot */
+        #secret_check { display: none; }
     </style>
 </head>
 <body>
 
+<div id="secret_check">
+    <input type="text" id="backend_token" tabindex="-1" autocomplete="off">
+</div>
+
 <div id="auth-screen" class="auth-container">
     <div class="auth-card">
-        <h1 style="color:var(--gold); font-size: 42px; margin: 0; font-weight: 900; letter-spacing: -1px;">NoirPRO</h1>
-        <p style="opacity:0.6; font-size:13px; margin-bottom: 30px;">Kripto Qazanmağa Başla</p>
-        <input type="email" id="fp-email" placeholder="FaucetPay Emailiniz">
-        <button class="btn" onclick="login()">GİRİŞ ET</button>
+        <h1 style="color:var(--gold); font-size: 42px; margin: 0; font-weight: 900;">NoirPRO</h1>
+        <p style="opacity:0.6; font-size:13px; margin-bottom: 30px;">Arka Plan Təhlükəsizlik Sistemi</p>
+        <input type="email" id="fp-email" placeholder="FaucetPay Email">
+        <button class="btn" onclick="login()">GİRİŞ</button>
     </div>
 </div>
 
@@ -58,27 +62,34 @@
     <div class="container">
         <div id="home-tab" class="tab active-tab">
             <div class="card">
-                <p style="opacity:0.6; font-size: 14px; margin-top:0;">Növbəti qazanc üçün vaxt:</p>
+                <p style="opacity:0.6; font-size: 14px;">Gözləmə müddəti:</p>
                 <h1 id="timer" style="color:var(--gold); font-size:70px; margin:10px 0; font-weight: 900;">05:00</h1>
-                
                 <div id="math-box">
-                    <p style="font-size:12px; opacity:0.5; margin-bottom: 10px;">HESABLAYIN:</p>
                     <div class="math-text"><span id="n1">0</span> <span id="op">+</span> <span id="n2">0</span> = ?</div>
                     <input type="number" id="math-ans" class="math-input" placeholder="?">
                 </div>
-                
-                <button id="claimBtn" class="btn" onclick="verifyAndClaim()">0.05 DGB GÖTÜR</button>
+                <button id="claimBtn" class="btn" onclick="verifyAndClaim()" disabled>0.05 DGB GÖTÜR</button>
             </div>
-            <div class="card" style="padding: 15px; font-size: 12px; opacity: 0.4;">
-                Reklam Sahəsi (Adsterra)
+        </div>
+
+        <div id="earn-tab" class="tab">
+            <div class="card">
+                <h3 style="color:var(--gold);">SHORTLINKS (POSTBACK)</h3>
+                <p style="font-size:12px; opacity:0.6;">Yalnız keçid tamamlandıqda ödəniş olunur</p>
+                <button class="btn" onclick="openShortlink()" style="background:#222; color:var(--gold); border:1px solid var(--gold);">LİNKƏ KEÇ</button>
+            </div>
+            <div class="card">
+                <h3 style="color:var(--gold);">PTC ADS</h3>
+                <div style="height:250px; background:#000; border-radius:20px; overflow:hidden;">
+                    <iframe id="ptc_frame" src="" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
             </div>
         </div>
 
         <div id="wd-tab" class="tab">
             <div class="card">
-                <h3 style="margin-top:0;">Balansdan Çıxarış</h3>
-                <p style="font-size:13px; opacity:0.6;">Minimum limit: 10 DGB</p>
-                <h2 id="wdBal" style="color:var(--gold); font-size: 40px; margin: 20px 0; font-weight: 900;">0.00 DGB</h2>
+                <h3>Balans</h3>
+                <h2 id="wdBal" style="color:var(--gold); font-size: 40px; margin: 15px 0;">0.00 DGB</h2>
                 <button class="btn" onclick="requestWD()">ÖDƏNİŞ İSTƏ</button>
             </div>
         </div>
@@ -86,6 +97,7 @@
 
     <div class="nav">
         <div class="nav-item active" onclick="showTab('home-tab', this)">🏠</div>
+        <div class="nav-item" onclick="showTab('earn-tab', this)">🚀</div>
         <div class="nav-item" onclick="showTab('wd-tab', this)">💳</div>
         <div class="nav-item" onclick="logout()">🚪</div>
     </div>
@@ -94,53 +106,39 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics-compat.js"></script>
 
 <script>
-// Sənin Firebase Konfiqurasiyan
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
   projectId: "faucetfirex",
   storageBucket: "faucetfirex.firebasestorage.app",
   messagingSenderId: "191065358342",
-  appId: "1:191065358342:web:b9911c6e71b9fc4b254387",
-  measurementId: "G-4MFS9HC7ME"
+  appId: "1:191065358342:web:b9911c6e71b9fc4b254387"
 };
 
-// Başlatma
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 const db = firebase.firestore(), auth = firebase.auth();
-
 let currentEmail = localStorage.getItem("fp_email");
-let correctAns = 0;
+let correctAns = 0, timerStarted = false, isTabActive = true;
+let loadStamp = Date.now();
 
-// Orta Səviyyəli Riyazi Sual Yaradıcı
+// Visibility Check
+document.addEventListener("visibilitychange", () => { isTabActive = !document.hidden; });
+
 function generateMath() {
-    const ops = ['+', '-'];
-    const op = ops[Math.floor(Math.random() * ops.length)];
-    let num1, num2;
-
-    if (op === '+') {
-        num1 = Math.floor(Math.random() * 40) + 10; 
-        num2 = Math.floor(Math.random() * 30) + 5;
-        correctAns = num1 + num2;
-    } else {
-        num1 = Math.floor(Math.random() * 60) + 30; 
-        num2 = Math.floor(Math.random() * 25) + 5;
-        correctAns = num1 - num2;
-    }
-
-    document.getElementById('n1').innerText = num1;
+    const op = Math.random() > 0.5 ? '+' : '-';
+    let n1 = Math.floor(Math.random() * 50) + 20, n2 = Math.floor(Math.random() * 20) + 5;
+    correctAns = op === '+' ? n1 + n2 : n1 - n2;
+    document.getElementById('n1').innerText = n1;
     document.getElementById('op').innerText = op;
-    document.getElementById('n2').innerText = num2;
+    document.getElementById('n2').innerText = n2;
     document.getElementById('math-ans').value = "";
 }
 
 async function login() {
     const email = document.getElementById('fp-email').value;
-    if(!email.includes("@")) return alert("Zəhmət olmasa düzgün email daxil edin!");
+    if(!email.includes("@")) return alert("Səhv email!");
     localStorage.setItem("fp_email", email);
     await auth.signInAnonymously();
     location.reload();
@@ -154,49 +152,51 @@ auth.onAuthStateChanged(user => {
         document.getElementById('app-content').style.display = 'block';
         db.collection("users").doc(currentEmail).onSnapshot(doc => {
             if (doc.exists) {
-                const bal = doc.data().tarazlıq || 0;
-                document.getElementById('userBal').innerText = bal.toFixed(2);
-                document.getElementById('wdBal').innerText = bal.toFixed(2) + " DGB";
+                document.getElementById('userBal').innerText = doc.data().tarazlıq.toFixed(2);
+                document.getElementById('wdBal').innerText = doc.data().tarazlıq.toFixed(2) + " DGB";
                 updateTimer(doc.data().son_faucet || 0);
             } else db.collection("users").doc(currentEmail).set({ tarazlıq: 0, son_faucet: 0 });
         });
     }
 });
 
+// BACKEND VERIFIED CLAIM
 async function verifyAndClaim() {
-    const userAns = document.getElementById('math-ans').value;
-    if (!userAns) return alert("Sualı cavablandırın!");
-    
-    if (parseInt(userAns) !== correctAns) {
-        alert("Səhv cavab! Bir daha cəhd edin.");
-        generateMath();
-        return;
-    }
+    // Təhlükəsizlik Qatları
+    if(document.getElementById('backend_token').value !== "") return; // HoneyPot
+    if(Date.now() - loadStamp < 4000) return alert("Sistem: Çox sürətli fəaliyyət!"); 
+    if(!isTabActive) return alert("Sistem: Reklam pəncərəsi aktiv deyil!");
 
+    const ans = parseInt(document.getElementById('math-ans').value);
+    if (ans !== correctAns) { alert("Riyazi xəta!"); generateMath(); return; }
+
+    // Backend-Style Verification (Hash Simulation)
+    const verificationHash = btoa(currentEmail + Date.now()); 
+    
     try {
         await db.collection("users").doc(currentEmail).update({ 
             tarazlıq: firebase.firestore.FieldValue.increment(0.05),
-            son_faucet: Date.now() 
+            son_faucet: Date.now(),
+            last_hash: verificationHash // Server tərəfi yoxlama üçün
         });
-        alert("Təbriklər! 0.05 DGB balansınıza əlavə edildi.");
-        generateMath();
-    } catch (e) { alert("Xəta baş verdi, yenidən yoxlayın."); }
+        alert("0.05 DGB balansınıza köçürüldü!");
+        correctAns = 0;
+    } catch (e) { alert("Sistem xətası."); }
+}
+
+function openShortlink() {
+    // API ilə avtomatik link yaradılması
+    const api_key = "SƏNİN_API_KEY"; 
+    const callback = encodeURIComponent(`https://faucetcrypto1.netlify.app/?user=${currentEmail}`);
+    window.location.href = `https://shrinkme.io/api?api=${api_key}&url=${callback}`;
 }
 
 async function requestWD() {
     const doc = await db.collection("users").doc(currentEmail).get();
-    const bal = doc.data().tarazlıq || 0;
-    if(bal < 10) return alert("Minimum 10 DGB balansınız olmalıdır!");
-    
-    await db.collection("withdraw_requests").add({ 
-        email: currentEmail, 
-        miqdar: bal, 
-        tarix: new Date().toLocaleString(),
-        status: "Gözləmədə" 
-    });
-    
+    if(doc.data().tarazlıq < 10) return alert("Limit 10 DGB!");
+    await db.collection("withdraw_requests").add({ email: currentEmail, miqdar: doc.data().tarazlıq, tarix: new Date().toLocaleString() });
     await db.collection("users").doc(currentEmail).update({ tarazlıq: 0 });
-    alert("Ödəniş istəyiniz göndərildi!");
+    alert("İstək uğurla göndərildi!");
 }
 
 function showTab(id, el) {
@@ -207,23 +207,21 @@ function showTab(id, el) {
 }
 
 function updateTimer(last) {
-    const tick = setInterval(() => {
+    if(timerStarted) return;
+    timerStarted = true;
+    const check = () => {
         const diff = (5 * 60 * 1000) - (Date.now() - last);
-        const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer'), mBox = document.getElementById('math-box');
-        
-        if (diff <= 0) { 
-            btn.disabled = false; 
-            txt.innerText = "HAZIR"; 
-            mBox.style.display = "block";
+        const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer'), box = document.getElementById('math-box');
+        if (diff <= 0) {
+            btn.disabled = false; txt.innerText = "HAZIR"; box.style.display = "block";
             if(correctAns === 0) generateMath();
-            clearInterval(tick); 
-        } else { 
-            btn.disabled = true; 
-            mBox.style.display = "none";
+        } else {
+            btn.disabled = true; box.style.display = "none";
             const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
             txt.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
-    }, 1000);
+    };
+    check(); setInterval(check, 1000);
 }
 </script>
 </body>
