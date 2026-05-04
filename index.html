@@ -3,141 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Multi-Language Professional Faucet</title>
-    
+    <title>NoirPRO — Pro Fast System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #050508; 
-            --gold: #FFC107; 
-            --ready: #00E676; 
-            --card: #0f0f18; 
-            --text: #ffffff; 
-            --border: rgba(255,255,255,0.06); 
-        }
+        :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.2s; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; overflow-x: hidden; }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
+        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
+        .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.2); display: flex; align-items: center; gap: 8px; }
         
-        body { 
-            background-color: var(--bg); 
-            color: var(--text); 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
-        /* Taymer Sahəsinin Geniş Dizaynı (viefaucet style) */
-        .faucet-box {
-            background: linear-gradient(145deg, #12121f, #08080c);
-            margin: 20px auto;
-            width: 90%;
-            max-width: 500px;
-            padding: 50px 20px;
-            border-radius: 45px;
+        .container { max-width: 500px; margin: auto; padding: 15px; }
+        
+        /* Qazanc Kartları */
+        .earn-card {
+            background: linear-gradient(145deg, #12121f, #0a0a0f);
+            padding: 25px;
+            border-radius: 35px;
             border: 1px solid var(--border);
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-
-        #timer {
-            font-size: 110px; /* Maksimum genişlik */
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: -6px;
-            line-height: 1;
-            text-shadow: 0 0 40px rgba(255,193,7,0.15);
-        }
-
-        .status-pill {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
             margin-bottom: 20px;
-            background: rgba(255,255,255,0.05);
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        .btn-claim {
+        .tag-fast { font-size: 10px; background: #00E676; color: #000; padding: 4px 10px; border-radius: 20px; font-weight: 900; margin-bottom: 10px; display: inline-block; }
+
+        .btn-main {
             background: linear-gradient(135deg, var(--gold), #FF8F00);
             color: #000;
             width: 100%;
-            padding: 22px;
+            padding: 18px;
             border: none;
-            border-radius: 24px;
-            font-size: 18px;
+            border-radius: 20px;
+            font-size: 16px;
             font-weight: 900;
             cursor: pointer;
-            box-shadow: 0 15px 30px rgba(255,193,7,0.2);
+            box-shadow: 0 10px 20px rgba(255,193,7,0.2);
         }
 
-        .btn-claim:disabled {
-            background: #1d1d2b;
-            color: #444;
-            box-shadow: none;
+        /* Offerwall & PTC Frame */
+        .frame-container { 
+            height: 350px; 
+            background: #000; 
+            border-radius: 25px; 
+            border: 1px solid var(--border); 
+            overflow: hidden; 
+            margin-top: 15px; 
         }
 
-        /* Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: rgba(10,10,15,0.95);
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-            border-top: 1px solid var(--border);
-        }
-
-        .nav-link { font-size: 28px; cursor: pointer; opacity: 0.2; }
-        .nav-link.active { opacity: 1; color: var(--gold); transform: scale(1.2); }
-
-        #math-zone { margin-top: 25px; display: none; animation: slideUp 0.4s ease; }
+        /* Naviqasiya */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 22px; border-top: 1px solid var(--border); z-index: 1000; }
+        .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; }
+        .nav-item.active { opacity: 1; color: var(--gold); }
+        
+        .tab { display: none; }
+        .active-tab { display: block; animation: slideUp 0.4s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="auth-page" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
+<div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 45px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border);">
-        <h1 style="color: var(--gold); font-size: 48px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
-        <p style="opacity: 0.4; font-size: 13px; margin-bottom: 35px;">Bütün dillərin gücü bir yerdə</p>
-        <input type="email" id="user-mail" placeholder="FaucetPay Email" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 20px; text-align: center;">
-        <button class="btn-claim" onclick="core.login()">PANELƏ GİRİŞ</button>
+        <h1 style="color: var(--gold); font-size: 45px; font-weight: 900;">NoirPRO</h1>
+        <p style="opacity: 0.4; margin-bottom: 30px;">Professional Fast Earn</p>
+        <input type="email" id="email-input" placeholder="FaucetPay Email" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 25px; text-align: center; outline: none;">
+        <button onclick="core.login()" class="btn-main">SİSTEMƏ DAXİL OL</button>
     </div>
 </div>
 
-<div id="main-app" style="display: none;">
-    <header style="padding: 25px; display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="font-weight: 900; color: var(--gold);">NoirPRO <span style="font-size: 10px; opacity: 0.5;">v.3.0</span></h2>
-        <div style="background: rgba(255,193,7,0.1); padding: 10px 20px; border-radius: 15px; border: 1px solid rgba(255,193,7,0.2);">
-            💰 <span id="bal-val" style="font-weight: 900;">0.00</span> DGB
+<div id="app-content" style="display: none;">
+    <header>
+        <h2 style="font-weight: 900; color: var(--gold); font-size: 22px;">NoirPRO</h2>
+        <div class="bal-display">
+            💰 <span id="user-bal" style="font-weight: 900;">0.00</span> DGB
         </div>
     </header>
 
     <div class="container">
-        <div class="faucet-box">
-            <div id="status-pill" class="status-pill">Gözləyin</div>
-            <h1 id="timer">--:--</h1>
-            
-            <div id="math-zone">
-                <p style="font-size: 11px; opacity: 0.4; margin-bottom: 15px;">BOT OLMADIĞINI TƏSDİQLƏ:</p>
-                <div id="quest-text" style="font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 15px;"></div>
-                <input type="number" id="ans-input" style="width: 150px; padding: 15px; font-size: 24px; border-radius: 15px; background: #000; border: 2px solid var(--gold); color: #fff; text-align: center;">
+        <div id="earn-tab" class="tab active-tab">
+            <div class="earn-card" style="border-color: rgba(0, 230, 118, 0.3);">
+                <div class="tag-fast">YÜKSƏK QAZANC</div>
+                <h3 style="color: #00E676; margin-bottom: 10px;">📲 YÜKLƏ VƏ QAZAN</h3>
+                <p style="font-size: 12px; opacity: 0.5; margin-bottom: 15px;">Oyun və tətbiqləri yükləyərək 100 DGB-yə qədər qazanın.</p>
+                <div class="frame-container">
+                    <iframe src="SƏNİN_OFFERWALL_URL_BURA" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
             </div>
-            
-            <div style="margin-top: 30px;">
-                <button id="claim-btn" class="btn-claim" onclick="core.submitClaim()" disabled>GÖZLƏYİN...</button>
+
+            <div class="earn-card">
+                <h3 style="color: var(--gold); margin-bottom: 10px;">🔗 SÜRETLİ KEÇİD</h3>
+                <p style="font-size: 12px; opacity: 0.5; margin-bottom: 20px;">Linkləri tamamlayın və anında balansınızı artırın.</p>
+                <button class="btn-main" onclick="window.location.href='SƏNİN_SHORTLINK_URL_BURA'">KEÇİDƏ BAŞLA</button>
+            </div>
+
+            <div class="earn-card">
+                <h3 style="color: var(--gold); margin-bottom: 10px;">📺 REKLAM İZLƏ</h3>
+                <div class="frame-container" style="height: 120px;">
+                    <iframe src="SƏNİN_PTC_URL_BURA" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="wallet-tab" class="tab">
+            <div class="earn-card" style="padding: 50px 20px;">
+                <p style="opacity: 0.5; margin-bottom: 10px;">Mövcud Balansınız</p>
+                <h1 style="font-size: 60px; color: var(--gold); margin-bottom: 30px;" id="wd-bal">0.00</h1>
+                <button class="btn-main" onclick="core.requestWD()">ANLIQ ÖDƏNİŞ İSTƏ</button>
+                <p style="font-size: 11px; opacity: 0.3; margin-top: 20px;">Minimum Çıxarış: 5 DGB</p>
             </div>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-link active">🏠</div>
-        <div class="nav-link">🚀</div>
-        <div class="nav-link">💳</div>
-        <div class="nav-link" onclick="core.logout()">🚪</div>
+        <div class="nav-item active" onclick="core.switchTab('earn-tab', this)">🏠</div>
+        <div class="nav-item" onclick="core.switchTab('wallet-tab', this)">💳</div>
+        <div class="nav-item" onclick="core.logout()">🚪</div>
     </nav>
 </div>
 
@@ -147,26 +128,28 @@
 
 <script>
 const core = {
-    settings: {
+    db: null,
+    auth: null,
+    config: {
         apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
         authDomain: "faucetfirex.firebaseapp.com",
         projectId: "faucetfirex"
     },
-    targetAns: 0,
-    timerObj: null,
 
     init() {
-        firebase.initializeApp(this.settings);
+        firebase.initializeApp(this.config);
         this.db = firebase.firestore();
         this.auth = firebase.auth();
-        this.runAuthCheck();
+        this.checkSession();
     },
 
     login() {
-        const mail = document.getElementById('user-mail').value;
+        const mail = document.getElementById('email-input').value;
         if(mail.includes('@')) {
-            localStorage.setItem('noir_mail', mail);
+            localStorage.setItem('noir_user', mail);
             this.auth.signInAnonymously().then(() => location.reload());
+        } else {
+            alert("Düzgün email daxil edin!");
         }
     },
 
@@ -175,77 +158,49 @@ const core = {
         location.reload();
     },
 
-    runAuthCheck() {
-        const mail = localStorage.getItem('noir_mail');
+    checkSession() {
+        const mail = localStorage.getItem('noir_user');
         this.auth.onAuthStateChanged(user => {
             if(user && mail) {
-                document.getElementById('auth-page').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                this.sync(mail);
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                this.syncData(mail);
             }
         });
     },
 
-    sync(mail) {
+    syncData(mail) {
         this.db.collection("users").doc(mail).onSnapshot(doc => {
-            const data = doc.exists ? doc.data() : {tarazlıq: 0, son_faucet: 0};
-            document.getElementById('bal-val').innerText = data.tarazlıq.toFixed(2);
-            this.handleTimer(data.son_faucet || 0);
+            const val = doc.exists ? (doc.data().tarazlıq || 0) : 0;
+            document.getElementById('user-bal').innerText = val.toFixed(2);
+            document.getElementById('wd-bal').innerText = val.toFixed(2);
+            if(!doc.exists) this.db.collection("users").doc(mail).set({tarazlıq: 0});
         });
     },
 
-    handleTimer(last) {
-        if(this.timerObj) clearInterval(this.timerObj);
-        const tEl = document.getElementById('timer'), 
-              bEl = document.getElementById('claim-btn'), 
-              sEl = document.getElementById('status-pill'),
-              mEl = document.getElementById('math-zone');
-
-        this.timerObj = setInterval(() => {
-            const gap = (5 * 60 * 1000) - (Date.now() - last);
-            if(gap <= 0) {
-                clearInterval(this.timerObj);
-                tEl.innerText = "READY";
-                tEl.style.color = "var(--ready)";
-                sEl.innerText = "HAZIR";
-                sEl.style.background = "var(--ready)";
-                bEl.disabled = false;
-                bEl.innerText = "CLAIM DGB";
-                mEl.style.display = "block";
-                this.generateCaptcha();
-            } else {
-                bEl.disabled = true;
-                bEl.innerText = "PLEASE WAIT";
-                mEl.style.display = "none";
-                tEl.style.color = "var(--gold)";
-                sEl.innerText = "GÖZLƏYİN";
-                sEl.style.background = "rgba(255,255,255,0.05)";
-                const m = Math.floor(gap/60000), s = Math.floor((gap%60000)/1000);
-                tEl.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-            }
-        }, 1000);
+    switchTab(id, el) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
+        document.getElementById(id).classList.add('active-tab');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        el.classList.add('active');
     },
 
-    generateCaptcha() {
-        const a = Math.floor(Math.random()*50), b = Math.floor(Math.random()*20);
-        this.targetAns = a + b;
-        document.getElementById('quest-text').innerText = `${a} + ${b}`;
-    },
-
-    submitClaim() {
-        const uAns = parseInt(document.getElementById('ans-input').value);
-        if(uAns === this.targetAns) {
-            const mail = localStorage.getItem('noir_mail');
-            this.db.collection("users").doc(mail).update({
-                tarazlıq: firebase.firestore.FieldValue.increment(0.05),
-                son_faucet: Date.now()
-            }).then(() => {
-                document.getElementById('ans-input').value = "";
-                alert("Təbriklər! 0.05 DGB qazandınız.");
+    async requestWD() {
+        const mail = localStorage.getItem('noir_user');
+        const doc = await this.db.collection("users").doc(mail).get();
+        const bal = doc.data().tarazlıq || 0;
+        
+        if(bal >= 5) {
+            await this.db.collection("withdraw_requests").add({
+                email: mail,
+                amount: bal,
+                status: "Gözləmədə",
+                date: Date.now()
             });
+            await this.db.collection("users").doc(mail).update({tarazlıq: 0});
+            alert("Ödəniş sorğusu göndərildi! Sürətli yoxlanılacaq.");
         } else {
-            alert("Səhv cavab!");
-            this.generateCaptcha();
+            alert("Minimum çıxarış 5 DGB-dir.");
         }
     }
 };
@@ -254,4 +209,3 @@ core.init();
 </script>
 </body>
 </html>
-
