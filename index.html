@@ -15,12 +15,13 @@
         .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .btn-main { background: var(--gold); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .offer-frame { height: 450px; background: #000; border-radius: 25px; border: 1px solid var(--border); overflow: hidden; margin-top: 15px; }
+        .ptc-frame { height: 200px; background: #000; border-radius: 25px; border: 1px dashed var(--gold); overflow: hidden; margin-top: 15px; }
         .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 15px; background: #000; padding: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--border); }
         th { color: var(--gold); text-transform: uppercase; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 22px; border-top: 1px solid var(--border); z-index: 1000; }
-        .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; }
+        .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; color: white; }
         .nav-item.active { opacity: 1; color: var(--gold); }
         #admin-nav-btn { display: none; }
         .tab { display: none; }
@@ -33,7 +34,7 @@
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 45px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border);">
         <h1 style="color: var(--gold); font-size: 42px; font-weight: 900;">NoirPRO</h1>
-        <input type="email" id="email-input" placeholder="Email ünvanınızı daxil edin" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin: 25px 0; text-align: center; outline: none;">
+        <input type="email" id="email-input" placeholder="Gmail daxil edin" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin: 25px 0; text-align: center; outline: none;">
         <button onclick="core.login()" class="btn-main">DAXİL OL</button>
     </div>
 </div>
@@ -51,10 +52,15 @@
                 <p style="font-size: 13px; margin: 10px 0;">Reklamı keç və <b>0.30 DGB</b> qazan!</p>
                 <button class="btn-main" onclick="core.goShort()">LİNKƏ KEÇ</button>
             </div>
-            
+
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h3 style="color: var(--green);">📲 YÜKLƏ VƏ QAZAN</h3>
-                <div class="offer-frame"><iframe src="https://wall.ayetstudios.com/offers/SƏNİN_ID" style="width:100%; height:100%; border:none;"></iframe></div>
+                <div class="offer-frame"><iframe src="SƏNİN_OFFERWALL_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--gold);">📺 REKLAM İZLƏ (PTC)</h3>
+                <div class="ptc-frame"><iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
             </div>
         </div>
 
@@ -69,11 +75,22 @@
         <div id="admin-tab" class="tab">
             <div class="card">
                 <h4>💳 ÖDƏNİŞ GÖZLƏYƏNLƏR</h4>
-                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead><tbody id="payout-list"></tbody></table></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Gmail</th><th>Məbləğ</th><th>Əməl</th></tr></thead>
+                        <tbody id="payout-list"></tbody>
+                    </table>
+                </div>
             </div>
+
             <div class="card">
-                <h4>👥 İSTİFADƏÇİ BAZASI</h4>
-                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Cihaz ID</th><th>Balans</th></tr></thead><tbody id="user-list"></tbody></table></div>
+                <h4>👤 İSTİFADƏÇİ BAZASI</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Gmail</th><th>Cihaz</th><th>Balans</th></tr></thead>
+                        <tbody id="user-list"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -87,7 +104,6 @@
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
@@ -99,86 +115,85 @@ const core = {
         projectId: "faucetfirex" 
     },
 
-    getDeviceID() {
-        let id = localStorage.getItem('noir_dev_v2');
-        if(!id) {
-            id = 'dev-' + Math.random().toString(36).substr(2, 9) + Date.now();
-            localStorage.setItem('noir_dev_v2', id);
-        }
-        return id;
-    },
-
     init() {
         firebase.initializeApp(this.config);
         this.db = firebase.firestore();
-        this.auth = firebase.auth();
         this.checkAuth();
+    },
+
+    getDeviceID() {
+        let id = localStorage.getItem('noir_device_vfinal');
+        if(!id) { id = 'dev-' + Math.random().toString(36).substr(2, 9); localStorage.setItem('noir_device_vfinal', id); }
+        return id;
     },
 
     async login() {
         const mail = document.getElementById('email-input').value.trim().toLowerCase();
         if(!mail.includes('@')) return alert("Düzgün email yazın.");
-        
-        const currentDevice = this.getDeviceID();
+        const device = this.getDeviceID();
         const userRef = this.db.collection("users").doc(mail);
         const doc = await userRef.get();
 
-        if(doc.exists && doc.data().deviceID && doc.data().deviceID !== currentDevice) {
-            alert("XƏTA: Bu hesaba yalnız öz cihazınızdan girə bilərsiniz!");
-            return;
+        if(doc.exists && doc.data().deviceID && doc.data().deviceID !== device) {
+            return alert("Xəta: Başqa cihazdan giriş qadağandır!");
         }
 
         localStorage.setItem('noir_session', mail);
-        this.auth.signInAnonymously().then(() => {
-            userRef.set({ email: mail, deviceID: currentDevice }, { merge: true }).then(() => location.reload());
-        });
+        await userRef.set({ email: mail, deviceID: device }, { merge: true });
+        location.reload();
     },
 
     goShort() {
-        const apiToken = "83c058c17034a04c01d7424627b894c507cfbed3";
-        const successUrl = window.location.origin + "/success.html";
-        // Birbaşa yönləndirmə funksiyası (ağ səhifəni görməmək üçün)
-        window.location.href = `https://shrinkme.io/api?api=${apiToken}&url=${successUrl}`;
+        window.location.href = "https://shrinkme.click/Gahaaa";
     },
 
     checkAuth() {
         const mail = localStorage.getItem('noir_session');
-        this.auth.onAuthStateChanged(user => {
-            if(user && mail) {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('app-content').style.display = 'block';
-                if(mail === this.adminEmail) document.getElementById('admin-nav-btn').style.display = 'block';
-                this.sync(mail);
-                if(mail === this.adminEmail) this.loadAdminPanel();
+        if(mail) {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+            if(mail === this.adminEmail) {
+                document.getElementById('admin-nav-btn').style.display = 'block';
+                this.loadAdminData();
             }
-        });
+            this.sync(mail);
+        }
     },
 
     sync(mail) {
         this.db.collection("users").doc(mail).onSnapshot(doc => {
-            const bal = doc.exists ? (doc.data().tarazlıq || 0) : 0;
-            document.getElementById('user-bal').innerText = bal.toFixed(2);
-            document.getElementById('wd-bal').innerText = bal.toFixed(2);
+            if(doc.exists) {
+                const bal = doc.data().tarazlıq || 0;
+                document.getElementById('user-bal').innerText = bal.toFixed(2);
+                document.getElementById('wd-bal').innerText = bal.toFixed(2);
+            }
         });
     },
 
-    loadAdminPanel() {
+    loadAdminData() {
+        // Ödəniş gözləyənlər
         this.db.collection("withdraw_requests").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('payout-list'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button style="background:var(--green); border:none; padding:5px; border-radius:5px;" onclick="core.approveWD('${doc.id}')">TƏSDİQLƏ</button></td></tr>`;
             });
         });
+
+        // İstifadəçi bazası
         this.db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('user-list'); list.innerHTML = "";
-            snap.forEach(doc => { 
-                list.innerHTML += `<tr><td>${doc.id}</td><td><small>${doc.data().deviceID || '-'}</small></td><td>${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`; 
+            snap.forEach(doc => {
+                const u = doc.data();
+                list.innerHTML += `<tr><td>${doc.id}</td><td><small>${u.deviceID || '-'}</small></td><td>${(u.tarazlıq || 0).toFixed(2)}</td></tr>`;
             });
         });
     },
 
-    async approve(id) {
-        if(confirm("Ödəniş təsdiqlənsin?")) await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
+    async approveWD(id) {
+        if(confirm("Bu ödənişi təsdiqləyirsiz?")) {
+            await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
+            alert("Uğurla tamamlandı!");
+        }
     },
 
     async requestWD() {
@@ -186,10 +201,15 @@ const core = {
         const doc = await this.db.collection("users").doc(mail).get();
         const bal = doc.data().tarazlıq || 0;
         if(bal >= 10) {
-            await this.db.collection("withdraw_requests").add({ email: mail, amount: bal, status: "Gözləmədə", date: Date.now() });
+            await this.db.collection("withdraw_requests").add({ 
+                email: mail, 
+                amount: bal, 
+                status: "Gözləmədə", 
+                date: Date.now() 
+            });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Ödəniş sorğusu göndərildi!");
-        } else alert("Minimum limit 10 DGB.");
+            alert("Sorğunuz göndərildi!");
+        } else alert("Minimum 10 DGB lazımdır.");
     },
 
     switchTab(id, el) {
