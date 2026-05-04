@@ -3,51 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO Official</title>
+    <title>NoirPRO — Şəxsi Kabinet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --text: #fff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; }
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
+        .auth-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .card { background: #0f0f18; padding: 30px; border-radius: 30px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        input { width: 100%; padding: 14px; margin: 8px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: #181825; color: #fff; outline: none; box-sizing: border-box; }
+        .btn { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; margin-top: 10px; font-size: 15px; }
+        .btn:disabled { background: #1d1d2b; color: #444; }
+        .toggle-link { margin-top: 15px; font-size: 13px; color: #8e8e9e; cursor: pointer; text-decoration: underline; }
         #app-content { display: none; }
-        .card { background: #0f0f18; padding: 30px; border-radius: 30px; text-align: center; margin: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .btn { background: var(--gold); color: #000; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 15px; }
-        .btn:disabled { background: #1d1d2b; color: #444; cursor: not-allowed; }
-        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(5,5,8,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; }
-        .bal-box { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; color: var(--gold); font-weight: 800; }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 18px; border-top: 1px solid rgba(255,255,255,0.1); }
+        header { padding: 15px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); align-items: center; }
+        .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; color: var(--gold); font-weight: 800; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <div class="card" style="width:320px">
-        <h1 style="color:var(--gold); margin-bottom:10px;">NoirPRO</h1>
-        <p style="color:#8e8e9e; font-size:14px; margin-bottom:20px;">Daxil olun və qazanmağa başlayın</p>
-        <button class="btn" style="background:#fff;" onclick="auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="18" style="vertical-align:middle; margin-right:8px;">
-            GOOGLE İLƏ GİRİŞ
-        </button>
+<div id="auth-screen" class="auth-container">
+    <div class="card">
+        <h1 style="color:var(--gold); margin:0 0 10px 0;">NoirPRO</h1>
+        <h3 id="auth-title">Giriş</h3>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="pass" placeholder="Şifrə">
+        <button class="btn" id="authBtn" onclick="handleAuth()">DAXİL OL</button>
+        <div class="toggle-link" id="toggleLink" onclick="toggleMode()">Hesabın yoxdur? Qeydiyyatdan keç</div>
     </div>
 </div>
 
 <div id="app-content">
     <header>
-        <span style="font-weight:900; color:var(--gold); font-size:20px;">NoirPRO</span>
-        <div class="bal-box">💰 <span id="userBal">0.00</span></div>
+        <span style="font-weight:900; color:var(--gold)">NoirPRO</span>
+        <div class="bal-display">💰 <span id="userBal">0.00</span></div>
     </header>
-
-    <div class="container">
+    
+    <div style="padding:20px; max-width:400px; margin:auto;">
         <div class="card">
-            <h3 style="margin:0; opacity:0.6;">Manual Claim</h3>
-            <h1 id="timer" style="color:var(--gold); font-size:55px; margin:15px 0;">05:00</h1>
-            <button id="claimBtn" class="btn" onclick="doClaim()">TOKENLƏRİ GÖTÜR</button>
+            <p style="opacity:0.6; margin-bottom:5px;">Sənin Balansın</p>
+            <h1 id="timer" style="color:var(--gold); font-size:50px; margin:10px 0;">05:00</h1>
+            <button id="claimBtn" class="btn" onclick="doClaim()">10 TOKEN QAZAN</button>
+            <button class="btn" style="background:transparent; color:#ff4444; border:1px solid #ff4444; margin-top:30px;" onclick="auth.signOut()">SİSTEMDƏN ÇIX</button>
         </div>
-    </div>
-
-    <div class="nav">
-        <span onclick="location.reload()" style="cursor:pointer; font-weight:800; color:var(--gold);">🏠 PANEL</span>
-        <span onclick="auth.signOut().then(()=>location.reload())" style="cursor:pointer; font-weight:800; opacity:0.5;">🚪 ÇIXIŞ</span>
     </div>
 </div>
 
@@ -56,7 +53,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
-// KONFİQURASİYA
+// FIREBASE AYARLARI
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -69,26 +66,49 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-let lastTime = 0;
+let isLoginMode = true;
+let lastClaimTime = 0;
 
-// SESSİYA YADDAŞI
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+// MODU DƏYİŞ (Giriş/Qeydiyyat)
+function toggleMode() {
+    isLoginMode = !isLoginMode;
+    document.getElementById('auth-title').innerText = isLoginMode ? "Giriş" : "Qeydiyyat";
+    document.getElementById('authBtn').innerText = isLoginMode ? "DAXİL OL" : "HESAB YARAT";
+    document.getElementById('toggleLink').innerText = isLoginMode ? "Hesabın yoxdur? Qeydiyyatdan keç" : "Artıq hesabın var? Giriş et";
+}
 
-// İSTİFADƏÇİ YOXLANIŞI
+// GİRİŞ VƏ QEYDİYYAT FUNKSİYASI
+async function handleAuth() {
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+    if(!email || !pass) return alert("Xanaları doldurun!");
+
+    try {
+        if(isLoginMode) {
+            await auth.signInWithEmailAndPassword(email, pass);
+        } else {
+            await auth.createUserWithEmailAndPassword(email, pass);
+        }
+    } catch(e) {
+        alert("Xəta: " + e.message);
+    }
+}
+
+// İSTİFADƏÇİ STATUSUNA NƏZARƏT
 auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
         
-        // Bazada "users" kolleksiyasına baxırıq
+        // Hər istifadəçinin öz sənədinə (document) baxırıq
         db.collection("users").doc(user.uid).onSnapshot(doc => {
             if (doc.exists) {
-                const d = doc.data();
-                document.getElementById('userBal').innerText = (d.tarazlıq || 0).toFixed(2);
-                lastTime = d.son_İddia || 0;
+                const data = doc.data();
+                document.getElementById('userBal').innerText = (data.tarazlıq || 0).toFixed(2);
+                lastClaimTime = data.son_İddia || 0;
                 startTimer();
             } else {
-                // Yeni istifadəçi yaradırıq
+                // Əgər bazada yoxdursa (yeni qeydiyyat), şəxsi hesabını yaradın
                 db.collection("users").doc(user.uid).set({ tarazlıq: 0, son_İddia: 0 });
             }
         });
@@ -98,36 +118,37 @@ auth.onAuthStateChanged(user => {
     }
 });
 
+// TOKEN QAZANMAQ
 async function doClaim() {
-    const u = auth.currentUser;
-    if(!u) return;
-    try {
-        await db.collection("users").doc(u.uid).update({ 
-            tarazlıq: firebase.firestore.FieldValue.increment(10), 
-            son_İddia: Date.now() 
-        });
-    } catch(e) {
-        alert("Xəta: Firebase Rules (Qaydalar) hələ də səhvdir!");
-    }
+    const user = auth.currentUser;
+    if(!user) return;
+    
+    await db.collection("users").doc(user.uid).update({ 
+        tarazlıq: firebase.firestore.FieldValue.increment(10), 
+        son_İddia: Date.now() 
+    });
 }
 
+// TAİMER FUNKSİYASI
 function startTimer() {
-    const tick = setInterval(() => {
-        const diff = (5 * 60 * 1000) - (Date.now() - lastTime);
-        const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer');
-        if (diff <= 0) { 
-            btn.disabled = false; btn.innerText = "GÖTÜR"; txt.innerText = "HAZIR";
-            clearInterval(tick);
+    const countdown = setInterval(() => {
+        const diff = (5 * 60 * 1000) - (Date.now() - lastClaimTime);
+        const btn = document.getElementById('claimBtn');
+        const txt = document.getElementById('timer');
+        
+        if (diff <= 0) {
+            btn.disabled = false;
+            txt.innerText = "HAZIR";
+            clearInterval(countdown);
         } else {
             btn.disabled = true;
-            const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
+            const m = Math.floor(diff/60000);
+            const s = Math.floor((diff%60000)/1000);
             txt.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
     }, 1000);
 }
 </script>
-
-<script src="https://pl29329349.profitablecpmratenetwork.com/aa/69/69/aa696903b4f2d1329390ab3ebd1dc84a.js"></script>
-
 </body>
 </html>
+
