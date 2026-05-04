@@ -3,55 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO Faucet</title>
+    <title>NoirPRO Official</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050508; --card: #0f0f18; --gold: #FFC107; --text: #fff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 70px; }
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        :root { --bg: #050508; --gold: #FFC107; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; }
+        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         #app-content { display: none; }
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 25px; text-align: center; margin: 20px; }
-        .btn { background: #FFC107; color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; }
-        .btn:disabled { background: #1d1d2b; color: #444; }
-        header { padding: 15px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .tab-content { display: none; } .active { display: block; }
+        .card { background: #0f0f18; padding: 30px; border-radius: 30px; text-align: center; margin: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .btn { background: var(--gold); color: #000; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 15px; }
+        .btn:disabled { background: #1d1d2b; color: #444; cursor: not-allowed; }
+        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(5,5,8,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; }
+        .bal-box { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; color: var(--gold); font-weight: 800; }
+        .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 18px; border-top: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
     <div class="card" style="width:320px">
-        <h1 style="color:var(--gold)">NoirPRO</h1>
-        <button class="btn" onclick="auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())">GOOGLE İLƏ GİRİŞ</button>
+        <h1 style="color:var(--gold); margin-bottom:10px;">NoirPRO</h1>
+        <p style="color:#8e8e9e; font-size:14px; margin-bottom:20px;">Daxil olun və qazanmağa başlayın</p>
+        <button class="btn" style="background:#fff;" onclick="auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="18" style="vertical-align:middle; margin-right:8px;">
+            GOOGLE İLƏ GİRİŞ
+        </button>
     </div>
 </div>
 
 <div id="app-content">
     <header>
-        <span style="font-weight:900; color:var(--gold)">NoirPRO</span>
-        <span style="font-weight:800">💰 <span id="userBal">0.00</span></span>
+        <span style="font-weight:900; color:var(--gold); font-size:20px;">NoirPRO</span>
+        <div class="bal-box">💰 <span id="userBal">0.00</span></div>
     </header>
 
-    <div id="faucet" class="tab-content active">
+    <div class="container">
         <div class="card">
-            <h3>Manual Claim</h3>
-            <h1 id="timer" style="color:var(--gold); font-size:45px">05:00</h1>
-            <button id="claimBtn" class="btn" onclick="doClaim()">GÖTÜR</button>
-        </div>
-    </div>
-
-    <div id="ptc" class="tab-content">
-        <div class="card">
-            <h3>PTC Ads</h3>
-            <div id="ptc-list"></div>
+            <h3 style="margin:0; opacity:0.6;">Manual Claim</h3>
+            <h1 id="timer" style="color:var(--gold); font-size:55px; margin:15px 0;">05:00</h1>
+            <button id="claimBtn" class="btn" onclick="doClaim()">TOKENLƏRİ GÖTÜR</button>
         </div>
     </div>
 
     <div class="nav">
-        <span onclick="showTab('faucet')">🏠 GÖTÜR</span>
-        <span onclick="showTab('ptc')">👁️ PTC</span>
-        <span onclick="auth.signOut().then(()=>location.reload())">🚪 ÇIXIŞ</span>
+        <span onclick="location.reload()" style="cursor:pointer; font-weight:800; color:var(--gold);">🏠 PANEL</span>
+        <span onclick="auth.signOut().then(()=>location.reload())" style="cursor:pointer; font-weight:800; opacity:0.5;">🚪 ÇIXIŞ</span>
     </div>
 </div>
 
@@ -60,6 +56,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
+// KONFİQURASİYA
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -74,51 +71,54 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 let lastTime = 0;
 
+// SESSİYA YADDAŞI
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+// İSTİFADƏÇİ YOXLANIŞI
 auth.onAuthStateChanged(user => {
     if (user) {
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
-        db.collection("istifadəçilər").doc(user.uid).onSnapshot(doc => {
+        
+        // Bazada "users" kolleksiyasına baxırıq
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
             if (doc.exists) {
                 const d = doc.data();
                 document.getElementById('userBal').innerText = (d.tarazlıq || 0).toFixed(2);
                 lastTime = d.son_İddia || 0;
                 startTimer();
             } else {
-                db.collection("istifadəçilər").doc(user.uid).set({ tarazlıq: 0, son_İddia: 0 });
+                // Yeni istifadəçi yaradırıq
+                db.collection("users").doc(user.uid).set({ tarazlıq: 0, son_İddia: 0 });
             }
         });
+    } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+        document.getElementById('app-content').style.display = 'none';
     }
 });
 
-function showTab(id) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    if(id === 'ptc') renderPTC();
-}
-
-function renderPTC() {
-    const ads = [{n: "Bonus Ad", r: 20, s: 10, u: "REKLAM_LİNKİ"}];
-    document.getElementById('ptc-list').innerHTML = ads.map(a => `
-        <div style="display:flex; justify-content:space-between; margin-top:10px; padding:10px; background:rgba(255,255,255,0.02); border-radius:10px">
-            <span style="font-size:12px">${a.n}<br><small style="color:var(--gold)">+${a.r} Token</small></span>
-            <button class="btn" style="width:auto; padding:5px 15px" onclick="window.open('${a.u}'); addRew(${a.r})">İZLƏ</button>
-        </div>`).join('');
-}
-
-async function addRew(v) { await db.collection("istifadəçilər").doc(auth.currentUser.uid).update({ tarazlıq: firebase.firestore.FieldValue.increment(v) }); }
-
 async function doClaim() {
-    await db.collection("istifadəçilər").doc(auth.currentUser.uid).update({ tarazlıq: firebase.firestore.FieldValue.increment(10), son_İddia: Date.now() });
+    const u = auth.currentUser;
+    if(!u) return;
+    try {
+        await db.collection("users").doc(u.uid).update({ 
+            tarazlıq: firebase.firestore.FieldValue.increment(10), 
+            son_İddia: Date.now() 
+        });
+    } catch(e) {
+        alert("Xəta: Firebase Rules (Qaydalar) hələ də səhvdir!");
+    }
 }
 
 function startTimer() {
-    setInterval(() => {
+    const tick = setInterval(() => {
         const diff = (5 * 60 * 1000) - (Date.now() - lastTime);
-        const btn = document.getElementById('claimBtn');
-        const txt = document.getElementById('timer');
-        if (diff <= 0) { btn.disabled = false; txt.innerText = "HAZIR"; }
-        else {
+        const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer');
+        if (diff <= 0) { 
+            btn.disabled = false; btn.innerText = "GÖTÜR"; txt.innerText = "HAZIR";
+            clearInterval(tick);
+        } else {
             btn.disabled = true;
             const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
             txt.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
