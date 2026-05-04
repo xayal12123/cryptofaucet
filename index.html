@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -36,9 +37,30 @@
         table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
         th, td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
         th { color: var(--gold); }
+
+        /* Anti-Adblock Styles */
+        #ab-mask {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding: 20px;
+        }
+        .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
     </style>
 </head>
 <body>
+
+<div class="ad-banner ads-box doubleclick adsense-ad" id="ad-bait" style="position:absolute; left:-999px; width:1px; height:1px;">&nbsp;</div>
+
+<div id="ab-mask">
+    <div class="ab-content">
+        <h1 style="font-size: 60px; margin-bottom: 10px;">🛑</h1>
+        <h2 style="color:#fff; margin-bottom: 15px; font-weight: 900;">ADBLOCK AŞKAR EDİLDİ!</h2>
+        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
+            Sistemimizin davamlılığı üçün reklamlara ehtiyacımız var. Zəhmət olmasa reklam blokerini söndürün və səhifəni yeniləyin.
+        </p>
+        <button class="btn-main" onclick="location.reload()">SƏHİFƏNİ YENİLƏ</button>
+    </div>
+</div>
 
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 40px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
@@ -103,6 +125,14 @@
                 <button class="admin-btn" onclick="core.saveSL()">SİYAHIYA ƏLAVƏ ET</button>
                 <div id="adm-sl-list" style="margin-top:15px;"></div>
             </div>
+
+            <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
+                <h4 style="color: var(--gold); margin-bottom: 10px;">💰 İSTİFADƏÇİYƏ BALANS YÜKLƏ</h4>
+                <p style="font-size: 11px; opacity: 0.5; margin-bottom: 15px;">Tapşırığı bitirən istifadəçinin balansını buradan artırın.</p>
+                <input type="email" id="adm-add-mail" placeholder="İstifadəçi Emaili">
+                <input type="number" id="adm-add-amount" placeholder="Məbləğ (Məs: 0.30)">
+                <button class="admin-btn" onclick="core.addBalance()">BALANSI ARTIR</button>
+            </div>
             
             <div class="card" style="border-color: rgba(255, 68, 68, 0.3);">
                 <h4 style="color: var(--red);">💸 ÖDƏNİŞ SORĞULARI</h4>
@@ -151,9 +181,21 @@ const core = {
         firebase.initializeApp(this.config);
         this.db = firebase.firestore();
         this.checkAuth();
+        this.checkAdBlock(); // Anti-Adblock yoxlaması
     },
 
-    // Xüsusi Cihaz Tokeni (Təhlükəsizlik)
+    // Anti-Adblock Məntiqi
+    checkAdBlock() {
+        setTimeout(() => {
+            const bait = document.getElementById('ad-bait');
+            const mask = document.getElementById('ab-mask');
+            if (!bait || window.getComputedStyle(bait).display === "none" || bait.offsetParent === null) {
+                mask.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }, 1800);
+    },
+
     getDevice() {
         let id = localStorage.getItem('noir_device_master_v1');
         if(!id) { 
@@ -172,7 +214,6 @@ const core = {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
             
-            // Cihaz Yoxlaması (Xəyalın cihaz kilidi məntiqi)
             if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail === this.adminEmail) {
                 return alert("Təhlükəsizlik Sistemi: Admin hesabına başqa cihazdan giriş qadağandır!");
             }
@@ -191,7 +232,6 @@ const core = {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
             
-            // Admin Panel Görünürlüyü
             if(mail === this.adminEmail) {
                 document.getElementById('admin-nav-btn').style.display = 'block';
                 this.loadAdminData();
@@ -209,9 +249,7 @@ const core = {
         });
     },
 
-    // --- REKLAMLARIN VƏ LİNKLƏRİN DİNAMİK YÜKLƏNMƏSİ ---
     loadAds() {
-        // Iframe Reklamları (Offerwall / PTC)
         this.db.collection("dynamic_ads").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('dynamic-ads-container');
             const adm = document.getElementById('adm-ads-list');
@@ -228,7 +266,6 @@ const core = {
             });
         });
 
-        // Shortlinklər
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('shortlinks-container');
             const adm = document.getElementById('adm-sl-list');
@@ -238,7 +275,6 @@ const core = {
             const userMail = localStorage.getItem('noir_session');
             snap.forEach(doc => {
                 const d = doc.data();
-                // SubID və ya Alias dəstəyi üçün linkin sonuna emaili bağlayırıq
                 const finalUrl = d.url.includes('?') ? `${d.url}&alias=${userMail}` : `${d.url}?alias=${userMail}`;
                 
                 cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);">
@@ -250,7 +286,6 @@ const core = {
         });
     },
 
-    // --- ADMİN FUNKSİYALARI ---
     async saveAd() {
         const title = document.getElementById('adm-ad-title').value.trim();
         const url = document.getElementById('adm-ad-url').value.trim();
@@ -269,16 +304,30 @@ const core = {
 
     del(id, coll) { if(confirm("Birdəfəlik silinsin?")) this.db.collection(coll).doc(id).delete(); },
 
+    async addBalance() {
+        const mail = document.getElementById('adm-add-mail').value.trim().toLowerCase();
+        const amount = parseFloat(document.getElementById('adm-add-amount').value);
+        if(!mail || isNaN(amount) || amount <= 0) return alert("Zəhmət olmasa düzgün email və məbləğ daxil edin.");
+        try {
+            const ref = this.db.collection("users").doc(mail);
+            const doc = await ref.get();
+            if(doc.exists) {
+                const newBal = (doc.data().tarazlıq || 0) + amount;
+                await ref.update({ tarazlıq: newBal });
+                alert(`✅ Uğurlu! ${mail} hesabına ${amount} DGB əlavə edildi.`);
+                document.getElementById('adm-add-mail').value = "";
+                document.getElementById('adm-add-amount').value = "";
+            } else { alert("❌ Sistemdə belə bir istifadəçi tapılmadı!"); }
+        } catch(e) { alert("Xəta baş verdi."); }
+    },
+
     loadAdminData() {
-        // Ödəniş Sorğuları
         this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('adm-payouts'); list.innerHTML = "";
             snap.forEach(doc => {
                 list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
             });
         });
-
-        // İstifadəçi Bazası
         this.db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('adm-users-list'); list.innerHTML = "";
             snap.forEach(doc => {
@@ -293,19 +342,15 @@ const core = {
         }
     },
 
-    // --- ÖDƏNİŞ İSTƏYİ (30 DGB LİMİTİ) ---
     async requestWD() {
         const mail = localStorage.getItem('noir_session');
         const doc = await this.db.collection("users").doc(mail).get();
         const b = doc.data().tarazlıq || 0;
-        
         if(b >= 30) {
             await this.db.collection("withdraws").add({ email: mail, amount: b, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Sorğu qəbul edildi! Məbləğ tezliklə FaucetPay hesabınıza köçürüləcək.");
-        } else {
-            alert(`Sizin balansınız yetərli deyil. Çıxarış üçün minimum 30 DGB lazımdır. Cari balansınız: ${b.toFixed(2)} DGB.`);
-        }
+            alert("Sorğu qəbul edildi!");
+        } else { alert(`Minimum 30 DGB lazımdır.`); }
     },
 
     switchTab(tabId, el) {
@@ -321,4 +366,4 @@ const core = {
 core.init();
 </script>
 </body>
-</html>
+    </html>
