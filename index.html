@@ -15,7 +15,6 @@
         .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .btn-main { background: var(--gold); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .offer-frame { height: 450px; background: #000; border-radius: 25px; border: 1px solid var(--border); overflow: hidden; margin-top: 15px; }
-        .ptc-frame { height: 200px; background: #000; border-radius: 25px; border: 1px dashed var(--gold); overflow: hidden; margin-top: 15px; }
         .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 15px; background: #000; padding: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--border); }
@@ -47,17 +46,15 @@
 
     <div class="container">
         <div id="earn-tab" class="tab active-tab">
+            <div class="card" style="border-left: 5px solid var(--gold);">
+                <h3 style="color: var(--gold);">🔗 SÜRƏTLİ KEÇİD</h3>
+                <p style="font-size: 13px; margin: 10px 0;">Keçidi tamamlayın və <b>0.30 DGB</b> qazanın!</p>
+                <button class="btn-main" onclick="core.goShort()">LİNKƏ KEÇ</button>
+            </div>
+            
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h3 style="color: var(--green);">📲 YÜKLƏ VƏ QAZAN</h3>
                 <div class="offer-frame"><iframe src="SƏNİN_OFFERWALL_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
-            </div>
-            <div class="card">
-                <h3 style="color: var(--gold);">📺 REKLAM İZLƏ</h3>
-                <div class="ptc-frame"><iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
-            </div>
-            <div class="card">
-                <h3 style="color: var(--gold);">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
-                <button class="btn-main" style="margin-top: 15px;" onclick="window.location.href='SƏNİN_SHORTLINK_LİNKİN'">LİNKƏ KEÇ</button>
             </div>
         </div>
 
@@ -66,39 +63,17 @@
                 <p style="opacity: 0.5;">Cari Balansınız</p>
                 <h1 style="font-size: 55px; color: var(--gold); margin: 15px 0;" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 10)</button>
-                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 10px;">* Minimum çıxarış limiti 10 DGB təyin edilib.</p>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
             <div class="card">
                 <h4>💳 ÖDƏNİŞ GÖZLƏYƏNLƏR</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead>
-                        <tbody id="payout-list"></tbody>
-                    </table>
-                </div>
+                <div class="table-wrapper"><table id="withdraw-table"><thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead><tbody id="payout-list"></tbody></table></div>
             </div>
-
-            <div class="card" style="border-color: var(--green);">
-                <h4 style="color: var(--green);">✅ TAMAMLANMIŞ ÖDƏNİŞLƏR</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Email</th><th>Məbləğ</th><th>Status</th></tr></thead>
-                        <tbody id="history-list"></tbody>
-                    </table>
-                </div>
-            </div>
-
             <div class="card">
                 <h4>👥 İSTİFADƏÇİ BAZASI</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Email</th><th>Balans</th></tr></thead>
-                        <tbody id="user-list"></tbody>
-                    </table>
-                </div>
+                <div class="table-wrapper"><table><thead><tr><th>Gmail</th><th>Cihaz ID</th><th>Balans</th></tr></thead><tbody id="user-list"></tbody></table></div>
             </div>
         </div>
     </div>
@@ -118,11 +93,19 @@
 <script>
 const core = {
     adminEmail: "xeyalemenov@gmail.com",
-    adminDeviceId: localStorage.getItem('noir_admin_token'),
     config: { 
         apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", 
         authDomain: "faucetfirex.firebaseapp.com", 
         projectId: "faucetfirex" 
+    },
+
+    getDeviceID() {
+        let id = localStorage.getItem('noir_device_key');
+        if(!id) {
+            id = 'dev-' + Math.random().toString(36).substr(2, 9) + Date.now();
+            localStorage.setItem('noir_device_key', id);
+        }
+        return id;
     },
 
     init() {
@@ -132,18 +115,30 @@ const core = {
         this.checkAuth();
     },
 
-    login() {
+    async login() {
         const mail = document.getElementById('email-input').value.trim().toLowerCase();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(emailRegex.test(mail)) { 
-            localStorage.setItem('noir_session', mail); 
-            this.auth.signInAnonymously().then(() => {
-                this.db.collection("users").doc(mail).set({ email: mail }, { merge: true }).then(() => location.reload());
-            });
-        } else { alert("Düzgün email daxil edin."); }
+        const currentDevice = this.getDeviceID();
+        if(!mail.includes('@')) return alert("Düzgün email daxil edin.");
+
+        const userRef = this.db.collection("users").doc(mail);
+        const doc = await userRef.get();
+
+        if(doc.exists && doc.data().deviceID && doc.data().deviceID !== currentDevice) {
+            alert("QADAĞAN: Bu hesaba başqa cihazdan daxil olmaq olmaz!");
+            return;
+        }
+
+        localStorage.setItem('noir_session', mail);
+        this.auth.signInAnonymously().then(() => {
+            userRef.set({ email: mail, deviceID: currentDevice }, { merge: true }).then(() => location.reload());
+        });
     },
 
-    logout() { localStorage.clear(); location.reload(); },
+    goShort() {
+        const apiToken = "83c058c17034a04c01d7424627b894c507cfbed3";
+        const successUrl = window.location.origin + "/success.html";
+        window.open(`https://shrinkme.io/api?api=${apiToken}&url=${successUrl}`, '_blank');
+    },
 
     checkAuth() {
         const mail = localStorage.getItem('noir_session');
@@ -151,16 +146,13 @@ const core = {
             if(user && mail) {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('app-content').style.display = 'block';
-                if(mail === this.adminEmail) this.verifyDevice();
+                if(mail === this.adminEmail) {
+                    document.getElementById('admin-nav-btn').style.display = 'block';
+                    this.loadAdminPanel();
+                }
                 this.sync(mail);
             }
         });
-    },
-
-    verifyDevice() {
-        const currentToken = btoa(navigator.userAgent + screen.width);
-        if (!this.adminDeviceId) { localStorage.setItem('noir_admin_token', currentToken); this.adminDeviceId = currentToken; }
-        if (this.adminDeviceId === currentToken) { document.getElementById('admin-nav-btn').style.display = 'block'; this.loadAdminPanel(); }
     },
 
     sync(mail) {
@@ -168,7 +160,6 @@ const core = {
             const bal = doc.exists ? (doc.data().tarazlıq || 0) : 0;
             document.getElementById('user-bal').innerText = bal.toFixed(2);
             document.getElementById('wd-bal').innerText = bal.toFixed(2);
-            if(!doc.exists) this.db.collection("users").doc(mail).set({email: mail, tarazlıq: 0});
         });
     },
 
@@ -176,30 +167,19 @@ const core = {
         this.db.collection("withdraw_requests").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('payout-list'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button style="padding:5px; background:var(--green); border:none; border-radius:5px; font-weight:900;" onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
             });
         });
-
-        this.db.collection("withdraw_requests").where("status", "==", "Ödənildi").orderBy("date", "desc").limit(10).onSnapshot(snap => {
-            const hist = document.getElementById('history-list'); hist.innerHTML = "";
-            snap.forEach(doc => {
-                hist.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td style="color:var(--green)">Ödənildi</td></tr>`;
-            });
-        });
-
         this.db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('user-list'); list.innerHTML = "";
-            snap.forEach(doc => { list.innerHTML += `<tr><td>${doc.id}</td><td>${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`; });
+            snap.forEach(doc => {
+                list.innerHTML += `<tr><td>${doc.id}</td><td><small>${doc.data().deviceID || '-'}</small></td><td>${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`;
+            });
         });
     },
 
-    async approve(id) { 
-        if(confirm("Bu ödənişi təsdiqləyirsiz?")) {
-            await this.db.collection("withdraw_requests").doc(id).update({ 
-                status: "Ödənildi",
-                date: Date.now()
-            }); 
-        }
+    async approve(id) {
+        if(confirm("Təsdiqlənsin?")) await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
     },
 
     async requestWD() {
@@ -209,8 +189,8 @@ const core = {
         if(bal >= 10) {
             await this.db.collection("withdraw_requests").add({ email: mail, amount: bal, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Ödəniş sorğunuz göndərildi!");
-        } else { alert("Minimum çıxarış 10 DGB-dir."); }
+            alert("Sorğu göndərildi!");
+        } else alert("Minimum 10 DGB lazımdır.");
     },
 
     switchTab(id, el) {
@@ -218,9 +198,12 @@ const core = {
         document.getElementById(id).classList.add('active-tab');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         el.classList.add('active');
-    }
+    },
+
+    logout() { localStorage.clear(); location.reload(); }
 };
 core.init();
 </script>
 </body>
 </html>
+
