@@ -3,43 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Premium Faucet & Earn</title>
+    <title>NoirPRO — Premium DGB Faucet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #fff; --border: rgba(255,255,255,0.08); }
         * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
         
-        /* UI Komponentləri */
+        /* Auth Screen */
         .auth-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .auth-card { background: var(--card); padding: 40px 30px; border-radius: 35px; width: 100%; max-width: 380px; border: 1px solid var(--border); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         input { width: 100%; padding: 16px; margin: 15px 0; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: #12121f; color: #fff; outline: none; text-align: center; font-size: 15px; }
-        #app-content { display: none; }
         
+        /* Main Layout */
+        #app-content { display: none; }
         header { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.9); backdrop-filter: blur(12px); z-index: 1000; }
         .bal-badge { background: rgba(255,193,7,0.1); padding: 8px 16px; border-radius: 14px; color: var(--gold); font-weight: 800; border: 1px solid rgba(255,193,7,0.2); }
-        
         .container { max-width: 480px; margin: auto; padding: 20px; }
         .card { background: var(--card); padding: 25px; border-radius: 30px; border: 1px solid var(--border); margin-bottom: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         
         .btn { background: linear-gradient(135deg, #FFC107, #FF8F00); color: #000; border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 16px; }
         .btn:disabled { background: #1d1d2b; color: #444; opacity: 0.5; cursor: not-allowed; }
         
-        /* Kapça və Taymer */
+        /* Protection & Faucet */
         #math-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 25px; margin: 15px 0; border: 1px dashed var(--border); display: none; }
         .math-text { font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 12px; }
         .math-input { width: 140px; font-size: 22px; font-weight: bold; border: 2px solid var(--gold); background: #000; color: #fff; text-align: center; }
         
-        /* Naviqasiya */
+        /* Navigation */
         .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-item { font-size: 24px; cursor: pointer; opacity: 0.4; }
         .nav-item.active { opacity: 1; color: var(--gold); }
         .tab { display: none; } .active-tab { display: block; animation: fadeIn 0.5s ease; }
         
-        /* Admin Cədvəli */
+        /* Admin Elements */
         table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
         th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
-        th { color: var(--gold); }
         .admin-only { display: none; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -55,9 +54,9 @@
 <div id="auth-screen" class="auth-container">
     <div class="auth-card">
         <h1 style="color:var(--gold); font-size: 42px; margin: 0; font-weight: 900;">NoirPRO</h1>
-        <p style="opacity:0.6; font-size:13px; margin-bottom: 30px;">Kripto Qazanc Paneli</p>
+        <p style="opacity:0.6; font-size:13px; margin-bottom: 30px;">Premium Faucet Edition</p>
         <input type="email" id="fp-email" placeholder="FaucetPay Email">
-        <button class="btn" onclick="login()">DAXİL OL</button>
+        <button class="btn" onclick="login()">GİRİŞ ET</button>
     </div>
 </div>
 
@@ -70,7 +69,7 @@
     <div class="container">
         <div id="home-tab" class="tab active-tab">
             <div class="card">
-                <p style="opacity:0.6; font-size: 14px;">Növbəti claim üçün vaxt:</p>
+                <p style="opacity:0.6; font-size: 14px;">Geri sayım:</p>
                 <h1 id="timer" style="color:var(--gold); font-size:70px; margin:10px 0; font-weight: 900;">--:--</h1>
                 <div id="math-box">
                     <div class="math-text"><span id="n1">0</span> <span id="op">+</span> <span id="n2">0</span> = ?</div>
@@ -78,28 +77,27 @@
                 </div>
                 <button id="claimBtn" class="btn" onclick="verifyAndClaim()" disabled>GÖZLƏYİN...</button>
             </div>
-            <div class="card" style="padding:15px; font-size:12px; opacity:0.4;">REKLAM SAHƏSİ (A-ADS)</div>
+            <div class="card" style="padding:15px; font-size:12px; opacity:0.4;">REKLAM (A-ADS / ADSTERRA)</div>
         </div>
 
         <div id="earn-tab" class="tab">
             <div class="card">
                 <h3 style="color:var(--gold); margin-top:0;">PTC ADS</h3>
-                <div style="height:250px; background:#000; border-radius:20px; overflow:hidden; border:1px solid var(--border);">
-                    <iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe>
+                <div style="height:250px; background:#000; border-radius:20px; display:flex; align-items:center; justify-content:center; border:1px dashed var(--gold);">
+                    <p style="color:var(--gold); opacity:0.6; font-size:14px;">Reklam Linkini Kodda Yerləşdirin...</p>
                 </div>
             </div>
             <div class="card">
                 <h3 style="color:var(--gold);">SHORTLINKS</h3>
-                <p style="font-size:12px; opacity:0.6;">Linkləri keç, hər keçid üçün 0.10 DGB qazan</p>
-                <button class="btn" onclick="window.location.href='SƏNİN_API_SHORTLINK_LİNKİN'" style="background:#222; color:var(--gold); border:1px solid var(--gold);">LİNKƏ KEÇ</button>
+                <button class="btn" onclick="window.location.href='API_LİNKİNİZ_BURAYA'" style="background:#222; color:var(--gold); border:1px solid var(--gold);">LİNKƏ KEÇ</button>
             </div>
         </div>
 
         <div id="wd-tab" class="tab">
             <div class="card">
-                <h3>Mövcud Balans</h3>
+                <h3>Cari Balans</h3>
                 <h2 id="wdBal" style="color:var(--gold); font-size: 40px; margin: 15px 0;">0.00 DGB</h2>
-                <button class="btn" onclick="requestWD()">ÖDƏNİŞ İSTƏ</button>
+                <button class="btn" onclick="requestWD()">ÇIXARIŞ İSTƏ</button>
             </div>
         </div>
 
@@ -128,7 +126,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
-// Firebase Konfiqurasiya
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -180,8 +177,10 @@ auth.onAuthStateChanged(user => {
 function runTimer(last) {
     if (timerInterval) clearInterval(timerInterval);
     const update = () => {
-        const diff = (5 * 60 * 1000) - (Date.now() - last);
+        const now = Date.now();
+        const diff = (5 * 60 * 1000) - (now - last);
         const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer'), box = document.getElementById('math-box');
+        
         if (diff <= 0) {
             clearInterval(timerInterval);
             txt.innerText = "HAZIR"; btn.disabled = false; btn.innerText = "0.05 DGB GÖTÜR";
@@ -204,8 +203,8 @@ function generateMath() {
 
 async function verifyAndClaim() {
     if(document.getElementById('hp_val').value !== "") return;
-    if(Date.now() - loadTime < 4000) return alert("Sürətli hərəkət!");
-    if(!isTabActive) return alert("Reklam pəncərəsində qalın!");
+    if(Date.now() - loadTime < 4000) return alert("Sistem: Sürətli hərəkət!");
+    if(!isTabActive) return alert("Sistem: Reklamdan çıxmayın!");
 
     const ans = parseInt(document.getElementById('math-ans').value);
     if (ans !== correctAns) { alert("Səhv cavab!"); generateMath(); return; }
@@ -214,7 +213,7 @@ async function verifyAndClaim() {
         tarazlıq: firebase.firestore.FieldValue.increment(0.05),
         son_faucet: Date.now() 
     });
-    alert("Balans artırıldı!");
+    alert("0.05 DGB balansınıza əlavə edildi!");
     correctAns = 0;
 }
 
@@ -222,21 +221,23 @@ function loadAdminData() {
     db.collection("withdraw_requests").where("status", "==", "Gözləmədə").onSnapshot(snap => {
         const list = document.getElementById("req-list"); list.innerHTML = "";
         snap.forEach(doc => {
-            list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().miqdar}</td><td><button onclick="pay('${doc.id}')">ÖDƏ</button></td></tr>`;
+            list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().miqdar}</td><td><button onclick="pay('${doc.id}')">TƏSDİQLƏ</button></td></tr>`;
         });
     });
 }
 
 async function pay(id) {
-    if(confirm("Təsdiqləyirsən?")) await db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
+    if(confirm("İstifadəçiyə ödəniş etdiyinizi təsdiqləyirsiniz?")) {
+        await db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
+    }
 }
 
 async function requestWD() {
     const doc = await db.collection("users").doc(currentEmail).get();
-    if(doc.data().tarazlıq < 10) return alert("Minimum 10 DGB!");
+    if(doc.data().tarazlıq < 10) return alert("Minimum limit: 10 DGB");
     await db.collection("withdraw_requests").add({ email: currentEmail, miqdar: doc.data().tarazlıq, status: "Gözləmədə", tarix: Date.now() });
     await db.collection("users").doc(currentEmail).update({ tarazlıq: 0 });
-    alert("Sorğu göndərildi!");
+    alert("Sorğu uğurla göndərildi!");
 }
 
 function showTab(id, el) {
