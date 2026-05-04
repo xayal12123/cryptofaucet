@@ -3,38 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Ultimate Earning & Admin</title>
+    <title>NoirPRO — Pro Fast (30 DGB Min)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); --green: #00E676; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.2s; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; }
-
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
         .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.2); font-weight: 900; }
-        
         .container { max-width: 500px; margin: auto; padding: 15px; }
-        
-        /* Kart Dizaynları */
         .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .btn-main { background: var(--gold); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
-        
-        /* Offerwall Frame */
         .offer-frame { height: 450px; background: #000; border-radius: 25px; border: 1px solid var(--border); overflow: hidden; margin-top: 15px; }
-        
-        /* Admin Cədvəlləri */
+        .ptc-frame { height: 200px; background: #000; border-radius: 25px; border: 1px dashed var(--gold); overflow: hidden; margin-top: 15px; }
         .table-wrapper { overflow-x: auto; margin-top: 15px; border-radius: 15px; background: #000; padding: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid var(--border); }
         th { color: var(--gold); text-transform: uppercase; }
-        .bal-txt { color: var(--green); font-weight: 800; }
-
-        /* Naviqasiya */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 22px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; }
         .nav-item.active { opacity: 1; color: var(--gold); }
         #admin-nav-btn { display: none; }
-        
         .tab { display: none; }
         .active-tab { display: block; animation: slideUp 0.4s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -44,9 +33,8 @@
 
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 45px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border);">
-        <h1 style="color: var(--gold); font-size: 42px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
-        <p style="opacity: 0.4; font-size: 13px; margin-bottom: 30px;">Professional Fast Earn Panel</p>
-        <input type="email" id="email-input" placeholder="FaucetPay Email" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 25px; text-align: center; outline: none;">
+        <h1 style="color: var(--gold); font-size: 42px; font-weight: 900;">NoirPRO</h1>
+        <input type="email" id="email-input" placeholder="Email" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin: 25px 0; text-align: center; outline: none;">
         <button onclick="core.login()" class="btn-main">DAXİL OL</button>
     </div>
 </div>
@@ -61,18 +49,15 @@
         <div id="earn-tab" class="tab active-tab">
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h3 style="color: var(--green);">📲 YÜKLƏ VƏ QAZAN</h3>
-                <p style="font-size: 12px; opacity: 0.5; margin-top: 5px;">Tətbiq yükləyərək yüksək DGB qazanın.</p>
-                <div class="offer-frame">
-                    <iframe src="BURAYA_OFFERWALL_LİNKİNİ_QOYUN" style="width:100%; height:100%; border:none;"></iframe>
-                </div>
+                <div class="offer-frame"><iframe src="SƏNİN_OFFERWALL_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
             </div>
-
+            <div class="card">
+                <h3 style="color: var(--gold);">📺 REKLAM İZLƏ</h3>
+                <div class="ptc-frame"><iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
+            </div>
             <div class="card">
                 <h3 style="color: var(--gold);">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
-                <button class="btn-main" style="margin-top: 15px;" onclick="window.location.href='BURAYA_SHORTLİNK_LİNKİNİ_QOYUN'">LİNKƏ KEÇ</button>
-                <div style="margin-top: 20px; height: 100px; background: #000; border-radius: 20px; border: 1px dashed var(--border); overflow: hidden;">
-                    <iframe src="BURAYA_PTC_LİNKİNİ_QOYUN" style="width:100%; height:100%; border:none;"></iframe>
-                </div>
+                <button class="btn-main" style="margin-top: 15px;" onclick="window.location.href='SƏNİN_SHORTLINK_LİNKİN'">LİNKƏ KEÇ</button>
             </div>
         </div>
 
@@ -80,29 +65,19 @@
             <div class="card" style="text-align: center; padding: 50px 20px;">
                 <p style="opacity: 0.5;">Cari Balansınız</p>
                 <h1 style="font-size: 55px; color: var(--gold); margin: 15px 0;" id="wd-bal">0.00</h1>
-                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 5)</button>
+                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 30)</button>
+                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 10px;">* Minimum çıxarış limiti 30 DGB təyin edilib.</p>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
             <div class="card">
-                <h4 style="color: var(--gold);">💳 ÖDƏNİŞ GÖZLƏYƏNLƏR</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead>
-                        <tbody id="payout-list"></tbody>
-                    </table>
-                </div>
+                <h4>💳 ÖDƏNİŞ GÖZLƏYƏNLƏR</h4>
+                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead><tbody id="payout-list"></tbody></table></div>
             </div>
-
             <div class="card">
-                <h4 style="color: var(--gold);">👥 İSTİFADƏÇİ BAZASI (Dəqiq Qazanc)</h4>
-                <div class="table-wrapper">
-                    <table>
-                        <thead><tr><th>Email</th><th>Balans</th></tr></thead>
-                        <tbody id="user-list"></tbody>
-                    </table>
-                </div>
+                <h4>👥 İSTİFADƏÇİ BAZASI</h4>
+                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Balans</th></tr></thead><tbody id="user-list"></tbody></table></div>
             </div>
         </div>
     </div>
@@ -122,11 +97,8 @@
 <script>
 const core = {
     adminEmail: "xeyalemenov@gmail.com",
-    config: {
-        apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
-        authDomain: "faucetfirex.firebaseapp.com",
-        projectId: "faucetfirex"
-    },
+    adminDeviceId: localStorage.getItem('noir_admin_token'),
+    config: { apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", authDomain: "faucetfirex.firebaseapp.com", projectId: "faucetfirex" },
 
     init() {
         firebase.initializeApp(this.config);
@@ -136,11 +108,8 @@ const core = {
     },
 
     login() {
-        const mail = document.getElementById('email-input').value;
-        if(mail.includes('@')) {
-            localStorage.setItem('noir_session', mail);
-            this.auth.signInAnonymously().then(() => location.reload());
-        }
+        const mail = document.getElementById('email-input').value.trim().toLowerCase();
+        if(mail.includes('@')) { localStorage.setItem('noir_session', mail); this.auth.signInAnonymously().then(() => location.reload()); }
     },
 
     logout() { localStorage.clear(); location.reload(); },
@@ -151,13 +120,16 @@ const core = {
             if(user && mail) {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('app-content').style.display = 'block';
-                if(mail === this.adminEmail) {
-                    document.getElementById('admin-nav-btn').style.display = 'block';
-                    this.loadAdminPanel();
-                }
+                if(mail === this.adminEmail) this.verifyDevice();
                 this.sync(mail);
             }
         });
+    },
+
+    verifyDevice() {
+        const currentToken = btoa(navigator.userAgent + screen.width);
+        if (!this.adminDeviceId) { localStorage.setItem('noir_admin_token', currentToken); this.adminDeviceId = currentToken; }
+        if (this.adminDeviceId === currentToken) { document.getElementById('admin-nav-btn').style.display = 'block'; this.loadAdminPanel(); }
     },
 
     sync(mail) {
@@ -170,38 +142,32 @@ const core = {
     },
 
     loadAdminPanel() {
-        // Ödəniş Sorğuları
         this.db.collection("withdraw_requests").where("status", "==", "Gözləmədə").onSnapshot(snap => {
-            const list = document.getElementById('payout-list');
-            list.innerHTML = "";
+            const list = document.getElementById('payout-list'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td class="bal-txt">${doc.data().amount.toFixed(2)}</td><td><button style="padding:5px; background:var(--green); border:none; border-radius:5px; font-weight:900;" onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button style="padding:5px; background:var(--green); border:none; border-radius:5px; font-weight:900;" onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
             });
         });
-
-        // Bütün İstifadəçilər
         this.db.collection("users").onSnapshot(snap => {
-            const list = document.getElementById('user-list');
-            list.innerHTML = "";
-            snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.id}</td><td class="bal-txt">${(doc.data().tarazlıq || 0).toFixed(2)} DGB</td></tr>`;
-            });
+            const list = document.getElementById('user-list'); list.innerHTML = "";
+            snap.forEach(doc => { list.innerHTML += `<tr><td>${doc.id}</td><td>${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`; });
         });
     },
 
-    async approve(id) {
-        if(confirm("Təsdiqləyirsiz?")) await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" });
-    },
+    async approve(id) { if(confirm("Təsdiqləyirsiz?")) await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" }); },
 
     async requestWD() {
         const mail = localStorage.getItem('noir_session');
         const doc = await this.db.collection("users").doc(mail).get();
         const bal = doc.data().tarazlıq || 0;
-        if(bal >= 5) {
+        // YENİ LİMİT YOXLAMASI (30 DGB)
+        if(bal >= 30) {
             await this.db.collection("withdraw_requests").add({ email: mail, amount: bal, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Sorğu göndərildi!");
-        } else alert("Minimum 5 DGB!");
+            alert("Ödəniş sorğunuz göndərildi! Sürətli şəkildə yoxlanılacaq.");
+        } else {
+            alert("Minimum çıxarış 30 DGB-dir. Hal-hazırda balansınız yetərli deyil.");
+        }
     },
 
     switchTab(id, el) {
