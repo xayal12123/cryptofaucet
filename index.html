@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Pro Fast (30 DGB Min)</title>
+    <title>NoirPRO — Pro Fast (10 DGB Min)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); --green: #00E676; }
@@ -34,7 +34,7 @@
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 45px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border);">
         <h1 style="color: var(--gold); font-size: 42px; font-weight: 900;">NoirPRO</h1>
-        <input type="email" id="email-input" placeholder="Email" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin: 25px 0; text-align: center; outline: none;">
+        <input type="email" id="email-input" placeholder="Email ünvanınızı daxil edin" style="width: 100%; padding: 18px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin: 25px 0; text-align: center; outline: none;">
         <button onclick="core.login()" class="btn-main">DAXİL OL</button>
     </div>
 </div>
@@ -55,29 +55,46 @@
                 <h3 style="color: var(--gold);">📺 REKLAM İZLƏ</h3>
                 <div class="ptc-frame"><iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
             </div>
-            <div class="card">
-                <h3 style="color: var(--gold);">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
-                <button class="btn-main" style="margin-top: 15px;" onclick="window.location.href='SƏNİN_SHORTLINK_LİNKİN'">LİNKƏ KEÇ</button>
-            </div>
         </div>
 
         <div id="wallet-tab" class="tab">
             <div class="card" style="text-align: center; padding: 50px 20px;">
                 <p style="opacity: 0.5;">Cari Balansınız</p>
                 <h1 style="font-size: 55px; color: var(--gold); margin: 15px 0;" id="wd-bal">0.00</h1>
-                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 30)</button>
-                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 10px;">* Minimum çıxarış limiti 30 DGB təyin edilib.</p>
+                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 10)</button>
+                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 10px;">* Minimum çıxarış limiti 10 DGB təyin edilib.</p>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
             <div class="card">
                 <h4>💳 ÖDƏNİŞ GÖZLƏYƏNLƏR</h4>
-                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead><tbody id="payout-list"></tbody></table></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Email</th><th>Məbləğ</th><th>Əməl</th></tr></thead>
+                        <tbody id="payout-list"></tbody>
+                    </table>
+                </div>
             </div>
+
+            <div class="card" style="border-color: var(--green);">
+                <h4 style="color: var(--green);">✅ TAMAMLANMIŞ ÖDƏNİŞLƏR</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Email</th><th>Məbləğ</th><th>Status</th></tr></thead>
+                        <tbody id="history-list"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="card">
                 <h4>👥 İSTİFADƏÇİ BAZASI</h4>
-                <div class="table-wrapper"><table><thead><tr><th>Email</th><th>Balans</th></tr></thead><tbody id="user-list"></tbody></table></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Email</th><th>Balans</th></tr></thead>
+                        <tbody id="user-list"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -98,7 +115,11 @@
 const core = {
     adminEmail: "xeyalemenov@gmail.com",
     adminDeviceId: localStorage.getItem('noir_admin_token'),
-    config: { apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", authDomain: "faucetfirex.firebaseapp.com", projectId: "faucetfirex" },
+    config: { 
+        apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", 
+        authDomain: "faucetfirex.firebaseapp.com", 
+        projectId: "faucetfirex" 
+    },
 
     init() {
         firebase.initializeApp(this.config);
@@ -109,7 +130,13 @@ const core = {
 
     login() {
         const mail = document.getElementById('email-input').value.trim().toLowerCase();
-        if(mail.includes('@')) { localStorage.setItem('noir_session', mail); this.auth.signInAnonymously().then(() => location.reload()); }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(emailRegex.test(mail)) { 
+            localStorage.setItem('noir_session', mail); 
+            this.auth.signInAnonymously().then(() => {
+                this.db.collection("users").doc(mail).set({ email: mail }, { merge: true }).then(() => location.reload());
+            });
+        } else { alert("Düzgün email daxil edin."); }
     },
 
     logout() { localStorage.clear(); location.reload(); },
@@ -137,7 +164,7 @@ const core = {
             const bal = doc.exists ? (doc.data().tarazlıq || 0) : 0;
             document.getElementById('user-bal').innerText = bal.toFixed(2);
             document.getElementById('wd-bal').innerText = bal.toFixed(2);
-            if(!doc.exists) this.db.collection("users").doc(mail).set({tarazlıq: 0});
+            if(!doc.exists) this.db.collection("users").doc(mail).set({email: mail, tarazlıq: 0});
         });
     },
 
@@ -148,26 +175,39 @@ const core = {
                 list.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button style="padding:5px; background:var(--green); border:none; border-radius:5px; font-weight:900;" onclick="core.approve('${doc.id}')">ÖDƏ</button></td></tr>`;
             });
         });
+
+        this.db.collection("withdraw_requests").where("status", "==", "Ödənildi").orderBy("date", "desc").limit(10).onSnapshot(snap => {
+            const hist = document.getElementById('history-list'); hist.innerHTML = "";
+            snap.forEach(doc => {
+                hist.innerHTML += `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td style="color:var(--green)">Ödənildi</td></tr>`;
+            });
+        });
+
         this.db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('user-list'); list.innerHTML = "";
             snap.forEach(doc => { list.innerHTML += `<tr><td>${doc.id}</td><td>${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`; });
         });
     },
 
-    async approve(id) { if(confirm("Təsdiqləyirsiz?")) await this.db.collection("withdraw_requests").doc(id).update({ status: "Ödənildi" }); },
+    async approve(id) { 
+        if(confirm("Bu ödənişi təsdiqləyirsiz?")) {
+            await this.db.collection("withdraw_requests").doc(id).update({ 
+                status: "Ödənildi",
+                date: Date.now()
+            }); 
+        }
+    },
 
     async requestWD() {
         const mail = localStorage.getItem('noir_session');
         const doc = await this.db.collection("users").doc(mail).get();
         const bal = doc.data().tarazlıq || 0;
-        // YENİ LİMİT YOXLAMASI (30 DGB)
-        if(bal >= 30) {
+        // Limit 10 DGB olaraq dəyişdirildi
+        if(bal >= 10) {
             await this.db.collection("withdraw_requests").add({ email: mail, amount: bal, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Ödəniş sorğunuz göndərildi! Sürətli şəkildə yoxlanılacaq.");
-        } else {
-            alert("Minimum çıxarış 30 DGB-dir. Hal-hazırda balansınız yetərli deyil.");
-        }
+            alert("Sorğu göndərildi!");
+        } else { alert("Minimum 10 DGB lazımdır."); }
     },
 
     switchTab(id, el) {
@@ -177,7 +217,6 @@ const core = {
         el.classList.add('active');
     }
 };
-
 core.init();
 </script>
 </body>
