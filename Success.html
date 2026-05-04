@@ -7,8 +7,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 </head>
 <body style="background:#050508; color:#FFC107; text-align:center; padding-top:100px; font-family:sans-serif;">
-    <h2>NoirPRO — Keçid Doğrulanır</h2>
-    <p>Zəhmət olmasa gözləyin, balansınız yenilənir...</p>
+    <h2>NoirPRO</h2>
+    <p>Balansınız yenilənir, bir neçə saniyə gözləyin...</p>
     <script>
         const config = { 
             apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", 
@@ -18,20 +18,21 @@
         firebase.initializeApp(config);
         const db = firebase.firestore();
         const mail = localStorage.getItem('noir_session');
-        const device = localStorage.getItem('noir_device_vfinal');
+        const dev = localStorage.getItem('noir_secure_v100');
 
-        if(mail && device) {
+        if(mail && dev) {
             db.collection("users").doc(mail).get().then(doc => {
-                if(doc.exists && doc.data().deviceID === device) {
+                if(doc.exists && doc.data().deviceID === dev) {
                     db.collection("users").doc(mail).update({
                         tarazlıq: firebase.firestore.FieldValue.increment(0.30)
                     }).then(() => {
-                        alert("Təbriklər! 0.30 DGB əlavə olundu.");
+                        alert("UĞURLU: 0.30 DGB balansınıza əlavə olundu!");
                         window.location.href = "index.html";
                     });
-                } else { alert("Cihaz xətası!"); window.location.href = "index.html"; }
+                } else { window.location.href = "index.html"; }
             });
-        } else window.location.href = "index.html";
+        } else { window.location.href = "index.html"; }
     </script>
 </body>
 </html>
+
