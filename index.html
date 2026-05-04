@@ -3,295 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>faucetpay.online - NoirPRO Multi-Earning</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>NoirPRO — Premium DGB Faucet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #ffcc00; --bg: #0a0a0a; --card: #161616; --text: #eee; --red: #ff3333; --blue: #007bff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
-        .container { max-width: 480px; margin: auto; }
-        .card { background: var(--card); margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #333; box-shadow: 0 4px 20px rgba(0,0,0,0.8); }
-        h1, h2, h3 { color: var(--gold); text-align: center; margin: 10px 0; }
-        button { background: var(--gold); border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; color: #000; font-size: 16px; transition: 0.3s; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        input { width: 100%; padding: 12px; background: #000; border: 1px solid #444; color: #fff; border-radius: 8px; margin: 10px 0; box-sizing: border-box; text-align: center; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px; }
-        .tab-content { display: none; min-height: 60vh; }
-        .active-tab { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333; z-index: 100; }
-        .nav-item { cursor: pointer; font-size: 22px; opacity: 0.5; transition: 0.3s; }
-        .nav-item.active { opacity: 1; color: var(--gold); transform: translateY(-5px); }
-        #login-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; text-align: center; }
-        #admin-panel { background: #000; border: 2px solid var(--red); padding: 15px; margin: 15px; border-radius: 12px; display: none; }
-        .link-item { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 10px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--gold); }
+        :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #fff; --border: rgba(255,255,255,0.08); }
+        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; overflow-x: hidden; }
+        
+        .auth-container { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .auth-card { background: var(--card); padding: 40px 30px; border-radius: 35px; width: 100%; max-width: 380px; border: 1px solid var(--border); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        
+        input { width: 100%; padding: 16px; margin: 15px 0; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: #12121f; color: #fff; outline: none; text-align: center; font-size: 15px; }
+        #app-content { display: none; }
+        
+        header { padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.9); backdrop-filter: blur(12px); z-index: 1000; }
+        .bal-badge { background: rgba(255,193,7,0.1); padding: 8px 16px; border-radius: 14px; color: var(--gold); font-weight: 800; border: 1px solid rgba(255,193,7,0.2); }
+        
+        .container { max-width: 480px; margin: auto; padding: 20px; }
+        .card { background: var(--card); padding: 25px; border-radius: 30px; border: 1px solid var(--border); margin-bottom: 18px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        .btn { background: linear-gradient(135deg, #FFC107, #FF8F00); color: #000; border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 10px 20px rgba(255,193,7,0.2); }
+        .btn:disabled { background: #1d1d2b; color: #444; box-shadow: none; cursor: not-allowed; opacity: 0.5; }
+        
+        /* Riyazi Kapça Dizaynı */
+        #math-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 25px; margin: 15px 0; border: 1px dashed var(--border); display: none; }
+        .math-text { font-size: 32px; font-weight: 900; color: var(--gold); margin-bottom: 12px; letter-spacing: 2px; }
+        .math-input { width: 140px; font-size: 22px; font-weight: bold; border: 2px solid var(--gold); background: #000; margin-top: 10px; }
+
+        .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); z-index: 1000; }
+        .nav-item { font-size: 24px; cursor: pointer; opacity: 0.4; }
+        .nav-item.active { opacity: 1; color: var(--gold); }
+        
+        .tab { display: none; } .active-tab { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
+<div id="auth-screen" class="auth-container">
+    <div class="auth-card">
+        <h1 style="color:var(--gold); font-size: 42px; margin: 0; font-weight: 900; letter-spacing: -1px;">NoirPRO</h1>
+        <p style="opacity:0.6; font-size:13px; margin-bottom: 30px;">Kripto Qazanmağa Başla</p>
+        <input type="email" id="fp-email" placeholder="FaucetPay Emailiniz">
+        <button class="btn" onclick="login()">GİRİŞ ET</button>
+    </div>
+</div>
+
+<div id="app-content">
+    <header>
+        <span style="font-weight:900; color:var(--gold); font-size: 24px;">NoirPRO</span>
+        <div class="bal-badge">💰 <span id="userBal">0.00</span> DGB</div>
+    </header>
+
     <div class="container">
-        <div id="login-screen">
-            <h1 style="font-size: 3rem;">NoirPRO</h1>
-            <p style="opacity: 0.7;">faucetpay.online - Professional Earning System</p>
-            <div class="card" style="width: 85%;">
-                <button onclick="login()">Google ilə Giriş Et</button>
+        <div id="home-tab" class="tab active-tab">
+            <div class="card">
+                <p style="opacity:0.6; font-size: 14px; margin-top:0;">Növbəti qazanc üçün vaxt:</p>
+                <h1 id="timer" style="color:var(--gold); font-size:70px; margin:10px 0; font-weight: 900;">05:00</h1>
+                
+                <div id="math-box">
+                    <p style="font-size:12px; opacity:0.5; margin-bottom: 10px;">HESABLAYIN:</p>
+                    <div class="math-text"><span id="n1">0</span> <span id="op">+</span> <span id="n2">0</span> = ?</div>
+                    <input type="number" id="math-ans" class="math-input" placeholder="?">
+                </div>
+                
+                <button id="claimBtn" class="btn" onclick="verifyAndClaim()">0.05 DGB GÖTÜR</button>
+            </div>
+            <div class="card" style="padding: 15px; font-size: 12px; opacity: 0.4;">
+                Reklam Sahəsi (Adsterra)
             </div>
         </div>
 
-        <div id="app-content" style="display: none;">
-            
-            <div id="bybit-banner" style="margin: 15px; display: none;">
-                <a id="bybit-link" href="#" target="_blank" style="text-decoration: none;">
-                    <div class="card" style="background: linear-gradient(90deg, #ffb11a, #17181a); color: white; padding: 12px; border: none; text-align: center;">
-                        <b style="font-size: 14px;">Bybit-də qeydiyyatdan keç, 30$ Bonus Qazan! 🚀</b>
-                    </div>
-                </a>
-            </div>
-
+        <div id="wd-tab" class="tab">
             <div class="card">
-                <h1 id="user-balance" style="font-size: 2.5rem;">0.0000 DGB</h1>
-                <p style="font-size: 14px; opacity: 0.6; margin: 0;">Cari Balansınız</p>
+                <h3 style="margin-top:0;">Balansdan Çıxarış</h3>
+                <p style="font-size:13px; opacity:0.6;">Minimum limit: 10 DGB</p>
+                <h2 id="wdBal" style="color:var(--gold); font-size: 40px; margin: 20px 0; font-weight: 900;">0.00 DGB</h2>
+                <button class="btn" onclick="requestWD()">ÖDƏNİŞ İSTƏ</button>
             </div>
-
-            <div id="faucet-tab" class="tab-content active-tab">
-                <div class="stats-grid">
-                    <div class="card" style="margin:0; border-bottom: 3px solid var(--gold);">
-                        <small>Kran</small><br><b>0.05 DGB</b>
-                    </div>
-                    <div class="card" style="margin:0; border-bottom: 3px solid #00ff88;">
-                        <small>Ref Bonus</small><br><b>0.10 DGB</b>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>Faucet Claim</h3>
-                    <div style="display: flex; justify-content: center; margin: 20px 0;">
-                        <div class="g-recaptcha" data-sitekey="6Ld0hNgsAAAAACuV-Gi5GQUE9EuJDV3QXu-Y9U8E" data-theme="dark"></div>
-                    </div>
-                    <button id="claimBtn" onclick="verifyAndClaim()">İNDİ TOPLA (0/10)</button>
-                </div>
-            </div>
-
-            <div id="links-tab" class="tab-content">
-                <div class="card">
-                    <h3>Shortlinks (0.30 DGB)</h3>
-                    <div id="links-list" style="margin-top: 15px;"></div>
-                </div>
-            </div>
-
-            <div id="ptc-tab" class="tab-content">
-                <div class="card">
-                    <h3>PTC Reklamları (0.15 DGB)</h3>
-                    <div id="ptc-list" style="margin-top: 15px;"></div>
-                </div>
-            </div>
-
-            <div id="ref-tab" class="tab-content">
-                <div class="card">
-                    <h3>Referal Sistemi</h3>
-                    <p style="font-size: 14px;">Dostlarını dəvət et, hər claim üçün <b>0.10 DGB</b> qazan!</p>
-                    <input type="text" id="refLink" readonly onclick="copyRef()">
-                    <p>Aktiv Referallar: <b id="refCount" style="color: var(--gold);">0</b></p>
-                </div>
-            </div>
-
-            <div id="admin-panel">
-                <h3 style="color: var(--red);">🛠 ADMİN İDARƏETMƏ</h3>
-                <div class="card" style="background:#1a0000; padding:10px;">
-                    <input type="text" id="admEmail" placeholder="İstifadəçi Emaili">
-                    <input type="number" id="admAmount" placeholder="Məbləğ (+/-)">
-                    <button onclick="adminUpdate()" style="background:var(--red); color:white;">BALANSI YENİLƏ</button>
-                </div>
-                <div class="card" style="background:#001a33; padding:10px;">
-                    <input type="text" id="admBybit" placeholder="Bybit Linkin">
-                    <button onclick="adminUpdateBybit()" style="background:var(--blue); color:white;">BYBIT LİNKİ YENİLƏ</button>
-                </div>
-                <div class="card" style="background:#1a1a1a; padding:10px;">
-                    <input type="text" id="admTitle" placeholder="Başlıq">
-                    <input type="text" id="admUrl" placeholder="URL">
-                    <button onclick="adminAddLink()" style="margin-bottom:5px;">SHORTLINK ƏLAVƏ ET</button>
-                    <button onclick="adminAddPTC()" style="background:#ff00ff; color:white;">PTC ƏLAVƏ ET</button>
-                </div>
-            </div>
-
-            <nav>
-                <div class="nav-item active" onclick="showTab('faucet-tab', this)">🏠</div>
-                <div class="nav-item" onclick="showTab('links-tab', this)">🔗</div>
-                <div class="nav-item" onclick="showTab('ptc-tab', this)">🖱️</div>
-                <div class="nav-item" onclick="showTab('ref-tab', this)">👥</div>
-            </nav>
         </div>
     </div>
 
+    <div class="nav">
+        <div class="nav-item active" onclick="showTab('home-tab', this)">🏠</div>
+        <div class="nav-item" onclick="showTab('wd-tab', this)">💳</div>
+        <div class="nav-item" onclick="logout()">🚪</div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics-compat.js"></script>
+
 <script>
-    // --- KONFİQURASİYA (Öz məlumatlarını bura qoy) ---
-    const firebaseConfig = { /* FIREBASE KONFİQURASİYANIZI BURAYA YAPIŞDIRIN */ };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+// Sənin Firebase Konfiqurasiyan
+const firebaseConfig = {
+  apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
+  authDomain: "faucetfirex.firebaseapp.com",
+  projectId: "faucetfirex",
+  storageBucket: "faucetfirex.firebasestorage.app",
+  messagingSenderId: "191065358342",
+  appId: "1:191065358342:web:b9911c6e71b9fc4b254387",
+  measurementId: "G-4MFS9HC7ME"
+};
 
-    const ADMIN_EMAIL = "xayalemenov@gmail.com";
-    const VAL_CLAIM = 0.05, VAL_REF = 0.10, VAL_SHORT = 0.30, VAL_PTC = 0.15, DAILY_LIMIT = 10;
-    let currentEmail = null;
+// Başlatma
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+const db = firebase.firestore(), auth = firebase.auth();
 
-    function login() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+let currentEmail = localStorage.getItem("fp_email");
+let correctAns = 0;
 
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            // Cihaz Limiti (Max 2)
-            let accounts = JSON.parse(localStorage.getItem('noir_devices')) || [];
-            if (!accounts.includes(user.email)) {
-                if (accounts.length >= 2) { alert("Xəta: Bir cihazda maksimum 2 hesab!"); auth.signOut(); return; }
-                accounts.push(user.email);
-                localStorage.setItem('noir_devices', JSON.stringify(accounts));
-            }
+// Orta Səviyyəli Riyazi Sual Yaradıcı
+function generateMath() {
+    const ops = ['+', '-'];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    let num1, num2;
 
-            currentEmail = user.email;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
+    if (op === '+') {
+        num1 = Math.floor(Math.random() * 40) + 10; 
+        num2 = Math.floor(Math.random() * 30) + 5;
+        correctAns = num1 + num2;
+    } else {
+        num1 = Math.floor(Math.random() * 60) + 30; 
+        num2 = Math.floor(Math.random() * 25) + 5;
+        correctAns = num1 - num2;
+    }
 
-            // Formatdan Qorxan Admin Cihaz İmzası
-            if (user.email === ADMIN_EMAIL) {
-                const sig = btoa(navigator.platform + screen.width + navigator.hardwareConcurrency);
-                const admRef = db.collection("admin_config").doc("security");
-                const admDoc = await admRef.get();
-                if (!admDoc.exists) await admRef.set({ authId: sig });
-                if (admDoc.data().authId === sig) document.getElementById('admin-panel').style.display = 'block';
-            }
+    document.getElementById('n1').innerText = num1;
+    document.getElementById('op').innerText = op;
+    document.getElementById('n2').innerText = num2;
+    document.getElementById('math-ans').value = "";
+}
 
-            await initUser();
-            loadBybit(); loadShortlinks(); loadPTC();
-        }
+async function login() {
+    const email = document.getElementById('fp-email').value;
+    if(!email.includes("@")) return alert("Zəhmət olmasa düzgün email daxil edin!");
+    localStorage.setItem("fp_email", email);
+    await auth.signInAnonymously();
+    location.reload();
+}
+
+function logout() { localStorage.clear(); auth.signOut(); location.reload(); }
+
+auth.onAuthStateChanged(user => {
+    if (user && currentEmail) {
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('app-content').style.display = 'block';
+        db.collection("users").doc(currentEmail).onSnapshot(doc => {
+            if (doc.exists) {
+                const bal = doc.data().tarazlıq || 0;
+                document.getElementById('userBal').innerText = bal.toFixed(2);
+                document.getElementById('wdBal').innerText = bal.toFixed(2) + " DGB";
+                updateTimer(doc.data().son_faucet || 0);
+            } else db.collection("users").doc(currentEmail).set({ tarazlıq: 0, son_faucet: 0 });
+        });
+    }
+});
+
+async function verifyAndClaim() {
+    const userAns = document.getElementById('math-ans').value;
+    if (!userAns) return alert("Sualı cavablandırın!");
+    
+    if (parseInt(userAns) !== correctAns) {
+        alert("Səhv cavab! Bir daha cəhd edin.");
+        generateMath();
+        return;
+    }
+
+    try {
+        await db.collection("users").doc(currentEmail).update({ 
+            tarazlıq: firebase.firestore.FieldValue.increment(0.05),
+            son_faucet: Date.now() 
+        });
+        alert("Təbriklər! 0.05 DGB balansınıza əlavə edildi.");
+        generateMath();
+    } catch (e) { alert("Xəta baş verdi, yenidən yoxlayın."); }
+}
+
+async function requestWD() {
+    const doc = await db.collection("users").doc(currentEmail).get();
+    const bal = doc.data().tarazlıq || 0;
+    if(bal < 10) return alert("Minimum 10 DGB balansınız olmalıdır!");
+    
+    await db.collection("withdraw_requests").add({ 
+        email: currentEmail, 
+        miqdar: bal, 
+        tarix: new Date().toLocaleString(),
+        status: "Gözləmədə" 
     });
+    
+    await db.collection("users").doc(currentEmail).update({ tarazlıq: 0 });
+    alert("Ödəniş istəyiniz göndərildi!");
+}
 
-    async function initUser() {
-        const urlParams = new URLSearchParams(window.location.search);
-        let refCode = urlParams.get('ref');
-        const userRef = db.collection("users").doc(currentEmail);
-        const doc = await userRef.get();
+function showTab(id, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(id).classList.add('active-tab');
+    el.classList.add('active');
+}
 
-        if (!doc.exists) {
-            let inv = null;
-            if (refCode) {
-                try { inv = atob(refCode); if ((JSON.parse(localStorage.getItem('noir_devices')) || []).includes(inv)) inv = null; } catch(e) {}
-            }
-            await userRef.set({ tarazlıq: 0, invitedBy: inv, referal_sayi: 0, daily_claims: 0, last_date: "" });
-            if (inv) db.collection("users").doc(inv).update({ referal_sayi: firebase.firestore.FieldValue.increment(1) });
+function updateTimer(last) {
+    const tick = setInterval(() => {
+        const diff = (5 * 60 * 1000) - (Date.now() - last);
+        const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer'), mBox = document.getElementById('math-box');
+        
+        if (diff <= 0) { 
+            btn.disabled = false; 
+            txt.innerText = "HAZIR"; 
+            mBox.style.display = "block";
+            if(correctAns === 0) generateMath();
+            clearInterval(tick); 
+        } else { 
+            btn.disabled = true; 
+            mBox.style.display = "none";
+            const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
+            txt.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
-        updateUI();
-    }
-
-    async function verifyAndClaim() {
-        if (grecaptcha.getResponse().length == 0) return alert("Robot testi!");
-        const userRef = db.collection("users").doc(currentEmail);
-        const doc = await userRef.get();
-        const data = doc.data();
-
-        const today = new Date().toLocaleDateString();
-        let count = data.last_date === today ? (data.daily_claims || 0) : 0;
-
-        if (count >= DAILY_LIMIT) return alert("Gündəlik limit doldu! Sabah yenidən gəlin.");
-
-        const batch = db.batch();
-        batch.update(userRef, { 
-            tarazlıq: firebase.firestore.FieldValue.increment(VAL_CLAIM),
-            daily_claims: count + 1,
-            last_date: today
-        });
-
-        if (data.invitedBy) {
-            batch.update(db.collection("users").doc(data.invitedBy), { 
-                tarazlıq: firebase.firestore.FieldValue.increment(VAL_REF) 
-            });
-        }
-
-        await batch.commit();
-        grecaptcha.reset();
-        alert("0.05 DGB Balansınıza əlavə edildi!");
-        updateUI();
-    }
-
-    async function updateUI() {
-        const doc = await db.collection("users").doc(currentEmail).get();
-        const data = doc.data();
-        const today = new Date().toLocaleDateString();
-        const count = data.last_date === today ? data.daily_claims : 0;
-
-        document.getElementById('user-balance').innerText = data.tarazlıq.toFixed(4) + " DGB";
-        document.getElementById('refCount').innerText = data.referal_sayi || 0;
-        document.getElementById('refLink').value = `https://faucetpay.online/?ref=${btoa(currentEmail)}`;
-        document.getElementById('claimBtn').innerText = `İNDİ TOPLA (${count}/${DAILY_LIMIT})`;
-    }
-
-    async function loadShortlinks() {
-        const list = document.getElementById('links-list');
-        const snap = await db.collection("links").get();
-        list.innerHTML = "";
-        snap.forEach(d => {
-            const l = d.data();
-            list.innerHTML += `<div class="link-item"><span>${l.title}</span><button onclick="window.open('${l.url}','_blank')" style="width:70px;">KEÇ</button></div>`;
-        });
-    }
-
-    async function loadPTC() {
-        const list = document.getElementById('ptc-list');
-        const snap = await db.collection("ptc").get();
-        list.innerHTML = "";
-        snap.forEach(d => {
-            const p = d.data();
-            list.innerHTML += `<div class="link-item" style="border-left-color:#ff00ff"><span>${p.title}</span><button onclick="watchPTC('${p.url}')" style="width:70px; background:#ff00ff; color:white">BAX</button></div>`;
-        });
-    }
-
-    function watchPTC(url) {
-        window.open(url, '_blank');
-        alert("Reklam başladı! 15 saniyə sonra balansa 0.15 DGB əlavə olunacaq.");
-        setTimeout(async () => {
-            await db.collection("users").doc(currentEmail).update({ tarazlıq: firebase.firestore.FieldValue.increment(VAL_PTC) });
-            alert("PTC Bonusu əlavə edildi!"); updateUI();
-        }, 15000);
-    }
-
-    async function loadBybit() {
-        const doc = await db.collection("settings").doc("affiliate").get();
-        if(doc.exists && doc.data().bybit_url) {
-            document.getElementById('bybit-link').href = doc.data().bybit_url;
-            document.getElementById('bybit-banner').style.display = 'block';
-        }
-    }
-
-    // --- ADMİN PANEL FUNKSİYALARI ---
-    async function adminUpdate() {
-        const em = document.getElementById('admEmail').value, am = parseFloat(document.getElementById('admAmount').value);
-        await db.collection("users").doc(em).update({ tarazlıq: firebase.firestore.FieldValue.increment(am) });
-        alert("Əməliyyat uğurlu!"); updateUI();
-    }
-
-    async function adminUpdateBybit() {
-        const url = document.getElementById('admBybit').value;
-        await db.collection("settings").doc("affiliate").set({ bybit_url: url });
-        alert("Bybit linki yeniləndi!"); loadBybit();
-    }
-
-    async function adminAddLink() {
-        const title = document.getElementById('admTitle').value, url = document.getElementById('admUrl').value;
-        await db.collection("links").add({ title, url }); alert("Link əlavə edildi!"); loadShortlinks();
-    }
-
-    async function adminAddPTC() {
-        const title = document.getElementById('admTitle').value, url = document.getElementById('admUrl').value;
-        await db.collection("ptc").add({ title, url }); alert("PTC əlavə edildi!"); loadPTC();
-    }
-
-    function showTab(id, el) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-        document.getElementById(id).classList.add('active-tab');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-    }
-
-    function copyRef() { const inp = document.getElementById('refLink'); inp.select(); document.execCommand("copy"); alert("Referal linkiniz kopyalandı!"); }
+    }, 1000);
+}
 </script>
 </body>
 </html>
