@@ -8,7 +8,7 @@
 </head>
 <body style="background:#050508; color:#FFC107; text-align:center; padding-top:100px; font-family:sans-serif;">
     <h2>NoirPRO — Keçid Doğrulanır</h2>
-    <p>Zəhmət olmasa gözləyin, 0.30 DGB balansınıza əlavə olunur...</p>
+    <p>Zəhmət olmasa gözləyin, balansınız yenilənir...</p>
     <script>
         const config = { 
             apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", 
@@ -18,7 +18,7 @@
         firebase.initializeApp(config);
         const db = firebase.firestore();
         const mail = localStorage.getItem('noir_session');
-        const device = localStorage.getItem('noir_device_key');
+        const device = localStorage.getItem('noir_device_vfinal');
 
         if(mail && device) {
             db.collection("users").doc(mail).get().then(doc => {
@@ -35,4 +35,3 @@
     </script>
 </body>
 </html>
-
