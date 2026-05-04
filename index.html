@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — High Paying DGB</title>
+    <title>NoirPRO — GitHub Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
@@ -11,23 +11,23 @@
         * { box-sizing: border-box; transition: 0.3s; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 80px; }
         .container { max-width: 480px; margin: auto; padding: 20px; }
-        .card { background: var(--card); padding: 30px; border-radius: 30px; border: 1px solid var(--border); text-align: center; margin-bottom: 20px; }
-        .btn { background: var(--gold); color: #000; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 900; cursor: pointer; font-size: 15px; }
-        .btn:disabled { background: #1d1d2b; color: #444; }
-        input { width: 100%; padding: 15px; margin: 15px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: #181825; color: #fff; outline: none; text-align: center; }
-        header { padding: 15px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 100; }
+        .card { background: var(--card); padding: 30px; border-radius: 30px; border: 1px solid var(--border); text-align: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .btn { background: var(--gold); color: #000; border: none; padding: 18px; width: 100%; border-radius: 18px; font-weight: 900; cursor: pointer; font-size: 16px; }
+        .btn:disabled { background: #1d1d2b; color: #444; cursor: not-allowed; }
+        input { width: 100%; padding: 16px; margin: 15px 0; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); background: #181825; color: #fff; outline: none; text-align: center; }
+        header { padding: 20px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.9); backdrop-filter: blur(10px); z-index: 100; }
         .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); }
         .tab { display: none; } .active { display: block; }
-        .g-recaptcha { display: flex; justify-content: center; margin: 15px 0; }
+        .g-recaptcha { display: flex; justify-content: center; margin: 15px 0; transform: scale(0.9); }
     </style>
 </head>
 <body>
 
-<div id="auth-screen" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-    <div class="card" style="width: 350px;">
-        <h1 style="color:var(--gold); margin:0;">NoirPRO</h1>
-        <p style="opacity: 0.6; font-size: 12px;">FaucetPay Email ilə Giriş</p>
-        <input type="email" id="fp-email" placeholder="misal@gmail.com">
+<div id="auth-screen" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px;">
+    <div class="card">
+        <h1 style="color:var(--gold); margin:0; font-size: 35px; font-weight: 900;">NoirPRO</h1>
+        <p style="opacity: 0.6; font-size: 13px;">FaucetPay Girişi</p>
+        <input type="email" id="fp-email" placeholder="Email daxil edin">
         <button class="btn" onclick="login()">DAXİL OL</button>
     </div>
 </div>
@@ -41,8 +41,8 @@
     <div class="container">
         <div id="home-tab" class="tab active">
             <div class="card">
-                <h1 id="timer" style="color:var(--gold); font-size:50px; margin:10px 0;">05:00</h1>
-                <div class="g-recaptcha" data-sitekey="6Lfb99csAAAAAOZvLx_yCEa77AYtZSEheQ0qTJnr" data-theme="dark"></div>
+                <h1 id="timer" style="color:var(--gold); font-size:60px; margin:10px 0;">05:00</h1>
+                <div class="g-recaptcha" data-sitekey="6Ld0hNgsAAAAACuV-Gi5GQUE9EuJDV3QXu-Y9U8E" data-theme="dark"></div>
                 <button id="claimBtn" class="btn" onclick="verifyAndClaim()">0.05 DGB GÖTÜR</button>
             </div>
         </div>
@@ -50,17 +50,16 @@
         <div id="wd-tab" class="tab">
             <div class="card">
                 <h3>Çıxarış</h3>
-                <p style="font-size: 12px; opacity: 0.6;">Limit: 10 DGB</p>
-                <h2 id="wdBal" style="color:var(--gold);">0.00 DGB</h2>
+                <h2 id="wdBal" style="color:var(--gold); font-size: 32px;">0.00 DGB</h2>
                 <button class="btn" onclick="requestWD()">İSTƏK GÖNDƏR</button>
             </div>
         </div>
     </div>
 
     <div class="nav">
-        <span onclick="showTab('home-tab')" style="cursor:pointer">🏠</span>
-        <span onclick="showTab('wd-tab')" style="cursor:pointer">💳</span>
-        <span onclick="logout()" style="cursor:pointer">🚪</span>
+        <span onclick="showTab('home-tab')" style="cursor:pointer; font-size: 22px;">🏠</span>
+        <span onclick="showTab('wd-tab')" style="cursor:pointer; font-size: 22px;">💳</span>
+        <span onclick="logout()" style="cursor:pointer; font-size: 22px;">🚪</span>
     </div>
 </div>
 
@@ -69,7 +68,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
 <script>
-// DİQQƏT: Buradakı məlumatları Firebase Panelindən yoxla
 const firebaseConfig = {
   apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs",
   authDomain: "faucetfirex.firebaseapp.com",
@@ -85,7 +83,7 @@ let currentEmail = localStorage.getItem("fp_email");
 
 async function login() {
     const email = document.getElementById('fp-email').value;
-    if(!email.includes("@")) return alert("Düzgün email yazın!");
+    if(!email.includes("@")) return alert("Düzgün email!");
     localStorage.setItem("fp_email", email);
     await auth.signInAnonymously();
     location.reload();
@@ -115,16 +113,16 @@ async function verifyAndClaim() {
         son_faucet: Date.now() 
     });
     grecaptcha.reset();
-    alert("Təbriklər!");
+    alert("0.05 DGB əlavə edildi!");
 }
 
 async function requestWD() {
     const doc = await db.collection("users").doc(currentEmail).get();
     const bal = doc.data().tarazlıq || 0;
-    if(bal < 10) return alert("Limit 10 DGB!");
+    if(bal < 10) return alert("Limit 10 DGB-dir!");
     await db.collection("withdraw_requests").add({ email: currentEmail, miqdar: bal, tarix: new Date().toLocaleString() });
     await db.collection("users").doc(currentEmail).update({ tarazlıq: 0 });
-    alert("İstək göndərildi!");
+    alert("Sorğu göndərildi!");
 }
 
 function showTab(id) {
@@ -136,11 +134,15 @@ function updateTimer(last) {
     const tick = setInterval(() => {
         const diff = (5 * 60 * 1000) - (Date.now() - last);
         const btn = document.getElementById('claimBtn'), txt = document.getElementById('timer'), cap = document.querySelector('.g-recaptcha');
-        if (diff <= 0) { btn.disabled = false; txt.innerText = "HAZIR"; cap.style.display = "flex"; clearInterval(tick); }
-        else { btn.disabled = true; cap.style.display = "none"; txt.innerText = Math.floor(diff/60000) + ":" + Math.floor((diff%60000)/1000).toString().padStart(2, '0'); }
+        if (diff <= 0) { btn.disabled = false; txt.innerText = "HAZIR"; cap.style.visibility = "visible"; clearInterval(tick); }
+        else { btn.disabled = true; cap.style.visibility = "hidden";
+            const m = Math.floor(diff/60000), s = Math.floor((diff%60000)/1000);
+            txt.innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
     }, 1000);
 }
 </script>
 </body>
 </html>
+
 
