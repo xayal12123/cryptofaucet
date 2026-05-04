@@ -55,6 +55,10 @@
                 <h3 style="color: var(--gold);">📺 REKLAM İZLƏ</h3>
                 <div class="ptc-frame"><iframe src="SƏNİN_PTC_LİNKİN" style="width:100%; height:100%; border:none;"></iframe></div>
             </div>
+            <div class="card">
+                <h3 style="color: var(--gold);">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
+                <button class="btn-main" style="margin-top: 15px;" onclick="window.location.href='SƏNİN_SHORTLINK_LİNKİN'">LİNKƏ KEÇ</button>
+            </div>
         </div>
 
         <div id="wallet-tab" class="tab">
@@ -202,12 +206,11 @@ const core = {
         const mail = localStorage.getItem('noir_session');
         const doc = await this.db.collection("users").doc(mail).get();
         const bal = doc.data().tarazlıq || 0;
-        // Limit 10 DGB olaraq dəyişdirildi
         if(bal >= 10) {
             await this.db.collection("withdraw_requests").add({ email: mail, amount: bal, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Sorğu göndərildi!");
-        } else { alert("Minimum 10 DGB lazımdır."); }
+            alert("Ödəniş sorğunuz göndərildi!");
+        } else { alert("Minimum çıxarış 10 DGB-dir."); }
     },
 
     switchTab(id, el) {
