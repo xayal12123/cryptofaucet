@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -45,6 +44,9 @@
             align-items: center; justify-content: center; text-align: center; padding: 20px;
         }
         .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
+        
+        /* Ad Slot Styling */
+        .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 25px; border: 1px dashed var(--border); }
     </style>
 </head>
 <body>
@@ -78,6 +80,15 @@
     </header>
 
     <div class="container">
+        
+        <div class="ad-slot">
+            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
+            <script type="text/javascript">
+                atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
+        </div>
+
         <div id="earn-tab" class="tab active-tab">
             <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
                 <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; gap: 8px;">
@@ -102,6 +113,14 @@
 
         <div id="wallet-tab" class="tab">
             <div class="card" style="text-align: center; padding: 50px 20px;">
+                
+                <div style="margin-bottom: 25px; transform: scale(0.9);">
+                    <script type="text/javascript">
+                        atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                    </script>
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
+                </div>
+
                 <p style="opacity: 0.5; margin-bottom: 10px; font-size: 14px;">Mövcud Balansınız</p>
                 <h1 style="font-size: 65px; color: var(--gold); margin-bottom: 25px; font-weight: 900;" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">ANLIQ ÖDƏNİŞ İSTƏ (MIN 30)</button>
@@ -181,10 +200,9 @@ const core = {
         firebase.initializeApp(this.config);
         this.db = firebase.firestore();
         this.checkAuth();
-        this.checkAdBlock(); // Anti-Adblock yoxlaması
+        this.checkAdBlock();
     },
 
-    // Anti-Adblock Məntiqi
     checkAdBlock() {
         setTimeout(() => {
             const bait = document.getElementById('ad-bait');
@@ -213,17 +231,13 @@ const core = {
         try {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
-            
             if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail === this.adminEmail) {
                 return alert("Təhlükəsizlik Sistemi: Admin hesabına başqa cihazdan giriş qadağandır!");
             }
-            
             localStorage.setItem('noir_session', mail);
             await userRef.set({ email: mail, deviceID: dev }, { merge: true });
             location.reload();
-        } catch(e) {
-            alert("Bağlantı xətası. İnternetinizi yoxlayın.");
-        }
+        } catch(e) { alert("Bağlantı xətası."); }
     },
 
     checkAuth() {
@@ -231,7 +245,6 @@ const core = {
         if(mail) {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            
             if(mail === this.adminEmail) {
                 document.getElementById('admin-nav-btn').style.display = 'block';
                 this.loadAdminData();
@@ -255,32 +268,22 @@ const core = {
             const adm = document.getElementById('adm-ads-list');
             cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Hazırda təklif yoxdur.</p>" : "";
             if(adm) adm.innerHTML = "";
-            
             snap.forEach(doc => {
                 const d = doc.data();
-                cont.innerHTML += `<div style="margin-bottom:25px;">
-                    <h4 style="color:var(--text); margin-bottom:10px; padding-left:5px; font-size:14px; border-left:3px solid var(--green); padding-left:10px;">${d.title}</h4>
-                    <iframe src="${d.url}"></iframe>
-                </div>`;
+                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); margin-bottom:10px; border-left:3px solid var(--green); padding-left:10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','dynamic_ads')">SİL</button></div>`;
             });
         });
-
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('shortlinks-container');
             const adm = document.getElementById('adm-sl-list');
             cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Hazırda link yoxdur.</p>" : "";
             if(adm) adm.innerHTML = "";
-            
             const userMail = localStorage.getItem('noir_session');
             snap.forEach(doc => {
                 const d = doc.data();
                 const finalUrl = d.url.includes('?') ? `${d.url}&alias=${userMail}` : `${d.url}?alias=${userMail}`;
-                
-                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);">
-                    <b style="font-size:14px; color:var(--text);">${d.title}</b>
-                    <button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD ET</button>
-                </div>`;
+                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);"><b style="font-size:14px;">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD ET</button></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','shortlinks')">SİL</button></div>`;
             });
         });
@@ -289,7 +292,7 @@ const core = {
     async saveAd() {
         const title = document.getElementById('adm-ad-title').value.trim();
         const url = document.getElementById('adm-ad-url').value.trim();
-        if(!title || !url) return alert("Başlıq və URL xanaları doldurulmalıdır.");
+        if(!title || !url) return alert("Xanaları doldurun.");
         await this.db.collection("dynamic_ads").add({ title, url, date: Date.now() });
         document.getElementById('adm-ad-title').value = ""; document.getElementById('adm-ad-url').value = "";
     },
@@ -297,35 +300,35 @@ const core = {
     async saveSL() {
         const title = document.getElementById('adm-sl-title').value.trim();
         const url = document.getElementById('adm-sl-url').value.trim();
-        if(!title || !url) return alert("Başlıq və URL xanaları doldurulmalıdır.");
+        if(!title || !url) return alert("Xanaları doldurun.");
         await this.db.collection("shortlinks").add({ title, url, date: Date.now() });
         document.getElementById('adm-sl-title').value = ""; document.getElementById('adm-sl-url').value = "";
     },
 
-    del(id, coll) { if(confirm("Birdəfəlik silinsin?")) this.db.collection(coll).doc(id).delete(); },
+    del(id, coll) { if(confirm("Silinsin?")) this.db.collection(coll).doc(id).delete(); },
 
     async addBalance() {
         const mail = document.getElementById('adm-add-mail').value.trim().toLowerCase();
         const amount = parseFloat(document.getElementById('adm-add-amount').value);
-        if(!mail || isNaN(amount) || amount <= 0) return alert("Zəhmət olmasa düzgün email və məbləğ daxil edin.");
+        if(!mail || isNaN(amount) || amount <= 0) return alert("Düzgün daxil edin.");
         try {
             const ref = this.db.collection("users").doc(mail);
             const doc = await ref.get();
             if(doc.exists) {
                 const newBal = (doc.data().tarazlıq || 0) + amount;
                 await ref.update({ tarazlıq: newBal });
-                alert(`✅ Uğurlu! ${mail} hesabına ${amount} DGB əlavə edildi.`);
+                alert(`✅ Əlavə edildi.`);
                 document.getElementById('adm-add-mail').value = "";
                 document.getElementById('adm-add-amount').value = "";
-            } else { alert("❌ Sistemdə belə bir istifadəçi tapılmadı!"); }
-        } catch(e) { alert("Xəta baş verdi."); }
+            } else { alert("❌ Tapılmadı!"); }
+        } catch(e) { alert("Xəta!"); }
     },
 
     loadAdminData() {
         this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('adm-payouts'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b>${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); font-weight:900; cursor:pointer; background:none; border:none;">ÖDƏ</button></td></tr>`;
             });
         });
         this.db.collection("users").onSnapshot(snap => {
@@ -336,11 +339,7 @@ const core = {
         });
     },
 
-    async payOk(id) { 
-        if(confirm("Pulu göndərdiyinizi təsdiqləyirsiniz?")) {
-            await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); 
-        }
-    },
+    async payOk(id) { if(confirm("Təsdiq?")) await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); },
 
     async requestWD() {
         const mail = localStorage.getItem('noir_session');
@@ -349,7 +348,7 @@ const core = {
         if(b >= 30) {
             await this.db.collection("withdraws").add({ email: mail, amount: b, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Sorğu qəbul edildi!");
+            alert("Sorğu göndərildi!");
         } else { alert(`Minimum 30 DGB lazımdır.`); }
     },
 
@@ -366,4 +365,4 @@ const core = {
 core.init();
 </script>
 </body>
-    </html>
+</html>
