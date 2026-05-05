@@ -8,7 +8,7 @@
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); --green: #00E676; --red: #ff4444; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.2s; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; overflow-x: hidden; }
         
         /* Header & Nav */
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
@@ -26,7 +26,7 @@
         
         /* Elements */
         .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 14px; box-shadow: 0 5px 15px rgba(255,193,7,0.2); }
-        iframe { width: 100%; height: 350px; border-radius: 20px; border: 1px solid var(--border); background: #000; margin-top: 15px; }
+        iframe { width: 100%; height: 500px; border-radius: 20px; border: 1px solid var(--border); background: #000; margin-top: 15px; }
         input { width: 100%; padding: 15px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 10px; outline: none; font-size: 13px; }
         
         /* Admin UI */
@@ -38,15 +38,14 @@
         th { color: var(--gold); }
 
         /* Anti-Adblock Styles */
-        #ab-mask {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center; padding: 20px;
-        }
+        #ab-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
         
         /* Ad Slot Styling */
         .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px 10px; border-radius: 30px; border: 1px dashed var(--border); }
+        
+        /* AADS Sticky */
+        .aads-sticky { position: fixed; right: 0; top: 40%; z-index: 995; }
     </style>
 </head>
 <body>
@@ -57,9 +56,7 @@
     <div class="ab-content">
         <h1 style="font-size: 60px; margin-bottom: 10px;">🛑</h1>
         <h2 style="color:#fff; margin-bottom: 15px; font-weight: 900;">ADBLOCK AŞKAR EDİLDİ!</h2>
-        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
-            Sistemimizin davamlılığı üçün reklamlara ehtiyacımız var. Zəhmət olmasa reklam blokerini söndürün və səhifəni yeniləyin.
-        </p>
+        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">Sistemimizin davamlılığı üçün reklamlara ehtiyacımız var. Zəhmət olmasa reklam blokerini söndürün və səhifəni yeniləyin.</p>
         <button class="btn-main" onclick="location.reload()">SƏHİFƏNİ YENİLƏ</button>
     </div>
 </div>
@@ -91,10 +88,7 @@
 
         <div id="earn-tab" class="tab active-tab">
             <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
-                <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; gap: 8px;">
-                    📲 YÜKLƏ VƏ QAZAN
-                </h3>
-                <p style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Aşağıdakı təklifləri tamamlayın və yüksək məbləğdə DGB əldə edin.</p>
+                <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; gap: 8px;">📲 YÜKLƏ VƏ QAZAN</h3>
                 <div id="dynamic-ads-container">
                     <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
                 </div>
@@ -110,29 +104,15 @@
         </div>
 
         <div id="short-tab" class="tab">
-            <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; gap: 8px;">
-                🔗 SÜRƏTLİ KEÇİDLƏR
-            </h3>
-            <p style="font-size: 11px; opacity: 0.5; margin-bottom: 20px;">Keçidləri tamamlayaraq anında balansınızı artırın.</p>
-            <div id="shortlinks-container">
-                <p style="text-align:center; opacity:0.3; padding:20px;">Linklər yüklənir...</p>
-            </div>
+            <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; gap: 8px;">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
+            <div id="shortlinks-container"></div>
         </div>
 
         <div id="wallet-tab" class="tab">
             <div class="card" style="text-align: center; padding: 50px 20px;">
-                
-                <div style="margin-bottom: 25px; transform: scale(0.9);">
-                    <script type="text/javascript">
-                        atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-                    </script>
-                    <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
-                </div>
-
                 <p style="opacity: 0.5; margin-bottom: 10px; font-size: 14px;">Mövcud Balansınız</p>
                 <h1 style="font-size: 65px; color: var(--gold); margin-bottom: 25px; font-weight: 900;" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">ANLIQ ÖDƏNİŞ İSTƏ (MIN 30)</button>
-                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 15px;">* Ödənişlər birbaşa FaucetPay hesabınıza göndəriləcək.</p>
             </div>
         </div>
 
@@ -169,6 +149,16 @@
                     </table>
                 </div>
             </div>
+            
+            <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
+                <h4 style="color: #fff; margin-bottom: 10px;">👥 BÜTÜN İSTİFADƏÇİLƏR</h4>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead><tr><th>Email</th><th>Balans</th></tr></thead>
+                        <tbody id="adm-users-list"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div class="ad-slot" style="margin-top: 20px;">
@@ -188,6 +178,17 @@
         <div class="nav-item" id="admin-nav-btn" style="display:none" onclick="core.switchTab('admin-tab', this)">⚙️</div>
         <div class="nav-item" onclick="core.logout()">🚪</div>
     </nav>
+</div>
+
+<div class="aads-sticky">
+    <input type="checkbox" id="aads-cls" hidden>
+    <div id="aads-box">
+        <label for="aads-cls" style="background:var(--gold); color:#000; padding:4px; border-radius:4px 0 0 4px; font-size:10px; cursor:pointer; font-weight:bold; display:block; text-align:center;">X</label>
+        <div style="background:var(--card); border:1px solid var(--border); border-right:none; border-radius:10px 0 0 10px; padding:5px;">
+            <iframe data-aa="2436739" src="//acceptable.a-ads.com/2436739/?size=Adaptive" style="border:0; width:100px; height:250px; overflow:hidden;"></iframe>
+        </div>
+    </div>
+    <style>#aads-cls:checked ~ #aads-box { display:none; }</style>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -212,10 +213,8 @@ const core = {
     checkAdBlock() {
         setTimeout(() => {
             const bait = document.getElementById('ad-bait');
-            const mask = document.getElementById('ab-mask');
-            if (!bait || window.getComputedStyle(bait).display === "none" || bait.offsetParent === null) {
-                mask.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
+            if (!bait || window.getComputedStyle(bait).display === "none") {
+                document.getElementById('ab-mask').style.display = 'flex';
             }
         }, 1800);
     },
@@ -236,13 +235,13 @@ const core = {
         try {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
-            if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail === this.adminEmail) {
-                return alert("Təhlükəsizlik Sistemi: Admin kilidi aktivdir!");
+            if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail !== this.adminEmail) {
+                return alert("Təhlükəsizlik Sistemi: Hesab başqa cihazla qeydiyyatdan keçib!");
             }
             localStorage.setItem('noir_session', mail);
             await userRef.set({ email: mail, deviceID: dev }, { merge: true });
             location.reload();
-        } catch(e) { alert("Xəta!"); }
+        } catch(e) { alert("Xəta baş verdi!"); }
     },
 
     checkAuth() {
@@ -275,7 +274,7 @@ const core = {
             if(adm) adm.innerHTML = "";
             snap.forEach(doc => {
                 const d = doc.data();
-                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); margin-bottom:10px; border-left:3px solid var(--green); padding-left:10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
+                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); border-left:3px solid var(--green); padding-left:10px; margin-bottom: 10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','dynamic_ads')">SİL</button></div>`;
             });
         });
@@ -288,7 +287,7 @@ const core = {
             snap.forEach(doc => {
                 const d = doc.data();
                 const finalUrl = d.url.includes('?') ? `${d.url}&alias=${userMail}` : `${d.url}?alias=${userMail}`;
-                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);"><b style="font-size:14px;">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD ET</button></div>`;
+                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center;"><b style="font-size:14px;">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD</button></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','shortlinks')">SİL</button></div>`;
             });
         });
@@ -330,17 +329,22 @@ const core = {
     },
 
     loadAdminData() {
+        // Ödənişlər
         this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('adm-payouts'); list.innerHTML = "";
             snap.forEach(doc => {
                 list.innerHTML += `<tr><td>${doc.data().email}</td><td><b>${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); font-weight:900; cursor:pointer; background:none; border:none;">ÖDƏ</button></td></tr>`;
             });
         });
+        // Bütün istifadəçilər
         this.db.collection("users").onSnapshot(snap => {
-            const list = document.getElementById('adm-users-list'); list.innerHTML = "";
-            snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`;
-            });
+            const list = document.getElementById('adm-users-list'); 
+            if(list) {
+                list.innerHTML = "";
+                snap.forEach(doc => {
+                    list.innerHTML += `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`;
+                });
+            }
         });
     },
 
@@ -369,6 +373,9 @@ const core = {
 
 core.init();
 </script>
+
+<script src="https://bitcotasks.com/popad.min.js?pub=Njk2NDM=&f=1&t=24"></script>
+
 </body>
 </html>
 
