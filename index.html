@@ -46,7 +46,7 @@
         .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
         
         /* Ad Slot Styling */
-        .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 25px; border: 1px dashed var(--border); }
+        .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px 10px; border-radius: 30px; border: 1px dashed var(--border); }
     </style>
 </head>
 <body>
@@ -82,7 +82,7 @@
     <div class="container">
         
         <div class="ad-slot">
-            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
+            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #1</p>
             <script type="text/javascript">
                 atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
             </script>
@@ -98,6 +98,14 @@
                 <div id="dynamic-ads-container">
                     <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
                 </div>
+            </div>
+
+            <div class="ad-slot">
+                <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #2</p>
+                <script type="text/javascript">
+                    atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                </script>
+                <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
             </div>
         </div>
 
@@ -131,15 +139,15 @@
         <div id="admin-tab" class="tab">
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h4 style="color: var(--green); margin-bottom: 15px;">📺 OFFERWALL / PTC YERLƏŞDİR</h4>
-                <input type="text" id="adm-ad-title" placeholder="Reklam Adı (Məs: CPALead Wall)">
-                <input type="text" id="adm-ad-url" placeholder="Iframe URL (https://...)">
+                <input type="text" id="adm-ad-title" placeholder="Reklam Adı">
+                <input type="text" id="adm-ad-url" placeholder="Iframe URL">
                 <button class="admin-btn" onclick="core.saveAd()">BAZAYA YAZ VƏ YAYIMLA</button>
                 <div id="adm-ads-list" style="margin-top:15px;"></div>
             </div>
 
             <div class="card" style="border-color: rgba(255, 193, 7, 0.3);">
                 <h4 style="color: var(--gold); margin-bottom: 15px;">🔗 SHORTLINK ƏLAVƏ ET</h4>
-                <input type="text" id="adm-sl-title" placeholder="Link Adı (Məs: ShrinkMe)">
+                <input type="text" id="adm-sl-title" placeholder="Link Adı">
                 <input type="text" id="adm-sl-url" placeholder="Qısa Link URL">
                 <button class="admin-btn" onclick="core.saveSL()">SİYAHIYA ƏLAVƏ ET</button>
                 <div id="adm-sl-list" style="margin-top:15px;"></div>
@@ -147,9 +155,8 @@
 
             <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
                 <h4 style="color: var(--gold); margin-bottom: 10px;">💰 İSTİFADƏÇİYƏ BALANS YÜKLƏ</h4>
-                <p style="font-size: 11px; opacity: 0.5; margin-bottom: 15px;">Tapşırığı bitirən istifadəçinin balansını buradan artırın.</p>
                 <input type="email" id="adm-add-mail" placeholder="İstifadəçi Emaili">
-                <input type="number" id="adm-add-amount" placeholder="Məbləğ (Məs: 0.30)">
+                <input type="number" id="adm-add-amount" placeholder="Məbləğ">
                 <button class="admin-btn" onclick="core.addBalance()">BALANSI ARTIR</button>
             </div>
             
@@ -162,17 +169,16 @@
                     </table>
                 </div>
             </div>
-
-            <div class="card">
-                <h4 style="color: var(--gold);">👥 İSTİFADƏÇİ STATİSTİKASI</h4>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead><tr><th>İstifadəçi</th><th>Balans (DGB)</th></tr></thead>
-                        <tbody id="adm-users-list"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
+
+        <div class="ad-slot" style="margin-top: 20px;">
+            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #3</p>
+            <script type="text/javascript">
+                atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
+        </div>
+
     </div>
 
     <nav class="bottom-nav">
@@ -225,19 +231,18 @@ const core = {
 
     async login() {
         const mail = document.getElementById('email-input').value.trim().toLowerCase();
-        if(!mail.includes('@')) return alert("Zəhmət olmasa düzgün FaucetPay email ünvanı daxil edin!");
+        if(!mail.includes('@')) return alert("Zəhmət olmasa düzgün email daxil edin!");
         const dev = this.getDevice();
-        
         try {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
             if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail === this.adminEmail) {
-                return alert("Təhlükəsizlik Sistemi: Admin hesabına başqa cihazdan giriş qadağandır!");
+                return alert("Təhlükəsizlik Sistemi: Admin kilidi aktivdir!");
             }
             localStorage.setItem('noir_session', mail);
             await userRef.set({ email: mail, deviceID: dev }, { merge: true });
             location.reload();
-        } catch(e) { alert("Bağlantı xətası."); }
+        } catch(e) { alert("Xəta!"); }
     },
 
     checkAuth() {
@@ -266,7 +271,7 @@ const core = {
         this.db.collection("dynamic_ads").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('dynamic-ads-container');
             const adm = document.getElementById('adm-ads-list');
-            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Hazırda təklif yoxdur.</p>" : "";
+            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Təklif yoxdur.</p>" : "";
             if(adm) adm.innerHTML = "";
             snap.forEach(doc => {
                 const d = doc.data();
@@ -277,7 +282,7 @@ const core = {
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('shortlinks-container');
             const adm = document.getElementById('adm-sl-list');
-            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Hazırda link yoxdur.</p>" : "";
+            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Link yoxdur.</p>" : "";
             if(adm) adm.innerHTML = "";
             const userMail = localStorage.getItem('noir_session');
             snap.forEach(doc => {
@@ -292,7 +297,7 @@ const core = {
     async saveAd() {
         const title = document.getElementById('adm-ad-title').value.trim();
         const url = document.getElementById('adm-ad-url').value.trim();
-        if(!title || !url) return alert("Xanaları doldurun.");
+        if(!title || !url) return alert("Doldurun!");
         await this.db.collection("dynamic_ads").add({ title, url, date: Date.now() });
         document.getElementById('adm-ad-title').value = ""; document.getElementById('adm-ad-url').value = "";
     },
@@ -300,7 +305,7 @@ const core = {
     async saveSL() {
         const title = document.getElementById('adm-sl-title').value.trim();
         const url = document.getElementById('adm-sl-url').value.trim();
-        if(!title || !url) return alert("Xanaları doldurun.");
+        if(!title || !url) return alert("Doldurun!");
         await this.db.collection("shortlinks").add({ title, url, date: Date.now() });
         document.getElementById('adm-sl-title').value = ""; document.getElementById('adm-sl-url').value = "";
     },
@@ -317,10 +322,10 @@ const core = {
             if(doc.exists) {
                 const newBal = (doc.data().tarazlıq || 0) + amount;
                 await ref.update({ tarazlıq: newBal });
-                alert(`✅ Əlavə edildi.`);
+                alert(`✅ ${amount} DGB əlavə edildi.`);
                 document.getElementById('adm-add-mail').value = "";
                 document.getElementById('adm-add-amount').value = "";
-            } else { alert("❌ Tapılmadı!"); }
+            } else { alert("❌ İstifadəçi tapılmadı!"); }
         } catch(e) { alert("Xəta!"); }
     },
 
@@ -339,7 +344,7 @@ const core = {
         });
     },
 
-    async payOk(id) { if(confirm("Təsdiq?")) await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); },
+    async payOk(id) { if(confirm("Ödənildi?")) await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); },
 
     async requestWD() {
         const mail = localStorage.getItem('noir_session');
@@ -349,7 +354,7 @@ const core = {
             await this.db.collection("withdraws").add({ email: mail, amount: b, status: "Gözləmədə", date: Date.now() });
             await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
             alert("Sorğu göndərildi!");
-        } else { alert(`Minimum 30 DGB lazımdır.`); }
+        } else { alert(`Limit 30 DGB.`); }
     },
 
     switchTab(tabId, el) {
@@ -366,3 +371,4 @@ core.init();
 </script>
 </body>
 </html>
+
