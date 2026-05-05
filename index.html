@@ -41,10 +41,8 @@
         #ab-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
         
-        /* Ad Slot Styling */
+        /* Ad Slot & A-Ads Sticky */
         .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px 10px; border-radius: 30px; border: 1px dashed var(--border); }
-        
-        /* AADS Sticky */
         .aads-sticky { position: fixed; right: 0; top: 40%; z-index: 995; }
     </style>
 </head>
@@ -77,9 +75,8 @@
     </header>
 
     <div class="container">
-        
         <div class="ad-slot">
-            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #1</p>
+            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
             <script type="text/javascript">
                 atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
             </script>
@@ -89,13 +86,12 @@
         <div id="earn-tab" class="tab active-tab">
             <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
                 <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; gap: 8px;">📲 YÜKLƏ VƏ QAZAN</h3>
+                <p style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Aşağıdakı təklifləri tamamlayın və yüksək məbləğdə DGB əldə edin.</p>
                 <div id="dynamic-ads-container">
                     <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
                 </div>
             </div>
-
             <div class="ad-slot">
-                <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #2</p>
                 <script type="text/javascript">
                     atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
                 </script>
@@ -105,7 +101,10 @@
 
         <div id="short-tab" class="tab">
             <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; gap: 8px;">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
-            <div id="shortlinks-container"></div>
+            <p style="font-size: 11px; opacity: 0.5; margin-bottom: 20px;">Keçidləri tamamlayaraq anında balansınızı artırın.</p>
+            <div id="shortlinks-container">
+                <p style="text-align:center; opacity:0.3; padding:20px;">Linklər yüklənir...</p>
+            </div>
         </div>
 
         <div id="wallet-tab" class="tab">
@@ -113,10 +112,12 @@
                 <p style="opacity: 0.5; margin-bottom: 10px; font-size: 14px;">Mövcud Balansınız</p>
                 <h1 style="font-size: 65px; color: var(--gold); margin-bottom: 25px; font-weight: 900;" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">ANLIQ ÖDƏNİŞ İSTƏ (MIN 30)</button>
+                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 15px;">* Ödənişlər birbaşa FaucetPay hesabınıza göndəriləcək.</p>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
+            
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h4 style="color: var(--green); margin-bottom: 15px;">📺 OFFERWALL / PTC YERLƏŞDİR</h4>
                 <input type="text" id="adm-ad-title" placeholder="Reklam Adı">
@@ -141,7 +142,7 @@
             </div>
             
             <div class="card" style="border-color: rgba(255, 68, 68, 0.3);">
-                <h4 style="color: var(--red);">💸 ÖDƏNİŞ SORĞULARI</h4>
+                <h4 style="color: var(--red); margin-bottom: 10px;">💸 ÖDƏNİŞ SORĞULARI</h4>
                 <div style="overflow-x:auto;">
                     <table>
                         <thead><tr><th>İstifadəçi</th><th>Məbləğ</th><th>Təsdiq</th></tr></thead>
@@ -149,26 +150,18 @@
                     </table>
                 </div>
             </div>
-            
-            <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
-                <h4 style="color: #fff; margin-bottom: 10px;">👥 BÜTÜN İSTİFADƏÇİLƏR</h4>
+
+            <div class="card" style="border-color: rgba(255, 255, 255, 0.1);">
+                <h4 style="color: #fff; margin-bottom: 10px;">👥 İSTİFADƏÇİ SİYAHISI</h4>
                 <div style="overflow-x:auto;">
                     <table>
-                        <thead><tr><th>Email</th><th>Balans</th></tr></thead>
+                        <thead><tr><th>Email</th><th>Balans (DGB)</th></tr></thead>
                         <tbody id="adm-users-list"></tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <div class="ad-slot" style="margin-top: 20px;">
-            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM #3</p>
-            <script type="text/javascript">
-                atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
         </div>
-
     </div>
 
     <nav class="bottom-nav">
@@ -183,7 +176,7 @@
 <div class="aads-sticky">
     <input type="checkbox" id="aads-cls" hidden>
     <div id="aads-box">
-        <label for="aads-cls" style="background:var(--gold); color:#000; padding:4px; border-radius:4px 0 0 4px; font-size:10px; cursor:pointer; font-weight:bold; display:block; text-align:center;">X</label>
+        <label for="aads-cls" style="background:var(--gold); color:#000; padding:4px; font-size:10px; cursor:pointer; font-weight:bold; display:block; text-align:center; border-radius: 4px 0 0 4px;">X</label>
         <div style="background:var(--card); border:1px solid var(--border); border-right:none; border-radius:10px 0 0 10px; padding:5px;">
             <iframe data-aa="2436739" src="//acceptable.a-ads.com/2436739/?size=Adaptive" style="border:0; width:100px; height:250px; overflow:hidden;"></iframe>
         </div>
@@ -213,8 +206,10 @@ const core = {
     checkAdBlock() {
         setTimeout(() => {
             const bait = document.getElementById('ad-bait');
-            if (!bait || window.getComputedStyle(bait).display === "none") {
-                document.getElementById('ab-mask').style.display = 'flex';
+            const mask = document.getElementById('ab-mask');
+            if (!bait || window.getComputedStyle(bait).display === "none" || bait.offsetParent === null) {
+                mask.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             }
         }, 1800);
     },
@@ -235,6 +230,7 @@ const core = {
         try {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
+            // Təhlükəsizlik: Əgər bu admin deyilsə və fərqli cihazdan girirsə, blokla!
             if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail !== this.adminEmail) {
                 return alert("Təhlükəsizlik Sistemi: Hesab başqa cihazla qeydiyyatdan keçib!");
             }
@@ -267,6 +263,7 @@ const core = {
     },
 
     loadAds() {
+        // PTC & Offerwalls
         this.db.collection("dynamic_ads").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('dynamic-ads-container');
             const adm = document.getElementById('adm-ads-list');
@@ -274,10 +271,12 @@ const core = {
             if(adm) adm.innerHTML = "";
             snap.forEach(doc => {
                 const d = doc.data();
-                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); border-left:3px solid var(--green); padding-left:10px; margin-bottom: 10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
+                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); border-left:3px solid var(--green); padding-left:10px; margin-bottom:10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','dynamic_ads')">SİL</button></div>`;
             });
         });
+        
+        // Shortlinks
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('shortlinks-container');
             const adm = document.getElementById('adm-sl-list');
@@ -287,7 +286,7 @@ const core = {
             snap.forEach(doc => {
                 const d = doc.data();
                 const finalUrl = d.url.includes('?') ? `${d.url}&alias=${userMail}` : `${d.url}?alias=${userMail}`;
-                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center;"><b style="font-size:14px;">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD</button></div>`;
+                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);"><b style="font-size:14px; color:var(--text);">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD</button></div>`;
                 if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','shortlinks')">SİL</button></div>`;
             });
         });
@@ -309,7 +308,7 @@ const core = {
         document.getElementById('adm-sl-title').value = ""; document.getElementById('adm-sl-url').value = "";
     },
 
-    del(id, coll) { if(confirm("Silinsin?")) this.db.collection(coll).doc(id).delete(); },
+    del(id, coll) { if(confirm("Birdəfəlik silinsin?")) this.db.collection(coll).doc(id).delete(); },
 
     async addBalance() {
         const mail = document.getElementById('adm-add-mail').value.trim().toLowerCase();
@@ -329,14 +328,13 @@ const core = {
     },
 
     loadAdminData() {
-        // Ödənişlər
         this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('adm-payouts'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b>${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); font-weight:900; cursor:pointer; background:none; border:none;">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
             });
         });
-        // Bütün istifadəçilər
+        
         this.db.collection("users").onSnapshot(snap => {
             const list = document.getElementById('adm-users-list'); 
             if(list) {
@@ -378,4 +376,3 @@ core.init();
 
 </body>
 </html>
-
