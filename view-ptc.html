@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8"><title>NoirPRO — View Ad</title>
+    <style>
+        body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#030305; font-family:sans-serif; }
+        #ptc-header { height:80px; background:#0d0d14; display:flex; align-items:center; justify-content:space-between; padding:0 30px; border-bottom:3px solid #FFC107; color:#fff; position:relative; z-index:100; }
+        .timer { font-size:28px; font-weight:800; color:#FFC107; }
+        .claim-btn { background:#FFC107; color:#000; border:none; padding:15px 30px; border-radius:15px; font-weight:900; cursor:pointer; display:none; text-transform:uppercase; box-shadow:0 0 20px rgba(255,193,7,0.3); }
+        iframe { width:100%; height:calc(100vh - 80px); border:none; background:#fff; }
+    </style>
+</head>
+<body>
+    <div id="ptc-header">
+        <div><h2 id="msg">Reklam izlənilir...</h2><p style="opacity:0.5; font-size:12px;">Mükafat: <span id="rew">0</span> DGB</p></div>
+        <div class="timer" id="t-box">⏳ <span id="s">0</span>s</div>
+        <button class="claim-btn" id="c-btn" onclick="rewardUser()">CLAIM DGB</button>
+    </div>
+    <iframe id="f" src=""></iframe>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script>
+    const config = { apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", authDomain: "faucetfirex.firebaseapp.com", projectId: "faucetfirex" };
+    firebase.initializeApp(config);
+    const db = firebase.firestore();
+
+    const p = new URLSearchParams(window.location.search);
+    const u = p.get('uid'), l = p.get('lid'), url = p.get('url'), time = parseInt(p.get('t')), rwd = parseFloat(p.get('r'));
+
+    document.getElementById('rew').innerText = rwd.toFixed(2);
+    document.getElementById('f').src = url;
+
+    let tLeft = time;
+    const interval = setInterval(() => {
+        tLeft--;
+        document.getElementById('s').innerText = tLeft;
+        if(tLeft <= 0) {
+            clearInterval(interval);
+            document.getElementById('t-box').style.display = 'none';
+            document.getElementById('c-btn').style.display = 'block';
+            document.getElementById('msg').innerText = "Tapşırıq Bitdi!";
+        }
+    }, 1000);
+
+    async function rewardUser() {
+        const ref = db.collection("users").doc(u);
+        const doc = await ref.get();
+        const done = doc.data().completed_ptc || [];
+        if(!done.includes(l)) {
+            done.push(l);
+            await ref.update({ tarazlıq: (doc.data().tarazlıq || 0) + rwd, completed_ptc: done });
+        }
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
+
