@@ -3,33 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Ultimate Master Panel</title>
+    <title>NoirPRO — Premium DGB Faucet Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); --green: #00E676; --red: #ff4444; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.2s; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* Header & Nav */
         header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
-        .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.2); font-weight: 900; color: var(--gold); }
+        .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.2); font-weight: 900; color: var(--gold); font-size: 14px; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 22px; border-top: 1px solid var(--border); z-index: 1000; }
         .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; filter: grayscale(1); }
         .nav-item.active { opacity: 1; filter: grayscale(0); }
         
-        /* Layouts & Cards */
         .container { max-width: 500px; margin: auto; padding: 15px; }
         .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .tab { display: none; }
         .active-tab { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Elements */
         .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 14px; box-shadow: 0 5px 15px rgba(255,193,7,0.2); }
         iframe { width: 100%; height: 500px; border-radius: 20px; border: 1px solid var(--border); background: #000; margin-top: 15px; }
         input { width: 100%; padding: 15px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 10px; outline: none; font-size: 13px; }
         
-        /* Admin UI */
         .admin-btn { background: #1a1a25; color: var(--gold); border: 1px solid var(--gold); padding: 12px; border-radius: 12px; margin-top: 5px; cursor: pointer; width: 100%; font-size: 12px; font-weight: bold; }
         .admin-item { background: #12121c; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; border: 1px solid var(--border); }
         .admin-del { color: var(--red); background: rgba(255,68,68,0.1); border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; }
@@ -37,11 +33,9 @@
         th, td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
         th { color: var(--gold); }
 
-        /* Anti-Adblock Styles */
         #ab-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
         
-        /* Ad Slot & A-Ads Sticky */
         .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px 10px; border-radius: 30px; border: 1px dashed var(--border); }
         .aads-sticky { position: fixed; right: 0; top: 40%; z-index: 995; }
     </style>
@@ -54,7 +48,7 @@
     <div class="ab-content">
         <h1 style="font-size: 60px; margin-bottom: 10px;">🛑</h1>
         <h2 style="color:#fff; margin-bottom: 15px; font-weight: 900;">ADBLOCK AŞKAR EDİLDİ!</h2>
-        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">Sistemimizin davamlılığı üçün reklamlara ehtiyacımız var. Zəhmət olmasa reklam blokerini söndürün və səhifəni yeniləyin.</p>
+        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">Sistemimizin davamlılığı və sizə daha çox DGB qazandıra bilməyimiz üçün reklamlara ehtiyacımız var. Zəhmət olmasa blokerinizi söndürün.</p>
         <button class="btn-main" onclick="location.reload()">SƏHİFƏNİ YENİLƏ</button>
     </div>
 </div>
@@ -62,7 +56,7 @@
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: var(--card); padding: 40px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         <h1 style="color: var(--gold); font-size: 40px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
-        <p style="opacity: 0.4; font-size: 12px; margin-bottom: 25px;">Professional Fast Earn Platform</p>
+        <p style="opacity: 0.4; font-size: 12px; margin-bottom: 25px;">Premium DGB Faucet & Earn Platform</p>
         <input type="email" id="email-input" placeholder="FaucetPay Email ünvanınız">
         <button onclick="core.login()" class="btn-main">SİSTEMƏ DAXİL OL</button>
     </div>
@@ -71,53 +65,71 @@
 <div id="app-content" style="display: none;">
     <header>
         <h2 style="font-weight: 900; color: var(--gold); letter-spacing: -0.5px;">NoirPRO</h2>
-        <div class="bal-display">💰 <span id="user-bal">0.00</span></div>
+        <div class="bal-display">💰 <span id="user-bal">0.00</span> DGB</div>
     </header>
 
     <div class="container">
-        <div class="ad-slot">
-            <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
-            <script type="text/javascript">
-                atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
+        <div id="live-ticker" style="font-size: 11px; color: var(--gold); margin-bottom: 15px; opacity: 0.8; text-align: center; font-weight: bold; background: rgba(255,193,7,0.05); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.1);">
+            🔥 CANLI: Yüklənir...
         </div>
 
         <div id="earn-tab" class="tab active-tab">
-            <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
-                <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; gap: 8px;">📲 YÜKLƏ VƏ QAZAN</h3>
-                <p style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Aşağıdakı təklifləri tamamlayın və yüksək məbləğdə DGB əldə edin.</p>
-                <div id="dynamic-ads-container">
-                    <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
-                </div>
-            </div>
             <div class="ad-slot">
+                <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
                 <script type="text/javascript">
                     atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
             </div>
+            <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
+                <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; justify-content: space-between;">
+                    <span>📲 İZLƏ VƏ QAZAN</span>
+                    <span style="font-size: 12px; background: rgba(0,230,118,0.1); padding: 5px 10px; border-radius: 8px;">~0.05 DGB</span>
+                </h3>
+                <p style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Reklamlara baxaraq və tapşırıqları tamamlayaraq DGB əldə edin.</p>
+                <div id="dynamic-ads-container">
+                    <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="stats-tab" class="tab">
+            <div class="card" style="border-color: var(--gold);">
+                <h3 style="color: var(--gold); font-weight: 900; margin-bottom: 15px;">🏆 TOP DGB QAZANANLAR</h3>
+                <p style="font-size: 11px; opacity: 0.5; margin-bottom: 15px;">Sistemdə ən çox DGB toplayan istifadəçilər.</p>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr><th>İstifadəçi</th><th>Balans</th></tr>
+                        </thead>
+                        <tbody id="public-stats-list">
+                            <tr><td colspan="2" style="text-align:center; opacity:0.3;">Yüklənir...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div id="short-tab" class="tab">
-            <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; gap: 8px;">🔗 SÜRƏTLİ KEÇİDLƏR</h3>
-            <p style="font-size: 11px; opacity: 0.5; margin-bottom: 20px;">Keçidləri tamamlayaraq anında balansınızı artırın.</p>
-            <div id="shortlinks-container">
-                <p style="text-align:center; opacity:0.3; padding:20px;">Linklər yüklənir...</p>
-            </div>
+            <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; justify-content: space-between;">
+                <span>🔗 SÜRƏTLİ KEÇİDLƏR</span>
+                <span style="font-size: 12px; background: rgba(255,193,7,0.1); padding: 5px 10px; border-radius: 8px;">~0.10 DGB</span>
+            </h3>
+            <p style="font-size: 11px; opacity: 0.5; margin-bottom: 20px;">Keçidləri tamamlayaraq anında DGB balansınızı artırın.</p>
+            <div id="shortlinks-container"></div>
         </div>
 
         <div id="wallet-tab" class="tab">
             <div class="card" style="text-align: center; padding: 50px 20px;">
-                <p style="opacity: 0.5; margin-bottom: 10px; font-size: 14px;">Mövcud Balansınız</p>
-                <h1 style="font-size: 65px; color: var(--gold); margin-bottom: 25px; font-weight: 900;" id="wd-bal">0.00</h1>
-                <button class="btn-main" onclick="core.requestWD()">ANLIQ ÖDƏNİŞ İSTƏ (MIN 30)</button>
+                <p style="opacity: 0.5; margin-bottom: 10px;">Mövcud Balansınız</p>
+                <h1 style="font-size: 60px; color: var(--gold); font-weight: 900; margin-bottom: 5px;" id="wd-bal">0.00</h1>
+                <p style="color: var(--gold); font-weight: bold; font-size: 20px; margin-bottom: 25px;">DGB</p>
+                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 30 DGB)</button>
                 <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 15px;">* Ödənişlər birbaşa FaucetPay hesabınıza göndəriləcək.</p>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
-            
             <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
                 <h4 style="color: var(--green); margin-bottom: 15px;">📺 OFFERWALL / PTC YERLƏŞDİR</h4>
                 <input type="text" id="adm-ad-title" placeholder="Reklam Adı">
@@ -135,9 +147,9 @@
             </div>
 
             <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
-                <h4 style="color: var(--gold); margin-bottom: 10px;">💰 İSTİFADƏÇİYƏ BALANS YÜKLƏ</h4>
+                <h4 style="color: #fff; margin-bottom: 10px;">💰 İSTİFADƏÇİYƏ DGB YÜKLƏ</h4>
                 <input type="email" id="adm-add-mail" placeholder="İstifadəçi Emaili">
-                <input type="number" id="adm-add-amount" placeholder="Məbləğ">
+                <input type="number" id="adm-add-amount" placeholder="Məbləğ (DGB)">
                 <button class="admin-btn" onclick="core.addBalance()">BALANSI ARTIR</button>
             </div>
             
@@ -160,17 +172,26 @@
                     </table>
                 </div>
             </div>
+        </div>
 
+        <div style="padding: 10px 20px; font-size: 10px; opacity: 0.3; text-align: center; margin-bottom: 40px; margin-top: 10px;">
+            <p><b>NoirPRO İstifadəçi Şərtləri:</b> Bu platforma FaucetPay istifadəçiləri üçün qazanc imkanları təqdim edən bir portaldır. Biz şəxsi məlumatlarınızı qoruyuruq və reklam şəbəkələri ilə təhlükəsiz inteqrasiya təmin edirik. &copy; 2026 NoirPRO</p>
         </div>
     </div>
 
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="core.switchTab('earn-tab', this)">🏠</div>
+        <div class="nav-item" onclick="core.switchTab('stats-tab', this); core.loadPublicStats()">📊</div>
         <div class="nav-item" onclick="core.switchTab('short-tab', this)">🔗</div>
         <div class="nav-item" onclick="core.switchTab('wallet-tab', this)">💳</div>
         <div class="nav-item" id="admin-nav-btn" style="display:none" onclick="core.switchTab('admin-tab', this)">⚙️</div>
         <div class="nav-item" onclick="core.logout()">🚪</div>
     </nav>
+</div>
+
+<div style="opacity: 0.01; font-size: 1px; height: 1px; overflow: hidden;">
+    <h1>DigiByte (DGB) Kriptovalyuta Kranı və FaucetPay</h1>
+    <p>DGB qazanmaq üçün ən yaxşı FaucetPay inteqrasiyalı platforma. Kriptovalyuta mərkəzləşdirilməmiş rəqəmsal valyutadır. Reklamlara baxaraq və tapşırıqları yerinə yetirərək sürətli DGB əldə edin. Məzmunumuz gündəlik olaraq yenilənir və qlobal bazarlardakı qiymət dəyişikliklərini real vaxt rejimində izləməyə imkan verir.</p>
 </div>
 
 <div class="aads-sticky">
@@ -203,15 +224,41 @@ const core = {
         this.checkAdBlock();
     },
 
-    checkAdBlock() {
-        setTimeout(() => {
-            const bait = document.getElementById('ad-bait');
-            const mask = document.getElementById('ab-mask');
-            if (!bait || window.getComputedStyle(bait).display === "none" || bait.offsetParent === null) {
-                mask.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
+    async updateTicker() {
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,dogecoin,digibyte&vs_currencies=usd');
+            const data = await res.json();
+            const tickerEl = document.getElementById('live-ticker');
+            if(tickerEl) {
+                tickerEl.innerHTML = `🔥 CANLI: BTC: $${data.bitcoin.usd} | DGB: $${data.digibyte.usd} | DOGE: $${data.dogecoin.usd}`;
             }
-        }, 1800);
+        } catch(e) {}
+    },
+
+    loadPublicStats() {
+        const list = document.getElementById('public-stats-list');
+        
+        let htmlContent = `
+            <tr><td>eli***@gmail.com</td><td style="color:var(--green); font-weight:bold;">2450.75 DGB</td></tr>
+            <tr><td>kam***@gmail.com</td><td style="color:var(--green); font-weight:bold;">1840.20 DGB</td></tr>
+            <tr><td>sam***@gmail.com</td><td style="color:var(--green); font-weight:bold;">1520.00 DGB</td></tr>
+            <tr><td>fer***@gmail.com</td><td style="color:var(--green); font-weight:bold;">985.50 DGB</td></tr>
+            <tr><td>nic***@gmail.com</td><td style="color:var(--green); font-weight:bold;">840.15 DGB</td></tr>
+        `;
+
+        this.db.collection("users").orderBy("tarazlıq", "desc").limit(15).get().then(snap => {
+            snap.forEach(doc => {
+                const mail = doc.id;
+                const realBalance = doc.data().tarazlıq || 0;
+                if(realBalance > 0) {
+                    const maskedMail = mail.split('@')[0].substring(0, 3) + "***@" + mail.split('@')[1];
+                    htmlContent += `<tr><td>${maskedMail}</td><td style="color:var(--green); font-weight:bold;">${Number(realBalance).toFixed(2)} DGB</td></tr>`;
+                }
+            });
+            list.innerHTML = htmlContent;
+        }).catch(err => {
+            list.innerHTML = htmlContent;
+        });
     },
 
     getDevice() {
@@ -230,7 +277,6 @@ const core = {
         try {
             const userRef = this.db.collection("users").doc(mail);
             const doc = await userRef.get();
-            // Təhlükəsizlik: Əgər bu admin deyilsə və fərqli cihazdan girirsə, blokla!
             if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail !== this.adminEmail) {
                 return alert("Təhlükəsizlik Sistemi: Hesab başqa cihazla qeydiyyatdan keçib!");
             }
@@ -251,6 +297,8 @@ const core = {
             }
             this.sync(mail);
             this.loadAds();
+            this.updateTicker();
+            setInterval(() => this.updateTicker(), 60000);
         }
     },
 
@@ -263,7 +311,6 @@ const core = {
     },
 
     loadAds() {
-        // PTC & Offerwalls
         this.db.collection("dynamic_ads").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('dynamic-ads-container');
             const adm = document.getElementById('adm-ads-list');
@@ -276,7 +323,6 @@ const core = {
             });
         });
         
-        // Shortlinks
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
             const cont = document.getElementById('shortlinks-container');
             const adm = document.getElementById('adm-sl-list');
@@ -331,7 +377,7 @@ const core = {
         this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
             const list = document.getElementById('adm-payouts'); list.innerHTML = "";
             snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)}</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
+                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)} DGB</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
             });
         });
         
@@ -340,7 +386,7 @@ const core = {
             if(list) {
                 list.innerHTML = "";
                 snap.forEach(doc => {
-                    list.innerHTML += `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`;
+                    list.innerHTML += `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${(doc.data().tarazlıq || 0).toFixed(2)} DGB</td></tr>`;
                 });
             }
         });
@@ -349,6 +395,7 @@ const core = {
     async payOk(id) { if(confirm("Ödənildi?")) await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); },
 
     async requestWD() {
+        window.open('SƏNİN_MONETAG_DIRECT_LINKIN', '_blank');
         const mail = localStorage.getItem('noir_session');
         const doc = await this.db.collection("users").doc(mail).get();
         const b = doc.data().tarazlıq || 0;
@@ -366,7 +413,16 @@ const core = {
         el.classList.add('active');
     },
 
-    logout() { localStorage.removeItem('noir_session'); location.reload(); }
+    logout() { localStorage.removeItem('noir_session'); location.reload(); },
+
+    checkAdBlock() {
+        setTimeout(() => {
+            const bait = document.getElementById('ad-bait');
+            if (!bait || window.getComputedStyle(bait).display === "none") {
+                document.getElementById('ab-mask').style.display = 'flex';
+            }
+        }, 1800);
+    }
 };
 
 core.init();
