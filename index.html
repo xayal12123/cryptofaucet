@@ -3,60 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Premium DGB Faucet Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <title>NoirPRO — Ultimate DGB Faucet Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050508; --gold: #FFC107; --card: #0f0f18; --text: #ffffff; --border: rgba(255,255,255,0.06); --green: #00E676; --red: #ff4444; }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.2s; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 100px; overflow-x: hidden; }
+        :root { --bg: #030305; --gold: #FFC107; --card: #0d0d14; --text: #f8f9fa; --border: rgba(255,255,255,0.08); --green: #00E676; --red: #ff5252; --accent: #1a1a2b; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 100px; overflow-x: hidden; }
         
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(5,5,8,0.95); backdrop-filter: blur(12px); z-index: 100; }
-        .bal-display { background: rgba(255,193,7,0.1); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.2); font-weight: 900; color: var(--gold); font-size: 14px; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0f; display: flex; justify-content: space-around; padding: 22px; border-top: 1px solid var(--border); z-index: 1000; }
-        .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; filter: grayscale(1); }
-        .nav-item.active { opacity: 1; filter: grayscale(0); }
+        header { padding: 25px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(3,3,5,0.9); backdrop-filter: blur(20px); z-index: 1000; }
+        .logo { font-size: 24px; font-weight: 900; color: var(--gold); letter-spacing: -1px; }
+        .bal-display { background: rgba(255,193,7,0.1); padding: 10px 18px; border-radius: 16px; border: 1px solid rgba(255,193,7,0.3); font-weight: 800; color: var(--gold); }
         
-        .container { max-width: 500px; margin: auto; padding: 15px; }
-        .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .container { max-width: 480px; margin: auto; padding: 20px; }
+        .card { background: var(--card); padding: 24px; border-radius: 30px; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        
         .tab { display: none; }
-        .active-tab { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .active-tab { display: block; animation: fadeInUp 0.5s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 14px; box-shadow: 0 5px 15px rgba(255,193,7,0.2); }
-        iframe { width: 100%; height: 500px; border-radius: 20px; border: 1px solid var(--border); background: #000; margin-top: 15px; }
-        input { width: 100%; padding: 15px; border-radius: 15px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 10px; outline: none; font-size: 13px; }
-        
-        .admin-btn { background: #1a1a25; color: var(--gold); border: 1px solid var(--gold); padding: 12px; border-radius: 12px; margin-top: 5px; cursor: pointer; width: 100%; font-size: 12px; font-weight: bold; }
-        .admin-item { background: #12121c; padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; border: 1px solid var(--border); }
-        .admin-del { color: var(--red); background: rgba(255,68,68,0.1); border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 11px; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
-        th { color: var(--gold); }
+        .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 18px; border: none; border-radius: 20px; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 13px; box-shadow: 0 8px 20px rgba(255,143,0,0.2); }
+        input { width: 100%; padding: 16px; border-radius: 18px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 12px; outline: none; font-size: 14px; }
 
-        #ab-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,8,0.98); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .ab-content { background: var(--card); padding: 40px; border-radius: 40px; border: 1px solid var(--red); max-width: 400px; box-shadow: 0 0 30px rgba(255,68,68,0.2); }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(13,13,20,0.95); display: flex; justify-content: space-around; padding: 20px; border-top: 1px solid var(--border); backdrop-filter: blur(15px); z-index: 1000; }
+        .nav-item { font-size: 26px; cursor: pointer; opacity: 0.3; filter: grayscale(1); transition: 0.4s; }
+        .nav-item.active { opacity: 1; filter: grayscale(0); transform: translateY(-8px); }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px 10px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border); }
+        th { color: var(--gold); font-size: 11px; text-transform: uppercase; }
+
+        .ad-slot { text-align: center; margin-bottom: 25px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px dashed var(--border); }
+        .aads-sticky { position: fixed; right: 0; top: 25%; z-index: 999; border: 1px solid var(--border); background: var(--card); padding: 5px; border-radius: 15px 0 0 15px; box-shadow: -5px 5px 20px rgba(0,0,0,0.5); }
         
-        .ad-slot { text-align: center; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px 10px; border-radius: 30px; border: 1px dashed var(--border); }
-        .aads-sticky { position: fixed; right: 0; top: 40%; z-index: 995; }
+        #ab-mask { display: none; position: fixed; inset: 0; background: rgba(3,3,5,0.98); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+        .admin-btn { background: var(--accent); color: var(--gold); border: 1px solid var(--gold); padding: 12px; border-radius: 14px; cursor: pointer; font-size: 12px; width: 100%; font-weight: bold; margin-top: 5px; }
+        .admin-del { color: var(--red); background: rgba(255,82,82,0.1); border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 11px; }
+        iframe { width: 100%; height: 500px; border-radius: 25px; border: 1px solid var(--border); background: #000; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<div class="ad-banner ads-box doubleclick adsense-ad" id="ad-bait" style="position:absolute; left:-999px; width:1px; height:1px;">&nbsp;</div>
-
+<div class="ad-banner" id="ad-bait" style="position:absolute; left:-999px; width:1px; height:1px;">&nbsp;</div>
 <div id="ab-mask">
-    <div class="ab-content">
-        <h1 style="font-size: 60px; margin-bottom: 10px;">🛑</h1>
-        <h2 style="color:#fff; margin-bottom: 15px; font-weight: 900;">ADBLOCK AŞKAR EDİLDİ!</h2>
-        <p style="opacity: 0.6; font-size: 13px; line-height: 1.6; margin-bottom: 30px;">Sistemimizin davamlılığı və sizə daha çox DGB qazandıra bilməyimiz üçün reklamlara ehtiyacımız var. Zəhmət olmasa blokerinizi söndürün.</p>
+    <div class="card" style="border-color: var(--red); text-align:center;">
+        <h1>🛑</h1>
+        <h2>ADBLOCK AKTİVDİR</h2>
+        <p style="opacity: 0.6; margin: 15px 0;">Sistemin davamlılığı üçün blokerinizi söndürün.</p>
         <button class="btn-main" onclick="location.reload()">SƏHİFƏNİ YENİLƏ</button>
     </div>
 </div>
 
-<div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 20px;">
-    <div style="background: var(--card); padding: 40px; border-radius: 40px; text-align: center; width: 100%; max-width: 400px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <h1 style="color: var(--gold); font-size: 40px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
-        <p style="opacity: 0.4; font-size: 12px; margin-bottom: 25px;">Premium DGB Faucet & Earn Platform</p>
+<div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 25px;">
+    <div class="card" style="width: 100%; max-width: 400px; text-align: center; padding: 45px 30px;">
+        <h1 style="color: var(--gold); font-size: 38px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
+        <p style="opacity: 0.4; font-size: 12px; margin-bottom: 35px;">Premium DGB Faucet & Earn Platform</p>
         <input type="email" id="email-input" placeholder="FaucetPay Email ünvanınız">
         <button onclick="core.login()" class="btn-main">SİSTEMƏ DAXİL OL</button>
     </div>
@@ -64,145 +64,105 @@
 
 <div id="app-content" style="display: none;">
     <header>
-        <h2 style="font-weight: 900; color: var(--gold); letter-spacing: -0.5px;">NoirPRO</h2>
-        <div class="bal-display">💰 <span id="user-bal">0.00</span> DGB</div>
+        <div class="logo">NoirPRO</div>
+        <div class="bal-display"><span id="user-bal">0.00</span> DGB</div>
     </header>
 
     <div class="container">
-        <div id="live-ticker" style="font-size: 11px; color: var(--gold); margin-bottom: 15px; opacity: 0.8; text-align: center; font-weight: bold; background: rgba(255,193,7,0.05); padding: 10px; border-radius: 12px; border: 1px solid rgba(255,193,7,0.1);">
-            🔥 CANLI: Yüklənir...
-        </div>
+        <div id="live-ticker" style="font-size: 11px; color: var(--gold); margin-bottom: 20px; text-align: center; font-weight: bold;">💎 BAZAR YÜKLƏNİR...</div>
 
         <div id="earn-tab" class="tab active-tab">
             <div class="ad-slot">
-                <p style="font-size: 9px; opacity: 0.3; margin-bottom: 8px;">SPONSORLU REKLAM</p>
                 <script type="text/javascript">
-                    atOptions = { 'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                    atOptions = {'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};
                 </script>
                 <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
             </div>
-            <div class="card" style="border-color: rgba(0, 230, 118, 0.2);">
-                <h3 style="color: var(--green); font-weight: 900; display: flex; align-items: center; justify-content: space-between;">
-                    <span>📲 İZLƏ VƏ QAZAN</span>
-                    <span style="font-size: 12px; background: rgba(0,230,118,0.1); padding: 5px 10px; border-radius: 8px;">~0.05 DGB</span>
-                </h3>
-                <p style="font-size: 11px; opacity: 0.5; margin-top: 5px;">Reklamlara baxaraq və tapşırıqları tamamlayaraq DGB əldə edin.</p>
-                <div id="dynamic-ads-container">
-                    <p style="text-align:center; opacity:0.3; margin-top:30px;">Reklamlar yüklənir...</p>
-                </div>
-            </div>
-        </div>
 
-        <div id="stats-tab" class="tab">
-            <div class="card" style="border-color: var(--gold);">
-                <h3 style="color: var(--gold); font-weight: 900; margin-bottom: 15px;">🏆 TOP DGB QAZANANLAR</h3>
-                <p style="font-size: 11px; opacity: 0.5; margin-bottom: 15px;">Sistemdə ən çox DGB toplayan istifadəçilər.</p>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead>
-                            <tr><th>İstifadəçi</th><th>Balans</th></tr>
-                        </thead>
-                        <tbody id="public-stats-list">
-                            <tr><td colspan="2" style="text-align:center; opacity:0.3;">Yüklənir...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="card" style="border-color: rgba(255,193,7,0.4);">
+                <h3>🏆 TOP QAZANANLAR</h3>
+                <table><tbody id="home-stats-list"></tbody></table>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--green);"><span>📲</span> PTC / OFFERWALLS</h3>
+                <div id="dynamic-ads-container"></div>
             </div>
         </div>
 
         <div id="short-tab" class="tab">
-            <h3 style="color: var(--gold); margin-bottom: 5px; font-weight: 900; display: flex; align-items: center; justify-content: space-between;">
-                <span>🔗 SÜRƏTLİ KEÇİDLƏR</span>
-                <span style="font-size: 12px; background: rgba(255,193,7,0.1); padding: 5px 10px; border-radius: 8px;">~0.10 DGB</span>
-            </h3>
-            <p style="font-size: 11px; opacity: 0.5; margin-bottom: 20px;">Keçidləri tamamlayaraq anında DGB balansınızı artırın.</p>
+            <h3 style="color: var(--gold); margin-bottom: 20px;">🔗 SÜRƏTLİ KEÇİDLƏR (~0.10 DGB)</h3>
             <div id="shortlinks-container"></div>
         </div>
 
         <div id="wallet-tab" class="tab">
-            <div class="card" style="text-align: center; padding: 50px 20px;">
-                <p style="opacity: 0.5; margin-bottom: 10px;">Mövcud Balansınız</p>
-                <h1 style="font-size: 60px; color: var(--gold); font-weight: 900; margin-bottom: 5px;" id="wd-bal">0.00</h1>
-                <p style="color: var(--gold); font-weight: bold; font-size: 20px; margin-bottom: 25px;">DGB</p>
-                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 30 DGB)</button>
-                <p style="font-size: 11px; color: var(--gold); opacity: 0.5; margin-top: 15px;">* Ödənişlər birbaşa FaucetPay hesabınıza göndəriləcək.</p>
+            <div class="card" style="text-align: center; padding: 40px 20px;">
+                <p style="opacity: 0.5;">Balansınız</p>
+                <h1 style="font-size: 70px; color: var(--gold); font-weight: 900; margin: 10px 0;" id="wd-bal">0.00</h1>
+                <p style="color: var(--gold); font-weight: bold; font-size: 20px; margin-bottom: 30px;">DGB</p>
+                <button class="btn-main" onclick="core.requestWD()">ÖDƏNİŞ İSTƏ (MIN 5 DGB)</button>
             </div>
         </div>
 
         <div id="admin-tab" class="tab">
-            <div class="card" style="border-color: rgba(0, 230, 118, 0.3);">
-                <h4 style="color: var(--green); margin-bottom: 15px;">📺 OFFERWALL / PTC YERLƏŞDİR</h4>
-                <input type="text" id="adm-ad-title" placeholder="Reklam Adı">
+            <div class="card" style="border-color: var(--red);">
+                <h4>🚀 1000 FAKE İSTİFADƏÇİ YARAT</h4>
+                <button class="admin-btn" style="background:var(--red); color:white;" onclick="core.generateMassFake()">TOPLU YARADICI AKTİV ET</button>
+            </div>
+
+            <div class="card" style="border-color: var(--green);">
+                <h4>📺 PTC / OFFERWALL ƏLAVƏ ET</h4>
+                <input type="text" id="adm-ad-title" placeholder="Reklam Başlığı">
                 <input type="text" id="adm-ad-url" placeholder="Iframe URL">
-                <button class="admin-btn" onclick="core.saveAd()">BAZAYA YAZ VƏ YAYIMLA</button>
-                <div id="adm-ads-list" style="margin-top:15px;"></div>
+                <button class="admin-btn" style="background:var(--green); color:black;" onclick="core.saveAd()">YAYIMLA</button>
+                <div id="adm-ads-list" style="margin-top:10px;"></div>
             </div>
 
-            <div class="card" style="border-color: rgba(255, 193, 7, 0.3);">
-                <h4 style="color: var(--gold); margin-bottom: 15px;">🔗 SHORTLINK ƏLAVƏ ET</h4>
+            <div class="card" style="border-color: var(--gold);">
+                <h4>🔗 SHORTLINK ƏLAVƏ ET</h4>
                 <input type="text" id="adm-sl-title" placeholder="Link Adı">
-                <input type="text" id="adm-sl-url" placeholder="Qısa Link URL">
-                <button class="admin-btn" onclick="core.saveSL()">SİYAHIYA ƏLAVƏ ET</button>
-                <div id="adm-sl-list" style="margin-top:15px;"></div>
+                <input type="text" id="adm-sl-url" placeholder="Link URL">
+                <button class="admin-btn" style="background:var(--gold); color:black;" onclick="core.saveSL()">BAZAYA ƏLAVƏ ET</button>
+                <div id="adm-sl-list" style="margin-top:10px;"></div>
             </div>
 
-            <div class="card" style="border-color: rgba(255, 255, 255, 0.2);">
-                <h4 style="color: #fff; margin-bottom: 10px;">💰 İSTİFADƏÇİYƏ DGB YÜKLƏ</h4>
-                <input type="email" id="adm-add-mail" placeholder="İstifadəçi Emaili">
-                <input type="number" id="adm-add-amount" placeholder="Məbləğ (DGB)">
-                <button class="admin-btn" onclick="core.addBalance()">BALANSI ARTIR</button>
+            <div class="card" style="border-color: var(--red);">
+                <h4>💸 GÖZLƏYƏN ÖDƏNİŞLƏR</h4>
+                <table><tbody id="adm-payouts-list"></tbody></table>
             </div>
-            
-            <div class="card" style="border-color: rgba(255, 68, 68, 0.3);">
-                <h4 style="color: var(--red); margin-bottom: 10px;">💸 ÖDƏNİŞ SORĞULARI</h4>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead><tr><th>İstifadəçi</th><th>Məbləğ</th><th>Təsdiq</th></tr></thead>
-                        <tbody id="adm-payouts"></tbody>
-                    </table>
+
+            <div class="card" style="border-color: rgba(255,255,255,0.1);">
+                <h4>📜 SON ÖDƏNİŞ TARİXÇƏSİ</h4>
+                <table><tbody id="adm-history-list"></tbody></table>
+            </div>
+
+            <div class="card">
+                <h4>💰 REAL İSTİFADƏÇİ SİYAHISI</h4>
+                <div style="max-height: 250px; overflow-y: auto;">
+                    <table><tbody id="adm-users-list"></tbody></table>
                 </div>
             </div>
 
-            <div class="card" style="border-color: rgba(255, 255, 255, 0.1);">
-                <h4 style="color: #fff; margin-bottom: 10px;">👥 İSTİFADƏÇİ SİYAHISI</h4>
-                <div style="overflow-x:auto;">
-                    <table>
-                        <thead><tr><th>Email</th><th>Balans (DGB)</th></tr></thead>
-                        <tbody id="adm-users-list"></tbody>
-                    </table>
-                </div>
+            <div class="card">
+                <h4>➕ BALANS ARTIR</h4>
+                <input type="email" id="adm-add-mail" placeholder="İstifadəçi Email">
+                <input type="number" id="adm-add-amount" placeholder="DGB Məbləğ">
+                <button class="admin-btn" onclick="core.addBalance()">GÖNDƏR</button>
             </div>
-        </div>
-
-        <div style="padding: 10px 20px; font-size: 10px; opacity: 0.3; text-align: center; margin-bottom: 40px; margin-top: 10px;">
-            <p><b>NoirPRO İstifadəçi Şərtləri:</b> Bu platforma FaucetPay istifadəçiləri üçün qazanc imkanları təqdim edən bir portaldır. Biz şəxsi məlumatlarınızı qoruyuruq və reklam şəbəkələri ilə təhlükəsiz inteqrasiya təmin edirik. &copy; 2026 NoirPRO</p>
         </div>
     </div>
 
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="core.switchTab('earn-tab', this)">🏠</div>
-        <div class="nav-item" onclick="core.switchTab('stats-tab', this); core.loadPublicStats()">📊</div>
         <div class="nav-item" onclick="core.switchTab('short-tab', this)">🔗</div>
         <div class="nav-item" onclick="core.switchTab('wallet-tab', this)">💳</div>
-        <div class="nav-item" id="admin-nav-btn" style="display:none" onclick="core.switchTab('admin-tab', this)">⚙️</div>
+        <div id="admin-nav-btn" class="nav-item" style="display:none" onclick="core.switchTab('admin-tab', this)">⚙️</div>
         <div class="nav-item" onclick="core.logout()">🚪</div>
     </nav>
 </div>
 
-<div style="opacity: 0.01; font-size: 1px; height: 1px; overflow: hidden;">
-    <h1>DigiByte (DGB) Kriptovalyuta Kranı və FaucetPay</h1>
-    <p>DGB qazanmaq üçün ən yaxşı FaucetPay inteqrasiyalı platforma. Kriptovalyuta mərkəzləşdirilməmiş rəqəmsal valyutadır. Reklamlara baxaraq və tapşırıqları yerinə yetirərək sürətli DGB əldə edin. Məzmunumuz gündəlik olaraq yenilənir və qlobal bazarlardakı qiymət dəyişikliklərini real vaxt rejimində izləməyə imkan verir.</p>
-</div>
-
 <div class="aads-sticky">
-    <input type="checkbox" id="aads-cls" hidden>
-    <div id="aads-box">
-        <label for="aads-cls" style="background:var(--gold); color:#000; padding:4px; font-size:10px; cursor:pointer; font-weight:bold; display:block; text-align:center; border-radius: 4px 0 0 4px;">X</label>
-        <div style="background:var(--card); border:1px solid var(--border); border-right:none; border-radius:10px 0 0 10px; padding:5px;">
-            <iframe data-aa="2436739" src="//acceptable.a-ads.com/2436739/?size=Adaptive" style="border:0; width:100px; height:250px; overflow:hidden;"></iframe>
-        </div>
-    </div>
-    <style>#aads-cls:checked ~ #aads-box { display:none; }</style>
+    <iframe data-aa="2436739" src="//acceptable.a-ads.com/2436739/?size=120x240" style="border:0; width:120px; height:240px; overflow:hidden; background-color: transparent;"></iframe>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -221,213 +181,175 @@ const core = {
         firebase.initializeApp(this.config);
         this.db = firebase.firestore();
         this.checkAuth();
+        this.loadHomeStats();
         this.checkAdBlock();
     },
 
-    async updateTicker() {
-        try {
-            const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,dogecoin,digibyte&vs_currencies=usd');
-            const data = await res.json();
-            const tickerEl = document.getElementById('live-ticker');
-            if(tickerEl) {
-                tickerEl.innerHTML = `🔥 CANLI: BTC: $${data.bitcoin.usd} | DGB: $${data.digibyte.usd} | DOGE: $${data.dogecoin.usd}`;
-            }
-        } catch(e) {}
-    },
-
-    loadPublicStats() {
-        const list = document.getElementById('public-stats-list');
-        
-        let htmlContent = `
-            <tr><td>eli***@gmail.com</td><td style="color:var(--green); font-weight:bold;">2450.75 DGB</td></tr>
-            <tr><td>kam***@gmail.com</td><td style="color:var(--green); font-weight:bold;">1840.20 DGB</td></tr>
-            <tr><td>sam***@gmail.com</td><td style="color:var(--green); font-weight:bold;">1520.00 DGB</td></tr>
-            <tr><td>fer***@gmail.com</td><td style="color:var(--green); font-weight:bold;">985.50 DGB</td></tr>
-            <tr><td>nic***@gmail.com</td><td style="color:var(--green); font-weight:bold;">840.15 DGB</td></tr>
-        `;
-
-        this.db.collection("users").orderBy("tarazlıq", "desc").limit(15).get().then(snap => {
-            snap.forEach(doc => {
-                const mail = doc.id;
-                const realBalance = doc.data().tarazlıq || 0;
-                if(realBalance > 0) {
-                    const maskedMail = mail.split('@')[0].substring(0, 3) + "***@" + mail.split('@')[1];
-                    htmlContent += `<tr><td>${maskedMail}</td><td style="color:var(--green); font-weight:bold;">${Number(realBalance).toFixed(2)} DGB</td></tr>`;
-                }
-            });
-            list.innerHTML = htmlContent;
-        }).catch(err => {
-            list.innerHTML = htmlContent;
-        });
-    },
-
-    getDevice() {
-        let id = localStorage.getItem('noir_device_master_v1');
-        if(!id) { 
-            id = 'dev-' + Math.random().toString(36).substr(2, 12); 
-            localStorage.setItem('noir_device_master_v1', id); 
-        }
-        return id;
-    },
-
     async login() {
-        const mail = document.getElementById('email-input').value.trim().toLowerCase();
-        if(!mail.includes('@')) return alert("Zəhmət olmasa düzgün email daxil edin!");
-        const dev = this.getDevice();
-        try {
-            const userRef = this.db.collection("users").doc(mail);
-            const doc = await userRef.get();
-            if(doc.exists && doc.data().deviceID && doc.data().deviceID !== dev && mail !== this.adminEmail) {
-                return alert("Təhlükəsizlik Sistemi: Hesab başqa cihazla qeydiyyatdan keçib!");
-            }
-            localStorage.setItem('noir_session', mail);
-            await userRef.set({ email: mail, deviceID: dev }, { merge: true });
-            location.reload();
-        } catch(e) { alert("Xəta baş verdi!"); }
+        const m = document.getElementById('email-input').value.trim().toLowerCase();
+        if(!m.includes('@')) return alert("Email səhvdir!");
+        localStorage.setItem('noir_session', m);
+        await this.db.collection("users").doc(m).set({ email: m, date: Date.now() }, { merge: true });
+        location.reload();
     },
 
     checkAuth() {
-        const mail = localStorage.getItem('noir_session');
-        if(mail) {
+        const m = localStorage.getItem('noir_session');
+        if(m) {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            if(mail === this.adminEmail) {
+            if(m === this.adminEmail) {
                 document.getElementById('admin-nav-btn').style.display = 'block';
                 this.loadAdminData();
             }
-            this.sync(mail);
+            this.sync(m);
             this.loadAds();
             this.updateTicker();
             setInterval(() => this.updateTicker(), 60000);
         }
     },
 
-    sync(mail) {
-        this.db.collection("users").doc(mail).onSnapshot(doc => {
+    sync(m) {
+        this.db.collection("users").doc(m).onSnapshot(doc => {
             const b = doc.exists ? (doc.data().tarazlıq || 0) : 0;
-            document.getElementById('user-bal').innerText = Number(b).toFixed(2);
-            document.getElementById('wd-bal').innerText = Number(b).toFixed(2);
+            document.getElementById('user-bal').innerText = b.toFixed(2);
+            document.getElementById('wd-bal').innerText = b.toFixed(2);
         });
     },
 
     loadAds() {
         this.db.collection("dynamic_ads").orderBy("date", "desc").onSnapshot(snap => {
-            const cont = document.getElementById('dynamic-ads-container');
-            const adm = document.getElementById('adm-ads-list');
-            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Təklif yoxdur.</p>" : "";
-            if(adm) adm.innerHTML = "";
-            snap.forEach(doc => {
-                const d = doc.data();
-                cont.innerHTML += `<div style="margin-bottom:25px;"><h4 style="color:var(--text); border-left:3px solid var(--green); padding-left:10px; margin-bottom:10px;">${d.title}</h4><iframe src="${d.url}"></iframe></div>`;
-                if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','dynamic_ads')">SİL</button></div>`;
-            });
+            document.getElementById('dynamic-ads-container').innerHTML = snap.docs.map(doc => `<div style="margin-bottom:25px;"><h4>${doc.data().title}</h4><iframe src="${doc.data().url}"></iframe></div>`).join('');
+            if(localStorage.getItem('noir_session') === this.adminEmail) {
+                document.getElementById('adm-ads-list').innerHTML = snap.docs.map(doc => `<div class="admin-item"><span>${doc.data().title}</span><button class="admin-del" onclick="core.del('${doc.id}','dynamic_ads')">SİL</button></div>`).join('');
+            }
         });
-        
         this.db.collection("shortlinks").orderBy("date", "desc").onSnapshot(snap => {
-            const cont = document.getElementById('shortlinks-container');
-            const adm = document.getElementById('adm-sl-list');
-            cont.innerHTML = snap.empty ? "<p style='text-align:center; opacity:0.3;'>Link yoxdur.</p>" : "";
-            if(adm) adm.innerHTML = "";
-            const userMail = localStorage.getItem('noir_session');
-            snap.forEach(doc => {
-                const d = doc.data();
-                const finalUrl = d.url.includes('?') ? `${d.url}&alias=${userMail}` : `${d.url}?alias=${userMail}`;
-                cont.innerHTML += `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; background: linear-gradient(145deg, #12121c, #0a0a0f);"><b style="font-size:14px; color:var(--text);">${d.title}</b><button class="btn-main" style="width:auto; padding:12px 20px; font-size:11px;" onclick="window.open('${finalUrl}', '_blank')">KEÇİD</button></div>`;
-                if(adm) adm.innerHTML += `<div class="admin-item"><span>${d.title}</span><button class="admin-del" onclick="core.del('${doc.id}','shortlinks')">SİL</button></div>`;
-            });
+            document.getElementById('shortlinks-container').innerHTML = snap.docs.map(doc => `<div class="card" style="display:flex; justify-content:space-between; align-items:center; padding:18px;"><b>${doc.data().title}</b><button class="btn-main" style="width:auto; padding:10px 20px; font-size:11px;" onclick="window.open('${doc.data().url}', '_blank')">KEÇİD</button></div>`).join('');
+            if(localStorage.getItem('noir_session') === this.adminEmail) {
+                document.getElementById('adm-sl-list').innerHTML = snap.docs.map(doc => `<div class="admin-item"><span>${doc.data().title}</span><button class="admin-del" onclick="core.del('${doc.id}','shortlinks')">SİL</button></div>`).join('');
+            }
         });
-    },
-
-    async saveAd() {
-        const title = document.getElementById('adm-ad-title').value.trim();
-        const url = document.getElementById('adm-ad-url').value.trim();
-        if(!title || !url) return alert("Doldurun!");
-        await this.db.collection("dynamic_ads").add({ title, url, date: Date.now() });
-        document.getElementById('adm-ad-title').value = ""; document.getElementById('adm-ad-url').value = "";
-    },
-
-    async saveSL() {
-        const title = document.getElementById('adm-sl-title').value.trim();
-        const url = document.getElementById('adm-sl-url').value.trim();
-        if(!title || !url) return alert("Doldurun!");
-        await this.db.collection("shortlinks").add({ title, url, date: Date.now() });
-        document.getElementById('adm-sl-title').value = ""; document.getElementById('adm-sl-url').value = "";
-    },
-
-    del(id, coll) { if(confirm("Birdəfəlik silinsin?")) this.db.collection(coll).doc(id).delete(); },
-
-    async addBalance() {
-        const mail = document.getElementById('adm-add-mail').value.trim().toLowerCase();
-        const amount = parseFloat(document.getElementById('adm-add-amount').value);
-        if(!mail || isNaN(amount) || amount <= 0) return alert("Düzgün daxil edin.");
-        try {
-            const ref = this.db.collection("users").doc(mail);
-            const doc = await ref.get();
-            if(doc.exists) {
-                const newBal = (doc.data().tarazlıq || 0) + amount;
-                await ref.update({ tarazlıq: newBal });
-                alert(`✅ ${amount} DGB əlavə edildi.`);
-                document.getElementById('adm-add-mail').value = "";
-                document.getElementById('adm-add-amount').value = "";
-            } else { alert("❌ İstifadəçi tapılmadı!"); }
-        } catch(e) { alert("Xəta!"); }
     },
 
     loadAdminData() {
-        this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
-            const list = document.getElementById('adm-payouts'); list.innerHTML = "";
-            snap.forEach(doc => {
-                list.innerHTML += `<tr><td>${doc.data().email}</td><td><b style="color:var(--gold)">${doc.data().amount.toFixed(2)} DGB</b></td><td><button onclick="core.payOk('${doc.id}')" style="color:var(--green); background:rgba(0,230,118,0.1); border:1px solid var(--green); padding:5px 10px; border-radius:8px; font-weight:900; cursor:pointer;">ÖDƏ</button></td></tr>`;
-            });
-        });
-        
+        // İSTİFADƏÇİ SİYAHISI (Yeni qoşulanlar daxil)
         this.db.collection("users").onSnapshot(snap => {
-            const list = document.getElementById('adm-users-list'); 
-            if(list) {
-                list.innerHTML = "";
-                snap.forEach(doc => {
-                    list.innerHTML += `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${(doc.data().tarazlıq || 0).toFixed(2)} DGB</td></tr>`;
-                });
-            }
+            document.getElementById('adm-users-list').innerHTML = snap.docs.map(doc => {
+                const b = doc.data().tarazlıq !== undefined ? doc.data().tarazlıq : 0;
+                return `<tr><td>${doc.id}</td><td style="color:var(--green); font-weight:bold;">${b.toFixed(2)} DGB</td></tr>`;
+            }).join('');
+        });
+
+        // GÖZLƏYƏN ÖDƏNİŞLƏR
+        this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
+            const l = document.getElementById('adm-payouts-list');
+            if(snap.empty) { l.innerHTML = "<tr><td colspan='3' style='text-align:center; opacity:0.3;'>Sorğu yoxdur.</td></tr>"; return; }
+            l.innerHTML = snap.docs.map(doc => `<tr><td>${doc.data().email}</td><td>${doc.data().amount.toFixed(2)}</td><td><button class="admin-btn" style="background:var(--green); color:#000;" onclick="core.payOk('${doc.id}')">ÖDƏNDİ</button></td></tr>`).join('');
+        });
+
+        // TARİXÇƏ
+        this.db.collection("withdraws").where("status", "==", "Ödənildi").orderBy("date", "desc").limit(10).onSnapshot(snap => {
+            const h = document.getElementById('adm-history-list');
+            if(snap.empty) { h.innerHTML = "<tr><td colspan='2' style='text-align:center; opacity:0.3;'>Tarixçə boşdur.</td></tr>"; return; }
+            h.innerHTML = snap.docs.map(doc => `<tr><td>${doc.data().email}</td><td style="color:var(--green); font-weight:bold;">+${doc.data().amount.toFixed(2)} DGB</td></tr>`).join('');
         });
     },
 
-    async payOk(id) { if(confirm("Ödənildi?")) await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi" }); },
+    async generateMassFake() {
+        if(!confirm("1000 feyk istifadəçi yaradılsın?")) return;
+        const dom = ["gmail.com", "mail.ru", "yahoo.com"]; const pre = ["pro", "king", "faucet", "noir"];
+        alert("Proses başladı, gözləyin...");
+        for (let i = 0; i < 1000; i++) {
+            let m = pre[Math.floor(Math.random()*pre.length)] + Math.floor(Math.random()*9999) + "@" + dom[Math.floor(Math.random()*dom.length)];
+            let b = parseFloat((Math.random()*(1500-5)+5).toFixed(2));
+            await this.db.collection("fake_users").doc(m).set({ tarazlıq: b, date: Date.now() });
+        }
+        alert("✅ Tamamlandı!");
+        this.loadHomeStats();
+    },
+
+    async payOk(id) { 
+        if(confirm("Ödəniş edildi?")) {
+            await this.db.collection("withdraws").doc(id).update({ status: "Ödənildi", date: Date.now() }); 
+            alert("Təsdiqləndi!");
+        }
+    },
 
     async requestWD() {
-        window.open('SƏNİN_MONETAG_DIRECT_LINKIN', '_blank');
-        const mail = localStorage.getItem('noir_session');
-        const doc = await this.db.collection("users").doc(mail).get();
+        window.open('https://www.profitablecpmratenetwork.com/d5pga1vdpp?key=91d95e55af6042708b6464ad2db85c92', '_blank');
+        const m = localStorage.getItem('noir_session');
+        const doc = await this.db.collection("users").doc(m).get();
         const b = doc.data().tarazlıq || 0;
-        if(b >= 30) {
-            await this.db.collection("withdraws").add({ email: mail, amount: b, status: "Gözləmədə", date: Date.now() });
-            await this.db.collection("users").doc(mail).update({ tarazlıq: 0 });
-            alert("Sorğu göndərildi!");
-        } else { alert(`Limit 30 DGB.`); }
+        if(b >= 5) {
+            await this.db.collection("withdraws").add({ email: m, amount: b, status: "Gözləmədə", date: Date.now() });
+            await this.db.collection("users").doc(m).update({ tarazlıq: 0 });
+            alert("Ödəniş sorğusu göndərildi!");
+        } else { alert("Minimum 5 DGB limitinə çatmalısınız!"); }
     },
 
-    switchTab(tabId, el) {
+    async loadHomeStats() {
+        const list = document.getElementById('home-stats-list');
+        let combined = [];
+        const rSnap = await this.db.collection("users").orderBy("tarazlıq", "desc").limit(5).get();
+        rSnap.forEach(d => { if(d.data().tarazlıq > 0) combined.push({id: d.id, bal: d.data().tarazlıq}); });
+        const fSnap = await this.db.collection("fake_users").orderBy("tarazlıq", "desc").limit(10).get();
+        fSnap.forEach(d => { combined.push({id: d.id, bal: d.data().tarazlıq}); });
+        combined.sort((a,b) => b.bal - a.bal);
+        list.innerHTML = combined.slice(0, 10).map(u => `<tr><td>${u.id.substring(0,3)}***@...</td><td style="color:var(--green); font-weight:800;">${u.bal.toFixed(2)} DGB</td></tr>`).join('');
+    },
+
+    async addBalance() {
+        const m = document.getElementById('adm-add-mail').value.trim();
+        const a = parseFloat(document.getElementById('adm-add-amount').value);
+        const ref = this.db.collection("users").doc(m);
+        const doc = await ref.get();
+        if(doc.exists) {
+            await ref.update({ tarazlıq: (doc.data().tarazlıq || 0) + a });
+            alert("Balans artırıldı!");
+        } else { alert("İstifadəçi tapılmadı!"); }
+    },
+
+    async saveAd() {
+        const t = document.getElementById('adm-ad-title').value;
+        const u = document.getElementById('adm-ad-url').value;
+        await this.db.collection("dynamic_ads").add({ title: t, url: u, date: Date.now() });
+        alert("Əlavə edildi!");
+    },
+
+    async saveSL() {
+        const t = document.getElementById('adm-sl-title').value;
+        const u = document.getElementById('adm-sl-url').value;
+        await this.db.collection("shortlinks").add({ title: t, url: u, date: Date.now() });
+        alert("Əlavə edildi!");
+    },
+
+    del(id, coll) { if(confirm("Silinsin?")) this.db.collection(coll).doc(id).delete(); },
+    switchTab(id, el) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
-        document.getElementById(tabId).classList.add('active-tab');
+        document.getElementById(id).classList.add('active-tab');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         el.classList.add('active');
     },
-
+    async updateTicker() {
+        try {
+            const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,digibyte&vs_currencies=usd');
+            const d = await r.json();
+            document.getElementById('live-ticker').innerHTML = `🔥 BTC: $${d.bitcoin.usd} | DGB: $${d.digibyte.usd}`;
+        } catch(e) {}
+    },
     logout() { localStorage.removeItem('noir_session'); location.reload(); },
-
     checkAdBlock() {
         setTimeout(() => {
-            const bait = document.getElementById('ad-bait');
-            if (!bait || window.getComputedStyle(bait).display === "none") {
-                document.getElementById('ab-mask').style.display = 'flex';
-            }
-        }, 1800);
+            const b = document.getElementById('ad-bait');
+            if (!b || window.getComputedStyle(b).display === "none") document.getElementById('ab-mask').style.display = 'flex';
+        }, 2000);
     }
 };
-
 core.init();
 </script>
 
+<script src="https://pl29339152.profitablecpmratenetwork.com/4e/94/4e/4e944efcd350a9bb4fbd08db9aa221a7.js"></script>
 <script src="https://bitcotasks.com/popad.min.js?pub=Njk2NDM=&f=1&t=24"></script>
 
 </body>
