@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <meta charset="UTF-8">
-    <title>Doğrulanır...</title>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <meta charset="UTF-8"><title>NoirPRO — Success</title>
+    <style>body { background:#030305; color:#FFC107; display:flex; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; text-align:center; }</style>
 </head>
-<body style="background:#050508; color:#FFC107; text-align:center; padding-top:100px; font-family:sans-serif;">
-    <h2>NoirPRO</h2>
-    <p>Balansınız yenilənir, bir neçə saniyə gözləyin...</p>
-    <script>
-        const config = { 
-            apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", 
-            authDomain: "faucetfirex.firebaseapp.com", 
-            projectId: "faucetfirex" 
-        };
-        firebase.initializeApp(config);
-        const db = firebase.firestore();
-        const mail = localStorage.getItem('noir_session');
-        const dev = localStorage.getItem('noir_secure_v100');
-
-        if(mail && dev) {
-            db.collection("users").doc(mail).get().then(doc => {
-                if(doc.exists && doc.data().deviceID === dev) {
-                    db.collection("users").doc(mail).update({
-                        tarazlıq: firebase.firestore.FieldValue.increment(0.30)
-                    }).then(() => {
-                        alert("UĞURLU: 0.30 DGB balansınıza əlavə olundu!");
-                        window.location.href = "index.html";
-                    });
-                } else { window.location.href = "index.html"; }
-            });
-        } else { window.location.href = "index.html"; }
-    </script>
+<body>
+    <div id="box"><h2>TƏSDİQLƏNİR...</h2><p>DGB balansınıza yüklənir.</p></div>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+<script>
+    const config = { apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", authDomain: "faucetfirex.firebaseapp.com", projectId: "faucetfirex" };
+    firebase.initializeApp(config);
+    const db = firebase.firestore();
+    async function verify() {
+        const p = new URLSearchParams(window.location.search);
+        const u = p.get('uid'), l = p.get('lid');
+        if(u && l) {
+            const r = db.collection("users").doc(u);
+            const d = await r.get();
+            if(d.exists) {
+                const bal = d.data().tarazlıq || 0;
+                const done = d.data().completed_today || [];
+                if(!done.includes(l)) done.push(l);
+                await r.update({ tarazlıq: bal + 0.10, completed_today: done });
+                document.getElementById('box').innerHTML = "<h1 style='color:#00E676;'>✅ +0.10 DGB!</h1>";
+                setTimeout(() => window.location.href="index.html", 2500);
+            }
+        }
+    }
+    verify();
+</script>
 </body>
 </html>
-
