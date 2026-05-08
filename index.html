@@ -1,57 +1,51 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="237228" async data-cfasync="false"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoirPRO — Ultimate Crypto Engine</title>
+    <title>NoirPRO — God Engine Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    
     <style>
-        :root { --bg: #030305; --gold: #FFC107; --card: #0d0d14; --text: #f8f9fa; --border: rgba(255,255,255,0.08); --green: #00E676; --red: #ff5252; --tg: #26A5E4; }
+        :root { --bg: #030305; --gold: #FFC107; --card: #0d0d14; --text: #f8f9fa; --border: rgba(255,255,255,0.08); --green: #00E676; --red: #ff5252; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 140px; overflow-x: hidden; }
-        
-        /* REKLAM SAHƏLƏRİ VƏ BOŞLUQLAR */
-        .ad-slot { margin: 35px auto; text-align: center; display: flex; justify-content: center; width: 100%; min-height: 50px; overflow: hidden; }
-        #sticky-ad-container { position: fixed; bottom: 95px; left: 0; width: 100%; z-index: 999; background: rgba(13,13,20,0.9); border-top: 1px solid var(--border); padding: 5px 0; display: flex; justify-content: center; backdrop-filter: blur(10px); }
-        .close-ad { position: absolute; top: -20px; right: 10px; background: var(--red); color: white; font-size: 10px; padding: 2px 8px; border-radius: 5px; cursor: pointer; }
-
         header { padding: 25px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(3,3,5,0.9); backdrop-filter: blur(25px); z-index: 1000; }
         .logo { font-size: 26px; font-weight: 900; color: var(--gold); }
-        .bal-display { background: rgba(255,193,7,0.1); padding: 10px 20px; border-radius: 20px; border: 1px solid var(--gold); font-weight: 800; color: var(--gold); }
+        .bal-display { background: rgba(255,193,7,0.1); padding: 10px 20px; border-radius: 20px; border: 1px solid var(--gold); font-weight: 800; }
         .container { max-width: 550px; margin: auto; padding: 20px; }
         .card { background: var(--card); padding: 25px; border-radius: 35px; border: 1px solid var(--border); margin-bottom: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
         .tab { display: none; }
         .active-tab { display: block; animation: slideUp 0.6s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 20px; border: none; border-radius: 22px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 13px; }
-        .btn-tg { background: var(--tg); color: white; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; padding: 15px; border-radius: 18px; font-weight: 700; margin-top: 15px; }
-        input { width: 100%; padding: 18px; border-radius: 20px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 15px; outline: none; }
+        .btn-main { background: linear-gradient(135deg, var(--gold), #FF8F00); color: #000; width: 100%; padding: 18px; border: none; border-radius: 22px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+        input, select { width: 100%; padding: 18px; border-radius: 20px; background: #000; border: 1px solid var(--border); color: #fff; margin-bottom: 15px; outline: none; }
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(13,13,20,0.98); display: flex; justify-content: space-around; padding: 25px; border-top: 1px solid var(--border); backdrop-filter: blur(20px); z-index: 1000; }
         .nav-item { font-size: 28px; cursor: pointer; opacity: 0.2; }
         .nav-item.active { opacity: 1; transform: translateY(-12px); color: var(--gold); }
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 15px 10px; border-bottom: 1px solid var(--border); font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        td, th { padding: 12px 10px; border-bottom: 1px solid var(--border); font-size: 12px; text-align: left; }
+        .reward-badge { background: var(--green); color: #000; padding: 4px 10px; border-radius: 12px; font-weight: 800; font-size: 10px; }
+        #ptc-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; }
+        #ptc-header { height: 75px; background: var(--card); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; border-bottom: 2px solid var(--gold); }
+        #ptc-timer-display { font-size: 22px; font-weight: 900; color: var(--gold); }
     </style>
 </head>
 <body>
 
+<div id="ptc-overlay">
+    <div id="ptc-header">
+        <div id="ptc-timer-display">Gözləyin: <span id="ptc-sec">0</span>s</div>
+        <button id="ptc-claim-btn" class="btn-main" style="width: auto; padding: 10px 20px; display: none;" onclick="core.claimPTC()">MÜKAFATI AL</button>
+    </div>
+    <iframe id="ptc-iframe" style="width:100%; height:calc(100% - 75px); border:none;"></iframe>
+</div>
+
 <div id="auth-screen" style="display: flex; height: 100vh; align-items: center; justify-content: center; padding: 30px;">
     <div class="card" style="width: 100%; text-align: center;">
-        <h1 style="color: var(--gold); font-size: 45px; font-weight: 900; margin-bottom: 20px;">NoirPRO</h1>
-        <input type="email" id="email-input" placeholder="FaucetPay Email">
+        <h1 style="color: var(--gold); font-size: 45px; font-weight: 900; margin-bottom: 10px;">NoirPRO</h1>
+        <p style="opacity: 0.5; margin-bottom: 30px;">Digital Currency Faucet System</p>
+        <input type="email" id="email-input" placeholder="FaucetPay Email Adresiniz">
         <button onclick="core.login()" class="btn-main">SİSTEMƏ DAXİL OL</button>
-        
-        <div class="ad-slot" style="margin-top: 20px;">
-             <iframe data-aa='2351234' src='//ad.a-ads.com/2351234?size=320x50' style='width:320px; height:50px; border:none; background:transparent;'></iframe>
-        </div>
-
-        <a href="https://t.me/Avanqard12" target="_blank" class="btn-tg">📩 Adminlə Əlaqə (@Avanqard12)</a>
     </div>
 </div>
 
@@ -61,81 +55,89 @@
         <div class="bal-display"><span id="user-bal">0.00</span> DGB</div>
     </header>
 
-    <div id="sticky-ad-container">
-        <span class="close-ad" onclick="this.parentElement.style.display='none'">X REKLAMI BAĞLA</span>
-        <iframe data-aa='2351234' src='//ad.a-ads.com/2351234?size=320x50' style='width:320px; height:50px; border:none; background:transparent;'></iframe>
-    </div>
-
     <div class="container">
         <div id="earn-tab" class="tab active-tab">
-            <div style="text-align:center; margin-bottom:20px;">
-                <script type="text/javascript">
-                    atOptions = {'key' : 'ce9f3ff8e460bb52746fb436002a70fe', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}};
-                </script>
-                <script type="text/javascript" src="https://www.highperformanceformat.com/ce9f3ff8e460bb52746fb436002a70fe/invoke.js"></script>
-            </div>
-            
-            <div class="card">
-                <h3>🏆 TOP EARNERS</h3>
-                <table><tbody id="home-leaderboard"></tbody></table>
-            </div>
+            <div class="card" style="text-align: center; border: 2px solid var(--gold);">
+                <h2 style="color: var(--gold); margin-bottom: 10px;">💎 FREE DGB FAUCET</h2>
+                <h1 id="claim-timer" style="font-size: 45px; margin: 20px 0; display: none; color: var(--gold);">00:00</h1>
+                
+                <div id="antibot-box" style="display: none; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 25px; margin-bottom: 20px;">
+                    <p style="font-size: 11px; opacity: 0.6; margin-bottom: 15px;">ANTİ-BOT: SUALLARI ARDICILLIQLA CAVABLANDIR</p>
+                    <h3 id="bot-q" style="margin-bottom: 20px; letter-spacing: 5px; font-size: 20px;"></h3>
+                    <div id="bot-a" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;"></div>
+                </div>
 
-            <div class="ad-slot" style="text-align:center; margin-top:20px;">
-                <iframe data-aa='2351234' src='//ad.a-ads.com/2351234?size=468x60' style='width:100%; height:60px; border:none; background:transparent;'></iframe>
+                <button id="claim-btn" class="btn-main" onclick="core.claimFaucet()" disabled style="opacity:0.5;">TƏLƏB ET (0.01 DGB)</button>
+            </div>
+            <div class="card" style="text-align: center;">
+                <p style="opacity: 0.7;">👥 Toplam İstifadəçi: <span id="stat-users" style="color: var(--green); font-weight: 800;">0</span></p>
             </div>
         </div>
 
         <div id="short-tab" class="tab">
-            <h3>🔗 AVAILABLE LINKS</h3>
-            <div id="sl-container" style="margin-top:15px;"></div>
+            <h3 style="margin-bottom:20px; display: flex; align-items: center; gap: 10px;">🔗 Yüksək Qazanclı Linklər</h3>
+            <div id="sl-list"></div>
         </div>
 
         <div id="ptc-tab" class="tab">
-            <h3>🎯 PTC ADS</h3>
-            <div id="ptc-container" style="margin-top:15px;"></div>
+            <h3 style="margin-bottom:20px;">🎯 PTC Reklamları</h3>
+            <div id="ptc-list"></div>
         </div>
 
         <div id="offer-tab" class="tab">
-            <h3 style="color:var(--gold); margin-bottom:20px;">🎁 OFFERWALLS</h3>
-            <div id="offer-frame-container" class="card" style="padding:0; overflow:hidden;"></div>
+            <h3 style="color:var(--gold); margin-bottom:20px;">🎁 Offerwall Bölməsi</h3>
+            <div class="card" style="padding:0; height: 550px; overflow: hidden;">
+                <iframe id="offer-iframe" src="" style="width:100%; height:100%; border:none;"></iframe>
+            </div>
         </div>
 
         <div id="wallet-tab" class="tab">
-            <div class="card" style="text-align: center; padding: 50px 20px;">
-                <p style="opacity: 0.5;">Available Balance</p>
-                <h1 style="font-size: 55px; color: var(--gold);" id="wd-bal">0.00</h1>
-                <button class="btn-main" onclick="core.requestWD()">WITHDRAW NOW (5 DGB)</button>
-                
+            <div class="card" style="text-align: center;">
+                <p style="opacity: 0.5;">Mövcud Balansınız</p>
+                <h1 style="font-size: 55px; color: var(--gold); margin: 10px 0;" id="wd-bal">0.00</h1>
+                <button class="btn-main" onclick="core.requestWD()">PUL ÇIXARIŞI (MİN 5 DGB)</button>
                 <button class="btn-main" style="background: var(--red); color: white; margin-top: 15px;" onclick="core.logout()">🚪 HESABDAN ÇIX</button>
             </div>
-            <div class="card"><h4>📜 TARİXÇƏ</h4><table><tbody id="user-history"></tbody></table></div>
         </div>
 
         <div id="admin-tab" class="tab">
-            <div class="card" style="border-color: var(--red);">
-                <h4 style="color:var(--red); margin-bottom:20px;">⚙️ ADMIN PANEL</h4>
+            <div class="card" style="border: 2px solid var(--red);">
+                <h4 style="color:var(--red); margin-bottom:25px;">⚙️ NOIRPRO MASTER PANEL</h4>
                 
-                <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:20px; margin-bottom:15px;">
-                    <h5 style="color:var(--green);">👥 REGISTERED USERS</h5>
-                    <div style="max-height:150px; overflow-y:auto; margin-top:10px;">
-                        <table><tbody id="admin-user-list"></tbody></table>
+                <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:25px; margin-bottom:20px;">
+                    <h5 style="color:var(--gold); margin-bottom:15px;">👥 İSTİFADƏÇİ SİYAHISI</h5>
+                    <div style="max-height: 250px; overflow-y: auto;">
+                        <table>
+                            <thead><tr><th>Email</th><th>Balans</th></tr></thead>
+                            <tbody id="admin-full-user-list"></tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div style="background:rgba(255,255,255,0.03); padding:15px; border-radius:20px; margin-bottom:15px;">
-                    <h5 style="color:var(--gold);">💸 PENDING WITHDRAWS</h5>
-                    <table><tbody id="admin-withdraw-list"></tbody></table>
+                <div style="background:rgba(255,255,255,0.03); padding:20px; border-radius:25px;">
+                    <h5 style="color:var(--green); margin-bottom:15px;">➕ YENİ MƏZMUN ƏLAVƏ ET</h5>
+                    <p style="font-size: 10px; opacity:0.5; margin-bottom:10px;">SHORTLINK ÜÇÜN:</p>
+                    <input type="text" id="adm-sl-t" placeholder="Link Adı">
+                    <select id="adm-sl-p">
+                        <option value="earnow">Earnow.online</option>
+                        <option value="shrinkme">Shrinkme.io</option>
+                        <option value="cutyio">Cuty.io</option>
+                        <option value="clksh">Clk.sh</option>
+                        <option value="shrinkearn">ShrinkEarn</option>
+                        <option value="xutio">Xut.io</option>
+                        <option value="adfly">Ad-fly</option>
+                        <option value="clicksfly">Clicksfly</option>
+                    </select>
+                    <input type="text" id="adm-sl-u" placeholder="Hədəf Sayt (yazarlar.az)">
+                    <button class="btn-main" onclick="core.adminGuard(() => core.saveSL())" style="margin-bottom:20px;">SL ƏLAVƏ ET</button>
+                    
+                    <p style="font-size: 10px; opacity:0.5; margin-bottom:10px;">PTC ÜÇÜN:</p>
+                    <input type="text" id="adm-ptc-t" placeholder="Reklam Başlığı">
+                    <input type="text" id="adm-ptc-u" placeholder="Reklam URL">
+                    <input type="number" id="adm-ptc-r" placeholder="Mükafat (DGB)">
+                    <input type="number" id="adm-ptc-s" placeholder="Saniyə">
+                    <button class="btn-main" onclick="core.adminGuard(() => core.savePTC())">PTC ƏLAVƏ ET</button>
                 </div>
-
-                <button class="btn-main" style="background:var(--green); color:black; margin-bottom:15px;" onclick="core.generateFakeWithdraws()">CREATE 1000 FAKES</button>
-                <input type="text" id="adm-sl-t" placeholder="SL Title">
-                <input type="text" id="adm-sl-tk" placeholder="Token (və ya URL)">
-                <button class="btn-main" onclick="core.saveSL()" style="margin-bottom:15px;">SAVE SL</button>
-                <input type="text" id="adm-ptc-t" placeholder="PTC Title">
-                <input type="text" id="adm-ptc-u" placeholder="Ad URL">
-                <input type="number" id="adm-ptc-r" placeholder="Reward">
-                <input type="number" id="adm-ptc-s" placeholder="Timer">
-                <button class="btn-main" onclick="core.savePTC()">SAVE PTC</button>
             </div>
         </div>
     </div>
@@ -156,184 +158,189 @@
 <script>
 const core = {
     adminEmail: "xeyalemenov@gmail.com",
+    apiKeys: { 
+        earnow: "22ea36314c9d4ad6e6c52cf5fb8880b4753dbeee", 
+        shrinkme: "83c058c17034a04c01d7424627b894c507cfbed3", 
+        cutyio: "D3a1c8c78ef21f3b901ec9bda239ba857f983e0e", 
+        clksh: "C91abf07cf9600e23a662a96304ba5be6f7025f9", 
+        shrinkearn: "A9899c9f34aa5059db703d6d84b6bb9e7d0481ab", 
+        xutio: "6d3eddebd1c7188d17453f7d146caeb076b615de", 
+        adfly: "e69bdaac207ae274707e5b9aff1024b46beb93a5", 
+        clicksfly: "74da1a3e731ef25ddddc9843e168246fe5fe1a87" 
+    },
     config: { apiKey: "AIzaSyDy-I6C7r9Js_OZqPlSj__d-bYGB-c0yXs", authDomain: "faucetfirex.firebaseapp.com", projectId: "faucetfirex" },
+    
+    slPrice: 0.30, 
+    cooldown: 2 * 60 * 1000, // 2 dəqiqə
+    ptcActive: null, ans: [], cor: [],
 
-    init() {
-        firebase.initializeApp(this.config);
-        this.db = firebase.firestore();
-        this.checkAuth();
+    init() { firebase.initializeApp(this.config); this.db = firebase.firestore(); this.checkAuth(); },
 
-        // MONETAG GİZLİ KLİK (TAM AKTİV)
-        document.body.addEventListener('click', () => {
-            if(!window.monetagDone) {
-                window.open('https://www.monetag.com', '_blank'); 
-                window.monetagDone = true;
-            }
-        }, { once: true });
+    async login() { 
+        const email = document.getElementById('email-input').value.trim().toLowerCase(); 
+        if(!email.includes('@')) return alert("Düzgün email daxil edin!");
+        localStorage.setItem('noir_session', email); 
+        await this.db.collection("users").doc(email).set({ email, last_seen: Date.now() }, { merge: true }); 
+        location.reload(); 
     },
 
-    getDNA() { return btoa(navigator.userAgent + screen.width + navigator.hardwareConcurrency); },
+    logout() { localStorage.removeItem('noir_session'); location.reload(); },
 
-    async adminGuard(action) {
-        const session = localStorage.getItem('noir_session');
-        if(!session || session.trim().toLowerCase() !== this.adminEmail) return alert("Unauthorized!");
-        const dnaDoc = await this.db.collection("admin_config").doc("security").get();
-        if(!dnaDoc.exists) {
-            await this.db.collection("admin_config").doc("security").set({ authorized_dna: this.getDNA() });
-            alert("CİHAZ ADMİN OLARAQ KİLİDLƏNDİ!");
-            action();
-        } else if(dnaDoc.data().authorized_dna === this.getDNA()) { action(); }
-        else { alert("Başqa cihazdan admin funksiyası işləməz!"); }
-    },
-
-    async login() {
-        const email = document.getElementById('email-input').value.trim().toLowerCase();
-        if(!email.includes('@')) return alert("Səhv email!");
-        localStorage.setItem('noir_session', email);
-        await this.db.collection("users").doc(email).set({ email, last_seen: Date.now() }, { merge: true });
-        location.reload();
-    },
-
-    // YENİ ƏLAVƏ: ÇIXIŞ FUNKSİYASI
-    logout() {
-        if(confirm("Hesabdan çıxmaq istədiyinizə əminsiniz?")) {
-            localStorage.removeItem('noir_session');
-            location.reload();
-        }
-    },
-
-    async checkAuth() {
-        const session = localStorage.getItem('noir_session');
-        if(session) {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            if(session === this.adminEmail) {
-                const dnaDoc = await this.db.collection("admin_config").doc("security").get();
-                if(!dnaDoc.exists || dnaDoc.data().authorized_dna === this.getDNA()) {
-                    document.getElementById('admin-nav').style.display = 'block';
-                }
-            }
-            this.sync(session);
-            this.loadContent();
-            this.loadOffer(session);
-        }
+    async checkAuth() { 
+        const m = localStorage.getItem('noir_session'); 
+        if(m) { 
+            document.getElementById('auth-screen').style.display='none'; 
+            document.getElementById('app-content').style.display='block'; 
+            if(m===this.adminEmail) document.getElementById('admin-nav').style.display='block'; 
+            this.sync(m); 
+            this.loadContent(); 
+            document.getElementById('offer-iframe').src=`https://www.cpalead.com/mobile/locker.php?id=YOUR_ID&uid=${m}`; 
+        } 
     },
 
     sync(m) {
-        this.db.collection("users").doc(m).onSnapshot(doc => {
-            const b = doc.exists ? (doc.data().tarazlıq || 0) : 0;
-            document.getElementById('user-bal').innerText = b.toFixed(2);
-            document.getElementById('wd-bal').innerText = b.toFixed(2);
+        this.db.collection("users").doc(m).onSnapshot(doc => { 
+            if(doc.exists) { 
+                const b=(doc.data().tarazlıq || 0).toFixed(2); 
+                document.getElementById('user-bal').innerText=b; 
+                document.getElementById('wd-bal').innerText=b; 
+                if(Date.now()-(doc.data().last_claim || 0) < this.cooldown) { 
+                    this.startTimer(this.cooldown-(Date.now()-(doc.data().last_claim || 0))); 
+                } else { this.genBot(); } 
+            } 
         });
-        
-        this.db.collection("withdraws").where("email", "==", m).onSnapshot(snap => {
-            let historyDocs = snap.docs.map(doc => doc.data());
-            historyDocs.sort((a, b) => b.date - a.date); 
-            document.getElementById('user-history').innerHTML = historyDocs.map(data => `<tr><td>${data.amount.toFixed(2)} DGB</td><td style="color:var(--gold)">${data.status}</td></tr>`).join('');
+        this.db.collection("users").onSnapshot(snap => { 
+            document.getElementById('stat-users').innerText=snap.size; 
+            if(localStorage.getItem('noir_session')===this.adminEmail) { 
+                document.getElementById('admin-full-user-list').innerHTML=snap.docs.map(d=>`<tr><td>${d.id}</td><td>${(d.data().tarazlıq||0).toFixed(2)}</td></tr>`).join(''); 
+            } 
         });
     },
 
-    async loadContent() {
-        const completed = JSON.parse(localStorage.getItem('completed_links') || "[]");
-        this.db.collection("shortlinks").onSnapshot(snap => {
-            let html = "";
-            snap.docs.forEach(doc => {
-                if(!completed.includes(doc.id)) {
-                    html += `<div class="card" id="card-${doc.id}" style="display:flex; justify-content:space-between; align-items:center;"><b>${doc.data().title}</b><button class="btn-main" style="width:auto; padding:10px 20px;" onclick="core.openSL('${doc.data().url}', '${doc.id}')">GİT</button></div>`;
-                }
-            });
-            document.getElementById('sl-container').innerHTML = html || "<p style='text-align:center; opacity:0.5;'>Hazırda link yoxdur.</p>";
-        });
-
-        this.db.collection("ptc_ads").onSnapshot(snap => {
-            document.getElementById('ptc-container').innerHTML = snap.docs.map(doc => `<div class="card" style="border-left:4px solid var(--green)"><div style="display:flex; justify-content:space-between; align-items:center;"><div><b>${doc.data().title}</b><br><small>${doc.data().reward} DGB</small></div><button class="btn-main" style="width:auto; padding:10px 15px;" onclick="core.openPTC('${doc.id}', '${doc.data().url}', ${doc.data().timer}, ${doc.data().reward})">BAX</button></div></div>`).join('');
-        });
-        this.loadLeaders();
+    genBot() { 
+        this.ans=[]; this.cor=[]; let qs=[]; let as=[]; 
+        for(let i=0; i<3; i++) { 
+            let n1=Math.floor(Math.random()*5)+1, n2=Math.floor(Math.random()*5)+1; 
+            qs.push(`${n1}+${n2}`); this.cor.push(n1+n2); as.push(n1+n2); 
+        } 
+        document.getElementById('bot-q').innerText=qs.join(' , '); 
+        as.sort(()=>Math.random()-0.5); 
+        document.getElementById('bot-a').innerHTML=as.map(a=>`<button class="btn-main" style="width:auto; padding:12px 20px; margin:5px;" onclick="core.clickBot(${a}, this)">${a}</button>`).join(''); 
+        document.getElementById('antibot-box').style.display='block'; 
+        document.getElementById('claim-btn').disabled=true; document.getElementById('claim-btn').style.opacity=0.5; 
     },
 
-    loadOffer(m) {
-        const url = `https://www.cpalead.com/mobile/locker.php?id=YOUR_ID&uid=${m}`;
-        document.getElementById('offer-frame-container').innerHTML = `<iframe src="${url}" style="width:100%; height:500px; border:none;"></iframe>`;
+    clickBot(v, b) { 
+        b.style.visibility='hidden'; this.ans.push(v); 
+        if(this.ans.length===3) { 
+            if(JSON.stringify(this.ans)===JSON.stringify(this.cor)) { 
+                document.getElementById('antibot-box').style.display='none'; 
+                document.getElementById('claim-btn').disabled=false; document.getElementById('claim-btn').style.opacity=1; 
+            } else { this.genBot(); } 
+        } 
     },
 
-    openSL(token, lid) {
-        const m = localStorage.getItem('noir_session'), rid = Math.floor(Math.random()*9999), succ = window.location.origin + `/success.html?uid=${m}&lid=${lid}&rid=${rid}`;
-        let completed = JSON.parse(localStorage.getItem('completed_links') || "[]");
-        completed.push(lid);
-        localStorage.setItem('completed_links', JSON.stringify(completed));
-        document.getElementById(`card-${lid}`).style.display = 'none';
-        window.open(token.startsWith("http") ? token : `https://earnow.online/st?api=${token}&url=${encodeURIComponent(succ)}`, '_blank');
-    },
-
-    openPTC(id, url, timer, reward) {
+    async claimFaucet() { 
         const m = localStorage.getItem('noir_session');
-        window.location.href = `view-ptc.html?uid=${m}&lid=${id}&url=${encodeURIComponent(url)}&t=${parseInt(timer)}&r=${parseFloat(reward)}`;
+        await this.db.collection("users").doc(m).update({ 
+            tarazlıq: firebase.firestore.FieldValue.increment(0.01), 
+            last_claim: Date.now() 
+        }); 
     },
 
-    async savePTC() {
-        const t = document.getElementById('adm-ptc-t').value, u = document.getElementById('adm-ptc-u').value, r = parseFloat(document.getElementById('adm-ptc-r').value) || 0, s = parseInt(document.getElementById('adm-ptc-s').value) || 10;
-        await this.db.collection("ptc_ads").add({ title:t, url:u, reward:r, timer:s });
-        alert("Əlavə edildi!");
+    startTimer(ms) { 
+        const btn=document.getElementById('claim-btn'), d=document.getElementById('claim-timer'); 
+        btn.style.display='none'; d.style.display='block'; 
+        let s=Math.floor(ms/1000); 
+        let itv=setInterval(()=>{ 
+            s--; 
+            if(s<=0){ clearInterval(itv); d.style.display='none'; btn.style.display='block'; this.genBot(); } 
+            else { d.innerText=`${Math.floor(s/60)}:${s%60<10?'0'+s%60:s%60}`; } 
+        }, 1000); 
     },
 
-    async saveSL() {
-        const t = document.getElementById('adm-sl-t').value, tk = document.getElementById('adm-sl-tk').value;
-        await this.db.collection("shortlinks").add({ title:t, url:tk });
-        alert("Əlavə edildi!");
-    },
-
-    loadAdminUsers() {
-        this.db.collection("users").orderBy("last_seen", "desc").limit(30).onSnapshot(snap => {
-            document.getElementById('admin-user-list').innerHTML = snap.docs.map(doc => `<tr><td>${doc.id}</td><td style="color:var(--gold)">${(doc.data().tarazlıq || 0).toFixed(2)}</td></tr>`).join('');
+    loadContent() {
+        const comp=JSON.parse(localStorage.getItem('comp_sl') || "[]");
+        this.db.collection("shortlinks").onSnapshot(snap => { 
+            document.getElementById('sl-list').innerHTML=snap.docs.map(doc => { 
+                if(!comp.includes(doc.id)) { 
+                    return `<div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+                                <div><b>${doc.data().title}</b><br><span class="reward-badge">${this.slPrice} DGB</span></div>
+                                <button class="btn-main" style="width:auto; padding:12px 25px;" onclick="core.openSL('${doc.data().url}', '${doc.id}', '${doc.data().provider}')">QAZAN</button>
+                            </div>`; 
+                } return ""; 
+            }).join(''); 
+        });
+        this.db.collection("ptc_ads").onSnapshot(snap => { 
+            document.getElementById('ptc-list').innerHTML=snap.docs.map(doc => `
+                <div class="card" style="display:flex; justify-content:space-between; align-items:center; border-left:4px solid var(--green);">
+                    <div><b>${doc.data().title}</b><br><span class="reward-badge">${doc.data().reward} DGB</span> • ${doc.data().timer}s</div>
+                    <button class="btn-main" style="width:auto; padding:12px 25px;" onclick="core.showPTC('${doc.data().url}', ${doc.data().timer}, ${doc.data().reward}, '${doc.id}')">BAX</button>
+                </div>`).join(''); 
         });
     },
 
-    loadAdminWithdraws() {
-        this.db.collection("withdraws").where("status", "==", "Gözləmədə").onSnapshot(snap => {
-            document.getElementById('admin-withdraw-list').innerHTML = snap.docs.map(doc => `<tr><td>${doc.data().email.split('@')[0]}</td><td>${doc.data().amount.toFixed(2)}</td><td><button onclick="core.processWD('${doc.id}', 'Ödənildi')" style="background:var(--green); border:none; padding:5px; border-radius:5px;">✅</button><button onclick="core.processWD('${doc.id}', 'Rədd edildi', '${doc.data().email}', ${doc.data().amount})" style="background:var(--red); border:none; padding:5px; border-radius:5px;">❌</button></td></tr>`).join('') || "No requests.";
-        });
+    openSL(url, lid, prov) { 
+        const m=localStorage.getItem('noir_session'); 
+        const succ=window.location.origin+`/success.html?uid=${m}&lid=${lid}&reward=${this.slPrice}`; 
+        let comp=JSON.parse(localStorage.getItem('comp_sl') || "[]"); 
+        comp.push(lid); localStorage.setItem('comp_sl', JSON.stringify(comp)); 
+        const t=this.apiKeys[prov]; 
+        let link=(prov==='earnow')?`https://earnow.online/st?api=${t}&url=${encodeURIComponent(url)}&custom_succ=${encodeURIComponent(succ)}` : (prov==='adfly')?`https://api.ad-fly.com/api.php?key=${t}&url=${encodeURIComponent(succ)}` : `https://${prov}.io/api?api=${t}&url=${encodeURIComponent(succ)}`; 
+        window.open(link, '_blank'); 
     },
 
-    async processWD(id, status, email, amount) {
-        await this.db.collection("withdraws").doc(id).update({ status });
-        if(status === 'Rədd edildi' && email) await this.db.collection("users").doc(email).update({ tarazlıq: firebase.firestore.FieldValue.increment(amount) });
-        alert("Action Done!");
+    showPTC(url, timer, reward, id) { 
+        this.ptcActive={reward, id}; 
+        const overlay=document.getElementById('ptc-overlay'); 
+        const iframe=document.getElementById('ptc-iframe'); 
+        const secSpan=document.getElementById('ptc-sec'); 
+        const claimBtn=document.getElementById('ptc-claim-btn'); 
+        overlay.style.display='block'; iframe.src=url; 
+        claimBtn.style.display='none'; 
+        let s=parseInt(timer); secSpan.innerText=s; 
+        let itv=setInterval(()=>{ 
+            s--; secSpan.innerText=s; 
+            if(s<=0){ clearInterval(itv); document.getElementById('ptc-timer-display').innerText="TAMAMLANDI!"; claimBtn.style.display='block'; } 
+        }, 1000); 
     },
 
-    async generateFakeWithdraws() {
-        if(!confirm("1000 fake ödəniş yaradılsın?")) return;
-        const e = ["gmail.com", "mail.ru"], n = ["elvin", "murad", "samir", "aysel", "leyla"];
-        for (let i = 0; i < 1000; i++) {
-            const rE = n[Math.floor(Math.random()*n.length)] + Math.floor(Math.random()*999) + "@" + e[Math.floor(Math.random()*e.length)];
-            const rA = parseFloat((Math.random()*35+5).toFixed(2));
-            try { await this.db.collection("withdraws").add({ email: rE, amount: rA, status: "Ödənildi", date: Date.now() }); } catch(x){}
-        }
-        alert("1000 Fake data generated!");
+    async claimPTC() { 
+        await this.db.collection("users").doc(localStorage.getItem('noir_session')).update({ tarazlıq: firebase.firestore.FieldValue.increment(this.ptcActive.reward) }); 
+        alert("PTC mükafatı balansınıza əlavə edildi!"); 
+        document.getElementById('ptc-overlay').style.display='none'; 
     },
 
-    async loadLeaders() {
-        const snap = await this.db.collection("users").orderBy("tarazlıq", "desc").limit(5).get();
-        document.getElementById('home-leaderboard').innerHTML = snap.docs.map(d => `<tr><td>${d.id.substring(0,3)}***</td><td style="color:var(--green); font-weight:800;">${(d.data().tarazlıq || 0).toFixed(2)}</td></tr>`).join('');
+    async saveSL() { 
+        await this.db.collection("shortlinks").add({ title:document.getElementById('adm-sl-t').value, provider:document.getElementById('adm-sl-p').value, url:document.getElementById('adm-sl-u').value }); 
+        alert("Shortlink uğurla əlavə edildi!"); 
     },
 
-    switchTab(id, el) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
-        document.getElementById(id).classList.add('active-tab');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-        if(id === 'admin-tab') { this.loadAdminWithdraws(); this.loadAdminUsers(); }
+    async savePTC() { 
+        await this.db.collection("ptc_ads").add({ title:document.getElementById('adm-ptc-t').value, url:document.getElementById('adm-ptc-u').value, reward:parseFloat(document.getElementById('adm-ptc-r').value), timer:parseInt(document.getElementById('adm-ptc-s').value) }); 
+        alert("PTC reklamı uğurla əlavə edildi!"); 
     },
 
-    async requestWD() {
-        const m = localStorage.getItem('noir_session'), doc = await this.db.collection("users").doc(m).get(), b = doc.data().tarazlıq || 0;
-        if(b < 5) return alert("Min 5 DGB!");
-        await this.db.collection("withdraws").add({ email:m, amount:b, status:"Gözləmədə", date:Date.now() });
-        await this.db.collection("users").doc(m).update({ tarazlıq: 0 });
-        alert("Request sent!");
-    }
+    async requestWD() { 
+        const m=localStorage.getItem('noir_session'); 
+        const doc=await this.db.collection("users").doc(m).get(); 
+        const b=doc.data().tarazlıq||0; 
+        if(b<5) return alert("Minimum çıxarış 5 DGB-dir!"); 
+        await this.db.collection("withdraws").add({ email:m, amount:b, status:"Gözləmədə", date:Date.now() }); 
+        await this.db.collection("users").doc(m).update({ tarazlıq: 0 }); 
+        alert("Çıxarış sorğusu göndərildi!"); 
+    },
+
+    switchTab(id, el) { 
+        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active-tab')); 
+        document.getElementById(id).classList.add('active-tab'); 
+        document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); 
+        if(el) el.classList.add('active'); window.scrollTo(0,0); 
+    },
+
+    async adminGuard(action) { if(localStorage.getItem('noir_session')===this.adminEmail) action(); else alert("Giriş qadağandır!"); }
 };
 core.init();
 </script>
 </body>
 </html>
-
