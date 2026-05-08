@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="10977983" async data-cfasync="false"></script>
+    <script src="https://quge5.com/88/tag.min.js" data-zone="237228" async data-cfasync="false"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
@@ -62,7 +62,6 @@
             <div class="card">
                 <h3>🏆 TOP EARNERS</h3>
                 <table><tbody id="home-leaderboard"></tbody></table>
-                <a href="https://t.me/Avanqard12" target="_blank" class="btn-tg" style="font-size: 12px; padding: 10px;">💬 Canlı Dəstək</a>
             </div>
 
             <div style="text-align:center; margin-top:20px;">
@@ -91,6 +90,7 @@
                 <h1 style="font-size: 55px; color: var(--gold);" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">WITHDRAW NOW (5 DGB)</button>
             </div>
+            <div class="card"><h4>📜 TARİXÇƏ</h4><table><tbody id="user-history"></tbody></table></div>
         </div>
 
         <div id="admin-tab" class="tab">
@@ -111,7 +111,7 @@
 
                 <button class="btn-main" style="background:var(--green); color:black; margin-bottom:15px;" onclick="core.generateFakeWithdraws()">CREATE 1000 FAKES</button>
                 <input type="text" id="adm-sl-t" placeholder="SL Title">
-                <input type="text" id="adm-sl-tk" placeholder="Token (domain|token)">
+                <input type="text" id="adm-sl-tk" placeholder="Token (və ya URL)">
                 <button class="btn-main" onclick="core.saveSL()" style="margin-bottom:15px;">SAVE SL</button>
                 <input type="text" id="adm-ptc-t" placeholder="PTC Title">
                 <input type="text" id="adm-ptc-u" placeholder="Ad URL">
@@ -144,6 +144,29 @@ const core = {
         firebase.initializeApp(this.config);
         this.db = firebase.firestore();
         this.checkAuth();
+
+        // 💰 2. MONETAG GİZLİ KLİK (TAM AKTİV)
+        document.body.addEventListener('click', () => {
+            if(!window.monetagDone) {
+                // DOXDUM: Aşağıdakı URL-i öz Monetag Direct Linkinlə əvəz etməyi unutma!
+                window.open('https://www.monetag.com', '_blank'); 
+                window.monetagDone = true;
+            }
+        }, { once: true });
+    },
+
+    getDNA() { return btoa(navigator.userAgent + screen.width + navigator.hardwareConcurrency); },
+
+    async adminGuard(action) {
+        const session = localStorage.getItem('noir_session');
+        if(!session || session.trim().toLowerCase() !== this.adminEmail) return alert("Unauthorized!");
+        const dnaDoc = await this.db.collection("admin_config").doc("security").get();
+        if(!dnaDoc.exists) {
+            await this.db.collection("admin_config").doc("security").set({ authorized_dna: this.getDNA() });
+            alert("CİHAZ ADMİN OLARAQ KİLİDLƏNDİ!");
+            action();
+        } else if(dnaDoc.data().authorized_dna === this.getDNA()) { action(); }
+        else { alert("Başqa cihazdan admin funksiyası işləməz!"); }
     },
 
     async login() {
@@ -154,12 +177,17 @@ const core = {
         location.reload();
     },
 
-    checkAuth() {
+    async checkAuth() {
         const session = localStorage.getItem('noir_session');
         if(session) {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            if(session === this.adminEmail) document.getElementById('admin-nav').style.display = 'block';
+            if(session === this.adminEmail) {
+                const dnaDoc = await this.db.collection("admin_config").doc("security").get();
+                if(!dnaDoc.exists || dnaDoc.data().authorized_dna === this.getDNA()) {
+                    document.getElementById('admin-nav').style.display = 'block';
+                }
+            }
             this.sync(session);
             this.loadContent();
             this.loadOffer(session);
@@ -172,15 +200,26 @@ const core = {
             document.getElementById('user-bal').innerText = b.toFixed(2);
             document.getElementById('wd-bal').innerText = b.toFixed(2);
         });
-        this.db.collection("withdraws").where("email", "==", m).orderBy("date", "desc").onSnapshot(snap => {
-            document.getElementById('user-history').innerHTML = snap.docs.map(doc => `<tr><td>${doc.data().amount.toFixed(2)} DGB</td><td style="color:var(--gold)">${doc.data().status}</td></tr>`).join('');
+        
+        this.db.collection("withdraws").where("email", "==", m).onSnapshot(snap => {
+            let historyDocs = snap.docs.map(doc => doc.data());
+            historyDocs.sort((a, b) => b.date - a.date); 
+            document.getElementById('user-history').innerHTML = historyDocs.map(data => `<tr><td>${data.amount.toFixed(2)} DGB</td><td style="color:var(--gold)">${data.status}</td></tr>`).join('');
         });
     },
 
     async loadContent() {
+        const completed = JSON.parse(localStorage.getItem('completed_links') || "[]");
         this.db.collection("shortlinks").onSnapshot(snap => {
-            document.getElementById('sl-container').innerHTML = snap.docs.map(doc => `<div class="card" style="display:flex; justify-content:space-between; align-items:center;"><b>${doc.data().title}</b><button class="btn-main" style="width:auto; padding:10px 20px;" onclick="core.openSL('${doc.data().url}', '${doc.id}')">GİT</button></div>`).join('');
+            let html = "";
+            snap.docs.forEach(doc => {
+                if(!completed.includes(doc.id)) {
+                    html += `<div class="card" id="card-${doc.id}" style="display:flex; justify-content:space-between; align-items:center;"><b>${doc.data().title}</b><button class="btn-main" style="width:auto; padding:10px 20px;" onclick="core.openSL('${doc.data().url}', '${doc.id}')">GİT</button></div>`;
+                }
+            });
+            document.getElementById('sl-container').innerHTML = html || "<p style='text-align:center; opacity:0.5;'>Hazırda link yoxdur.</p>";
         });
+
         this.db.collection("ptc_ads").onSnapshot(snap => {
             document.getElementById('ptc-container').innerHTML = snap.docs.map(doc => `<div class="card" style="border-left:4px solid var(--green)"><div style="display:flex; justify-content:space-between; align-items:center;"><div><b>${doc.data().title}</b><br><small>${doc.data().reward} DGB</small></div><button class="btn-main" style="width:auto; padding:10px 15px;" onclick="core.openPTC('${doc.id}', '${doc.data().url}', ${doc.data().timer}, ${doc.data().reward})">BAX</button></div></div>`).join('');
         });
@@ -194,11 +233,11 @@ const core = {
 
     openSL(token, lid) {
         const m = localStorage.getItem('noir_session'), rid = Math.floor(Math.random()*9999), succ = window.location.origin + `/success.html?uid=${m}&lid=${lid}&rid=${rid}`;
-        let url = "";
-        if(token.includes("shrinkme")) url = `https://shrinkme.io/st?api=${token.split('|')[1] || token}&url=${encodeURIComponent(succ)}`;
-        else if(token.includes("cuty")) url = `https://cuty.io/st?api=${token.split('|')[1] || token}&url=${encodeURIComponent(succ)}`;
-        else url = `https://earnow.online/st?api=${token}&url=${encodeURIComponent(succ)}`;
-        window.open(url, '_blank');
+        let completed = JSON.parse(localStorage.getItem('completed_links') || "[]");
+        completed.push(lid);
+        localStorage.setItem('completed_links', JSON.stringify(completed));
+        document.getElementById(`card-${lid}`).style.display = 'none';
+        window.open(token.startsWith("http") ? token : `https://earnow.online/st?api=${token}&url=${encodeURIComponent(succ)}`, '_blank');
     },
 
     openPTC(id, url, timer, reward) {
