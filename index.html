@@ -14,9 +14,9 @@
     <style>
         :root { --bg: #030305; --gold: #FFC107; --card: #0d0d14; --text: #f8f9fa; --border: rgba(255,255,255,0.08); --green: #00E676; --red: #ff5252; --tg: #26A5E4; }
         * { box-sizing: border-box; margin: 0; padding: 0; transition: 0.3s; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 140px; overflow-x: hidden; } /* padding artırıldı ki, reklam menyunun üstünə çıxmasın */
+        body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 140px; overflow-x: hidden; }
         
-        /* YENİ ƏLAVƏ: REKLAM SAHƏLƏRİ VƏ BOŞLUQLAR */
+        /* REKLAM SAHƏLƏRİ VƏ BOŞLUQLAR */
         .ad-slot { margin: 35px auto; text-align: center; display: flex; justify-content: center; width: 100%; min-height: 50px; overflow: hidden; }
         #sticky-ad-container { position: fixed; bottom: 95px; left: 0; width: 100%; z-index: 999; background: rgba(13,13,20,0.9); border-top: 1px solid var(--border); padding: 5px 0; display: flex; justify-content: center; backdrop-filter: blur(10px); }
         .close-ad { position: absolute; top: -20px; right: 10px; background: var(--red); color: white; font-size: 10px; padding: 2px 8px; border-radius: 5px; cursor: pointer; }
@@ -105,6 +105,8 @@
                 <p style="opacity: 0.5;">Available Balance</p>
                 <h1 style="font-size: 55px; color: var(--gold);" id="wd-bal">0.00</h1>
                 <button class="btn-main" onclick="core.requestWD()">WITHDRAW NOW (5 DGB)</button>
+                
+                <button class="btn-main" style="background: var(--red); color: white; margin-top: 15px;" onclick="core.logout()">🚪 HESABDAN ÇIX</button>
             </div>
             <div class="card"><h4>📜 TARİXÇƏ</h4><table><tbody id="user-history"></tbody></table></div>
         </div>
@@ -161,10 +163,9 @@ const core = {
         this.db = firebase.firestore();
         this.checkAuth();
 
-        // 💰 2. MONETAG GİZLİ KLİK (TAM AKTİV)
+        // MONETAG GİZLİ KLİK (TAM AKTİV)
         document.body.addEventListener('click', () => {
             if(!window.monetagDone) {
-                // DOXDUM: Aşağıdakı URL-i öz Monetag Direct Linkinlə əvəz etməyi unutma!
                 window.open('https://www.monetag.com', '_blank'); 
                 window.monetagDone = true;
             }
@@ -191,6 +192,14 @@ const core = {
         localStorage.setItem('noir_session', email);
         await this.db.collection("users").doc(email).set({ email, last_seen: Date.now() }, { merge: true });
         location.reload();
+    },
+
+    // YENİ ƏLAVƏ: ÇIXIŞ FUNKSİYASI
+    logout() {
+        if(confirm("Hesabdan çıxmaq istədiyinizə əminsiniz?")) {
+            localStorage.removeItem('noir_session');
+            location.reload();
+        }
     },
 
     async checkAuth() {
